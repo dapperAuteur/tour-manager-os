@@ -41,7 +41,7 @@ Tour Manager OS digitizes the entire touring workflow:
 | CSV Parsing | Papa Parse |
 | Charts | Recharts |
 | Email | Resend |
-| AI/RAG Help | pgvector + OpenAI embeddings |
+| AI/RAG Help | pgvector + Gemini embeddings |
 | Offline/PWA | next-pwa + IndexedDB |
 | Deployment | Vercel |
 
