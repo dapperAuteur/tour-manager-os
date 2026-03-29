@@ -122,13 +122,15 @@ Last updated: 2026-03-30
 - 📋 Public event pages per show
 - 📋 Pre/post-show exclusive content
 
-## Phase 10: Family Tour Hub 📋
+## Phase 10: Family Tour Hub ✅
 > Polls, practice scheduling, shared albums, group collaboration.
 
-- 📋 Family polls for group decisions
-- 📋 Practice room scheduling
+- ✅ Family polls with multi-option voting, progress bars, open/close control
+- ✅ Practice session scheduling with date/time/location and RSVP (going/maybe/can't)
+- ✅ Shared photo/video albums per tour with media management
+- ✅ Hub index page with Polls, Practice, Albums sections
+- ✅ 404 pages (public and authenticated)
 - 📋 Setlist collaboration
-- 📋 Shared photo/video albums per tour
 - 📋 Days-off planner with local suggestions
 
 ## Phase 11: Help & Feedback 📋

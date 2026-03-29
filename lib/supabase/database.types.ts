@@ -293,6 +293,47 @@ export type Database = {
           },
         ]
       }
+      album_media: {
+        Row: {
+          album_id: string
+          caption: string | null
+          created_at: string | null
+          id: string
+          media_type: string
+          sort_order: number | null
+          uploaded_by: string | null
+          url: string
+        }
+        Insert: {
+          album_id: string
+          caption?: string | null
+          created_at?: string | null
+          id?: string
+          media_type: string
+          sort_order?: number | null
+          uploaded_by?: string | null
+          url: string
+        }
+        Update: {
+          album_id?: string
+          caption?: string | null
+          created_at?: string | null
+          id?: string
+          media_type?: string
+          sort_order?: number | null
+          uploaded_by?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "album_media_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "shared_albums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_categories: {
         Row: {
           access_level: string | null
@@ -1262,6 +1303,222 @@ export type Database = {
         }
         Relationships: []
       }
+      poll_options: {
+        Row: {
+          created_at: string | null
+          id: string
+          label: string
+          poll_id: string
+          sort_order: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          label: string
+          poll_id: string
+          sort_order?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          label?: string
+          poll_id?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_options_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poll_votes: {
+        Row: {
+          created_at: string | null
+          id: string
+          option_id: string
+          poll_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          option_id: string
+          poll_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          option_id?: string
+          poll_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "poll_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      polls: {
+        Row: {
+          allow_multiple: boolean | null
+          closes_at: string | null
+          created_at: string | null
+          created_by: string
+          description: string | null
+          id: string
+          org_id: string
+          question: string
+          status: string
+          tour_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          allow_multiple?: boolean | null
+          closes_at?: string | null
+          created_at?: string | null
+          created_by: string
+          description?: string | null
+          id?: string
+          org_id: string
+          question: string
+          status?: string
+          tour_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          allow_multiple?: boolean | null
+          closes_at?: string | null
+          created_at?: string | null
+          created_by?: string
+          description?: string | null
+          id?: string
+          org_id?: string
+          question?: string
+          status?: string
+          tour_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "polls_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "polls_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      practice_rsvps: {
+        Row: {
+          created_at: string | null
+          id: string
+          session_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          session_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          session_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practice_rsvps_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "practice_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      practice_sessions: {
+        Row: {
+          created_at: string | null
+          created_by: string
+          date: string
+          description: string | null
+          end_time: string | null
+          id: string
+          location: string | null
+          org_id: string
+          start_time: string
+          status: string
+          timezone: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by: string
+          date: string
+          description?: string | null
+          end_time?: string | null
+          id?: string
+          location?: string | null
+          org_id: string
+          start_time: string
+          status?: string
+          timezone?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string
+          date?: string
+          description?: string | null
+          end_time?: string | null
+          id?: string
+          location?: string | null
+          org_id?: string
+          start_time?: string
+          status?: string
+          timezone?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practice_sessions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       schedule_items: {
         Row: {
           category: string | null
@@ -1353,6 +1610,57 @@ export type Database = {
           },
           {
             foreignKeyName: "settlements_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shared_albums: {
+        Row: {
+          cover_url: string | null
+          created_at: string | null
+          created_by: string
+          description: string | null
+          id: string
+          org_id: string
+          title: string
+          tour_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string | null
+          created_by: string
+          description?: string | null
+          id?: string
+          org_id: string
+          title: string
+          tour_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string | null
+          created_by?: string
+          description?: string | null
+          id?: string
+          org_id?: string
+          title?: string
+          tour_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_albums_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shared_albums_tour_id_fkey"
             columns: ["tour_id"]
             isOneToOne: false
             referencedRelation: "tours"
