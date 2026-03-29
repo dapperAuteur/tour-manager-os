@@ -157,3 +157,4 @@ npm run db:types     # Generate TypeScript types from Supabase schema
 ## License
 
 Proprietary. All rights reserved.
+# tour-manager-os
