@@ -174,13 +174,19 @@ Last updated: 2026-03-30
 - 📋 Video lesson support
 - 📋 Admin education tool (codebase reference)
 
-## Phase 14: Musician Tax Platform 💡
-> State-by-state tax tracking, deductions, year-end packages.
+## Phase 14: Musician Tax Platform ✅
+> State-by-state tax tracking, deductions, year-end export.
 
-- 💡 Per diem tracking against IRS guidelines
-- 💡 State-by-state tax liability calculator
-- 💡 QuickBooks/Xero integration
-- 💡 Year-end tax package generation
+- ✅ Tax Center dashboard (gross income, deductions, per diem, states count)
+- ✅ State-by-state income tracker with progress bars
+- ✅ Deduction breakdown with IRS guidance notes per category
+- ✅ 15 musician-specific deduction categories seeded
+- ✅ Per diem tracking table
+- ✅ Year selector (5-year range)
+- ✅ Income detail table
+- ✅ CSV tax export (state + deduction summaries + detail records)
+- 📋 QuickBooks/Xero integration
+- 📋 Auto-populate state income from show revenue
 
 ## Phase 15: Production Bible 💡
 > Stage plots, equipment inventory, crew call sheets.

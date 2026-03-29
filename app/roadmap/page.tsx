@@ -170,9 +170,21 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 14+: And More',
+    name: 'Phase 14: Musician Tax Platform',
+    status: 'complete',
+    description: 'State-by-state income tracking, deductions with IRS guidance, and tax export.',
+    items: [
+      { label: 'Tax Center dashboard', done: true },
+      { label: 'State-by-state income with progress bars', done: true },
+      { label: 'Deduction categories with IRS guidance', done: true },
+      { label: 'CSV tax export', done: true },
+      { label: 'QuickBooks/Xero integration', done: false },
+    ],
+  },
+  {
+    name: 'Phase 15+: And More',
     status: 'future',
-    description: 'Tax platform, production bible, subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
+    description: 'Production bible, subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
     items: [],
   },
 ]
