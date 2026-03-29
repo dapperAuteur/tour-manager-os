@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/bam/Code_NOiCloud/ai-builds/gemini/**)",
+      "Bash(find /Users/bam/Code_NOiCloud/ai-builds/gemini/tour-manager-os -maxdepth 2 -type f \\\\\\(-name README* -o -name CLAUDE.md -o -name package.json -o -name .gitignore -o -name .* -o -name *.md \\\\\\))",
+      "WebFetch(domain:www.eventric.com)",
+      "Bash(python3 -c \":*)",
+      "Bash(pip3 install:*)",
+      "WebFetch(domain:performermag.com)",
+      "WebFetch(domain:sourceforge.net)",
+      "Read(//Users/bam/Code_NOiCloud/ai-builds/claude/flashlearn-ai/**)",
+      "Bash(find /Users/bam/Code_NOiCloud/ai-builds/gemini/contractor-os/lib -name *.ts)",
+      "Bash(find /Users/bam/Code_NOiCloud/ai-builds/claude/flashlearn-ai/lib -name *.ts)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "additionalDirectories": [
+      "/Users/bam/Code_NOiCloud/ai-builds/gemini/tour-manager-os",
+      "/Users/bam/.claude/projects/-Users-bam-Code_NOiCloud-ai-builds-gemini-tour-manager-os/memory"
+    ]
+  }
+}
