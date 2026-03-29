@@ -62,15 +62,19 @@ Last updated: 2026-03-30
 - 📋 Receipt image viewing linked to transactions
 - 📋 Expense cost splitting between team members
 
-## Phase 5: Show Day App 📋
+## Phase 5: Show Day App ✅
 > Mobile-first daily companion for each band member.
 
-- 📋 "Today" view (schedule, venue, hotel, weather, countdown)
-- 📋 Swipe between days
-- 📋 "Next up" widget
+- ✅ "Today" view — hero daily view with schedule timeline, venue, hotel, catering, sound, merch, contacts
+- ✅ Day navigation (prev/next between show dates)
+- ✅ Tap-to-navigate (venue/hotel addresses open in Google Maps)
+- ✅ Tap-to-call (all phone numbers are clickable)
+- ✅ Timezone display (abbreviation shown next to all times)
+- ✅ Travel info from previous show (distance, driver)
+- ✅ Next destination preview
+- ✅ Day off view when no show scheduled
 - 📋 Push notifications for schedule changes
-- 📋 Tap-to-navigate (venue/hotel addresses open in maps)
-- 📋 Tap-to-call (phone numbers)
+- 📋 Weather integration
 
 ## Phase 6: Demo System 📋
 > Pre-configured demo accounts with realistic data for try-before-you-buy.
