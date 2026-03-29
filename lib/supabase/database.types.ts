@@ -535,6 +535,30 @@ export type Database = {
         }
         Relationships: []
       }
+      deduction_categories: {
+        Row: {
+          description: string | null
+          id: string
+          irs_guidance: string | null
+          name: string
+          sort_order: number | null
+        }
+        Insert: {
+          description?: string | null
+          id: string
+          irs_guidance?: string | null
+          name: string
+          sort_order?: number | null
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          irs_guidance?: string | null
+          name?: string
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
       email_campaigns: {
         Row: {
           clicked_count: number | null
@@ -1636,6 +1660,59 @@ export type Database = {
         }
         Relationships: []
       }
+      per_diem_log: {
+        Row: {
+          city: string | null
+          created_at: string | null
+          date: string
+          id: string
+          notes: string | null
+          rate: number
+          received: boolean | null
+          received_amount: number | null
+          state: string | null
+          tax_year: number
+          tour_id: string
+          user_id: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string | null
+          date: string
+          id?: string
+          notes?: string | null
+          rate?: number
+          received?: boolean | null
+          received_amount?: number | null
+          state?: string | null
+          tax_year: number
+          tour_id: string
+          user_id: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          notes?: string | null
+          rate?: number
+          received?: boolean | null
+          received_amount?: number | null
+          state?: string | null
+          tax_year?: number
+          tour_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "per_diem_log_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       poll_options: {
         Row: {
           created_at: string | null
@@ -2097,6 +2174,72 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "shows_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      state_income: {
+        Row: {
+          city: string | null
+          country: string | null
+          created_at: string | null
+          gross_income: number
+          id: string
+          notes: string | null
+          performance_date: string
+          show_id: string | null
+          state: string
+          tax_year: number
+          tour_id: string
+          updated_at: string | null
+          user_id: string
+          venue_name: string | null
+        }
+        Insert: {
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          gross_income?: number
+          id?: string
+          notes?: string | null
+          performance_date: string
+          show_id?: string | null
+          state: string
+          tax_year: number
+          tour_id: string
+          updated_at?: string | null
+          user_id: string
+          venue_name?: string | null
+        }
+        Update: {
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          gross_income?: number
+          id?: string
+          notes?: string | null
+          performance_date?: string
+          show_id?: string | null
+          state?: string
+          tax_year?: number
+          tour_id?: string
+          updated_at?: string | null
+          user_id?: string
+          venue_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "state_income_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "state_income_tour_id_fkey"
             columns: ["tour_id"]
             isOneToOne: false
             referencedRelation: "tours"
