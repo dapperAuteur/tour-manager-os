@@ -704,6 +704,68 @@ export type Database = {
           },
         ]
       }
+      equipment: {
+        Row: {
+          category: string
+          condition: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          notes: string | null
+          org_id: string
+          owner: string | null
+          purchase_date: string | null
+          purchase_price: number | null
+          quantity: number | null
+          serial_number: string | null
+          travels_with_band: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          condition?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          org_id: string
+          owner?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quantity?: number | null
+          serial_number?: string | null
+          travels_with_band?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          condition?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          org_id?: string
+          owner?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quantity?: number | null
+          serial_number?: string | null
+          travels_with_band?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       expenses: {
         Row: {
           amount: number
@@ -1001,6 +1063,88 @@ export type Database = {
             columns: ["module_id"]
             isOneToOne: false
             referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      input_channels: {
+        Row: {
+          channel_number: number
+          di_box: boolean | null
+          id: string
+          input_list_id: string
+          instrument: string
+          microphone: string | null
+          notes: string | null
+          phantom_power: boolean | null
+          sort_order: number | null
+          stand_type: string | null
+        }
+        Insert: {
+          channel_number: number
+          di_box?: boolean | null
+          id?: string
+          input_list_id: string
+          instrument: string
+          microphone?: string | null
+          notes?: string | null
+          phantom_power?: boolean | null
+          sort_order?: number | null
+          stand_type?: string | null
+        }
+        Update: {
+          channel_number?: number
+          di_box?: boolean | null
+          id?: string
+          input_list_id?: string
+          instrument?: string
+          microphone?: string | null
+          notes?: string | null
+          phantom_power?: boolean | null
+          sort_order?: number | null
+          stand_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "input_channels_input_list_id_fkey"
+            columns: ["input_list_id"]
+            isOneToOne: false
+            referencedRelation: "input_lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      input_lists: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_default: boolean | null
+          name: string
+          org_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_default?: boolean | null
+          name: string
+          org_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_default?: boolean | null
+          name?: string
+          org_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "input_lists_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -2181,6 +2325,66 @@ export type Database = {
           },
         ]
       }
+      stage_plots: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          elements: Json | null
+          id: string
+          is_default: boolean | null
+          name: string
+          org_id: string
+          show_id: string | null
+          stage_depth: number | null
+          stage_width: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          elements?: Json | null
+          id?: string
+          is_default?: boolean | null
+          name: string
+          org_id: string
+          show_id?: string | null
+          stage_depth?: number | null
+          stage_width?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          elements?: Json | null
+          id?: string
+          is_default?: boolean | null
+          name?: string
+          org_id?: string
+          show_id?: string | null
+          stage_depth?: number | null
+          stage_width?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stage_plots_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stage_plots_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       state_income: {
         Row: {
           city: string | null
@@ -2444,6 +2648,53 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      venue_notes: {
+        Row: {
+          category: string | null
+          city: string | null
+          content: string
+          created_at: string | null
+          created_by: string | null
+          id: string
+          org_id: string
+          state: string | null
+          updated_at: string | null
+          venue_name: string
+        }
+        Insert: {
+          category?: string | null
+          city?: string | null
+          content: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          org_id: string
+          state?: string | null
+          updated_at?: string | null
+          venue_name: string
+        }
+        Update: {
+          category?: string | null
+          city?: string | null
+          content?: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          org_id?: string
+          state?: string | null
+          updated_at?: string | null
+          venue_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venue_notes_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

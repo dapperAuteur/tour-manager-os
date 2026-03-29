@@ -182,9 +182,21 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 15+: And More',
+    name: 'Phase 15: Production Bible',
+    status: 'complete',
+    description: 'Equipment inventory, stage plots, input lists, and venue notes.',
+    items: [
+      { label: 'Equipment inventory (14 categories)', done: true },
+      { label: 'Stage plots', done: true },
+      { label: 'Input lists / patch sheets', done: true },
+      { label: 'Searchable venue notes', done: true },
+      { label: 'Drag-and-drop stage plot editor', done: false },
+    ],
+  },
+  {
+    name: 'Phase 16+: And More',
     status: 'future',
-    description: 'Production bible, subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
+    description: 'Subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
     items: [],
   },
 ]

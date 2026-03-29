@@ -188,14 +188,17 @@ Last updated: 2026-03-30
 - 📋 QuickBooks/Xero integration
 - 📋 Auto-populate state income from show revenue
 
-## Phase 15: Production Bible 💡
-> Stage plots, equipment inventory, crew call sheets.
+## Phase 15: Production Bible ✅
+> Equipment inventory, stage plots, input lists, and venue notes.
 
-- 💡 Drag-and-drop stage plot builder
-- 💡 Equipment inventory tracking
-- 💡 Auto-generated crew call sheets
-- 💡 Rider compliance checklists
-- 💡 Historical production notes per venue
+- ✅ Equipment inventory (14 categories, condition tracking, travels/stays flag, serial numbers)
+- ✅ Stage plots (name, dimensions, default flag, show association)
+- ✅ Input lists / patch sheets (channel-by-channel with instrument, mic, DI, phantom power)
+- ✅ Venue notes (searchable by venue name, categorized: load-in, parking, stage, sound, etc.)
+- ✅ Production hub index with 4 section cards
+- 📋 Drag-and-drop stage plot builder (visual editor)
+- 📋 Auto-generated crew call sheets
+- 📋 Rider compliance checklists
 
 ## Phase 16: Subscriptions & Billing 💡
 > Stripe-powered lifetime + annual subscriptions.
