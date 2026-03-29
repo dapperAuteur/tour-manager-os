@@ -32,6 +32,15 @@ The signup form shows a real-time checklist as the user types. The submit button
 - Configured in Supabase Dashboard (Authentication → Providers → Email)
 - Code expires in 10 minutes
 
+### Paid vs Free Access
+
+- **All modules are paid** — there are no free-tier modules
+- Non-paying users get **read-only access** across the entire app (can view but not create/edit/delete)
+- The `is_paid` field on `org_members` controls write access
+- Server actions must check `is_paid` before allowing create/update/delete operations
+- Venue contacts and business partners get **data-entry only** access (advance sheet forms, no app access)
+- Super admin (`bam@awews.com`) has full access to everything
+
 ### Data Protection
 
 - Never store passwords — Supabase Auth handles this
