@@ -665,6 +665,120 @@ export type Database = {
           },
         ]
       }
+      feedback_messages: {
+        Row: {
+          attachments: Json | null
+          content: string
+          created_at: string | null
+          id: string
+          sender_id: string | null
+          sender_role: string
+          thread_id: string
+        }
+        Insert: {
+          attachments?: Json | null
+          content: string
+          created_at?: string | null
+          id?: string
+          sender_id?: string | null
+          sender_role?: string
+          thread_id: string
+        }
+        Update: {
+          attachments?: Json | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          sender_id?: string | null
+          sender_role?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "feedback_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feedback_notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          read: boolean | null
+          recipient_id: string
+          thread_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          read?: boolean | null
+          recipient_id: string
+          thread_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          read?: boolean | null
+          recipient_id?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_notifications_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "feedback_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feedback_threads: {
+        Row: {
+          category: string
+          created_at: string | null
+          id: string
+          org_id: string | null
+          priority: string
+          status: string
+          subject: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          id?: string
+          org_id?: string | null
+          priority?: string
+          status?: string
+          subject: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          org_id?: string | null
+          priority?: string
+          status?: string
+          subject?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_threads_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flights: {
         Row: {
           airline: string | null
@@ -732,6 +846,56 @@ export type Database = {
             columns: ["itinerary_day_id"]
             isOneToOne: false
             referencedRelation: "itinerary_days"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      help_articles: {
+        Row: {
+          category: string
+          content: string
+          created_at: string | null
+          id: string
+          module_id: string | null
+          published: boolean | null
+          slug: string
+          sort_order: number | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          content: string
+          created_at?: string | null
+          id?: string
+          module_id?: string | null
+          published?: boolean | null
+          slug: string
+          sort_order?: number | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          module_id?: string | null
+          published?: boolean | null
+          slug?: string
+          sort_order?: number | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "help_articles_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
             referencedColumns: ["id"]
           },
         ]
