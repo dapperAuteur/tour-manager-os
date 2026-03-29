@@ -1,13 +1,19 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-export async function getUserFeedbackThreads() {
+export async function getUserFeedbackThreads(search?: string) {
   const supabase = await createClient()
-  const { data, error } = await supabase
+
+  let query = supabase
     .from('feedback_threads')
     .select('*, feedback_messages(count)')
     .order('updated_at', { ascending: false })
 
+  if (search && search.trim()) {
+    query = query.or(`subject.ilike.%${search}%,category.ilike.%${search}%`)
+  }
+
+  const { data, error } = await query
   if (error) throw error
   return data || []
 }
@@ -32,8 +38,24 @@ export async function getThreadWithMessages(threadId: string) {
 }
 
 // Admin queries — bypass RLS
-export async function getAllFeedbackThreads() {
+export async function getAllFeedbackThreads(search?: string) {
   const supabase = createAdminClient()
+
+  if (search && search.trim()) {
+    // Fuzzy search via RPC
+    const { data: fuzzy } = await supabase.rpc('search_feedback_threads', { query: search.trim() })
+    if (fuzzy && fuzzy.length > 0) {
+      // Enrich with user profiles and message counts
+      const ids = fuzzy.map((f: { id: string }) => f.id)
+      const { data } = await supabase
+        .from('feedback_threads')
+        .select('*, user_profiles:user_id(display_name), feedback_messages(count)')
+        .in('id', ids)
+        .order('updated_at', { ascending: false })
+      return data || []
+    }
+  }
+
   const { data, error } = await supabase
     .from('feedback_threads')
     .select('*, user_profiles:user_id(display_name), feedback_messages(count)')
