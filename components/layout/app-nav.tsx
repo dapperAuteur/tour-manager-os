@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database } from 'lucide-react'
+import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database, Code2, Key } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
@@ -19,6 +19,7 @@ const navItems = [
   { href: '/academy', label: 'Academy', icon: GraduationCap },
   { href: '/help', label: 'Help', icon: HelpCircle },
   { href: '/feedback', label: 'Feedback', icon: MessageSquare },
+  { href: '/developers', label: 'API Docs', icon: Code2 },
   { href: '/data', label: 'Import/Export', icon: Database },
   { href: '/pricing', label: 'Pricing', icon: CreditCard },
   { href: '/modules', label: 'Modules', icon: Blocks },
@@ -30,6 +31,7 @@ const adminItems = [
   { href: '/admin/users', label: 'Users', icon: Users },
   { href: '/admin/modules', label: 'Modules', icon: Shield },
   { href: '/admin/subscriptions', label: 'Subscriptions', icon: CreditCard },
+  { href: '/admin/api-keys', label: 'API Keys', icon: Key },
   { href: '/admin/feedback', label: 'Feedback', icon: MessageSquare },
   { href: '/admin/logs', label: 'Logs', icon: ScrollText },
 ]
