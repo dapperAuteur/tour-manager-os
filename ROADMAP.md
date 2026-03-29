@@ -160,14 +160,19 @@ Last updated: 2026-03-30
 - 📋 Module adoption rates
 - 📋 Charts and graphs (Recharts)
 
-## Phase 13: Academy / LMS 📋
+## Phase 13: Academy / LMS ✅
 > Courses teaching users how to use the platform.
 
-- 📋 Course and lesson management
-- 📋 Rich text + video lessons
-- 📋 Quizzes and progress tracking
-- 📋 Certificates of completion
-- 📋 Admin education tool (codebase/architecture reference)
+- ✅ Course catalog with difficulty levels and estimated time
+- ✅ Lesson viewer with markdown rendering (headings, lists, bold)
+- ✅ Per-user lesson and course progress tracking
+- ✅ Quiz system with multiple choice, scoring, and explanations
+- ✅ Lesson navigation (prev/next within course)
+- ✅ 3 seeded courses (8 lessons, 2 quizzes)
+- 📋 Certificates of completion (PDF)
+- 📋 Admin course/lesson editor
+- 📋 Video lesson support
+- 📋 Admin education tool (codebase reference)
 
 ## Phase 14: Musician Tax Platform 💡
 > State-by-state tax tracking, deductions, year-end packages.
@@ -187,14 +192,27 @@ Last updated: 2026-03-30
 - 💡 Historical production notes per venue
 
 ## Phase 16: Subscriptions & Billing 💡
-> Stripe-powered annual subscriptions (Free/Pro/Enterprise).
+> Stripe-powered lifetime + annual subscriptions.
 
-- 💡 Subscription tier management
-- 💡 Stripe recurring billing
-- 💡 Usage limits per tier
+- 💡 Lifetime membership ($103.29 — first 100 sales)
+- 💡 Annual subscription ($103.29/yr — after 100 lifetime sold)
+- 💡 Stripe checkout + recurring billing
+- 💡 Paid vs free user enforcement
+- 💡 Admin promo code creation
+- 💡 Lifetime sales counter on admin dashboard
 - 💡 Upgrade/downgrade flows
 
-## Phase 17: Public API 💡
+## Phase 17: Email Integration 💡
+> Send/receive emails from within the app using user's own business email.
+
+- 💡 OAuth-connected email (Gmail/Outlook API)
+- 💡 Send emails from the app using user's business address
+- 💡 Emails recorded in app AND appear in user's regular inbox
+- 💡 Email open tracking via Resend tracking pixel
+- 💡 Click tracking on campaign links
+- 💡 Open/click stats on email campaign dashboard
+
+## Phase 18: Public API 💡
 > RESTful API for third-party integrations.
 
 - 💡 API key authentication
@@ -202,28 +220,28 @@ Last updated: 2026-03-30
 - 💡 OpenAPI/Swagger docs
 - 💡 Webhook support
 
-## Phase 18: White Label 💡
+## Phase 19: White Label 💡
 > Branded versions for other bands/organizations.
 
 - 💡 Custom logo, colors, fonts, domain
 - 💡 Multi-tenant architecture
 - 💡 Master admin dashboard
 
-## Phase 19: Venue Network 💡
+## Phase 20: Venue Network 💡
 > Crowd-sourced venue database, smart advance pre-fill.
 
 - 💡 Venue profiles with ratings and photos
 - 💡 Smart advance (pre-fill from past data)
 - 💡 Venue search and discovery
 
-## Phase 20: Multi-Act Touring 💡
+## Phase 21: Multi-Act Touring 💡
 > Festival mode, cross-act coordination.
 
 - 💡 Multi-act schedule coordination
 - 💡 Shared production timelines
 - 💡 Festival mode (multiple stages/days)
 
-## Phase 21: Wellness Platform 💡
+## Phase 22: Wellness Platform 💡
 > Health and wellbeing tools for life on the road.
 
 - 💡 Sleep tracking relative to timezone changes
@@ -235,4 +253,4 @@ Last updated: 2026-03-30
 
 ## How to Request Features
 
-Use the in-app feedback tool (coming in Phase 11) or open an issue on GitHub.
+Use the in-app feedback tool or open an issue on GitHub.

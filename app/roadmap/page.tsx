@@ -158,9 +158,21 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 13+: And More',
+    name: 'Phase 13: Academy / LMS',
+    status: 'complete',
+    description: 'Courses, lessons, quizzes, and progress tracking.',
+    items: [
+      { label: 'Course catalog', done: true },
+      { label: 'Lesson viewer with progress', done: true },
+      { label: 'Quiz system with scoring', done: true },
+      { label: '3 courses seeded (8 lessons)', done: true },
+      { label: 'Certificates (PDF)', done: false },
+    ],
+  },
+  {
+    name: 'Phase 14+: And More',
     status: 'future',
-    description: 'Academy/LMS, tax platform, production bible, subscriptions, public API, white label, venue network, multi-act touring, and wellness tools.',
+    description: 'Tax platform, production bible, subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
     items: [],
   },
 ]
