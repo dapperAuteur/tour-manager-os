@@ -30,6 +30,7 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 - Small incremental commits - atomic changes so user can confirm no bugs introduced
 - Clear commit messages with each step
 - Pause for user review after each step before proceeding
+- **NEVER merge feature branches into main** - user handles all merges themselves
 
 ### Module System
 - Every major feature is a toggleable module (admin enables for org, members opt-in)
@@ -50,7 +51,8 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 - Academy/LMS: courses and lessons with progress tracking
 
 ### What to Avoid
-- (We'll add to this as we go)
+- Never merge feature branches into main — user handles all merges
+- `plans/ideas-to-discuss-later.md` is a scratchpad — do NOT add items from it to the plan or implement them unless the user explicitly asks
 
 ### What Works Well
 - (We'll add to this as we go)

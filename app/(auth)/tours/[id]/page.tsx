@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Plus, Send, MapPin, Calendar, Clock, ExternalLink } from 'lucide-react'
+import { Plus, Send, MapPin, Calendar, Clock, ExternalLink, FileText } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getTour } from '@/lib/tours/queries'
 import { Header } from '@/components/layout/header'
@@ -61,6 +61,17 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
               </div>
             )}
           </div>
+        </div>
+
+        {/* Actions */}
+        <div className="mb-8 flex gap-3">
+          <Link
+            href={`/tours/${id}/itinerary`}
+            className="inline-flex items-center gap-2 rounded-lg border border-border-default px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            <FileText className="h-4 w-4" aria-hidden="true" />
+            View Itinerary
+          </Link>
         </div>
 
         {/* Shows */}
