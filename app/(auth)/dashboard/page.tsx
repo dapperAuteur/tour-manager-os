@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { Plus, MapPin, Calendar, Users } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
 import { getTours } from '@/lib/tours/queries'
-import { Header } from '@/components/layout/header'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -18,18 +15,10 @@ const statusColors: Record<string, string> = {
 }
 
 export default async function DashboardPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
-
   const tours = await getTours()
 
   return (
     <>
-      <Header />
       <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Your Tours</h1>
