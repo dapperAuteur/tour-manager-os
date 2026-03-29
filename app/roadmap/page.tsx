@@ -232,9 +232,20 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 19+: And More',
+    name: 'Phase 19: White Label',
+    status: 'complete',
+    description: 'Custom branding, colors, fonts, domains for enterprise clients.',
+    items: [
+      { label: 'Branding settings (logo, color, font, CSS)', done: true },
+      { label: 'Custom domain management', done: true },
+      { label: 'DNS verification flow', done: true },
+      { label: 'Dynamic theme injection', done: false },
+    ],
+  },
+  {
+    name: 'Phase 20+: And More',
     status: 'future',
-    description: 'White label, venue network, multi-act touring, and wellness tools.',
+    description: 'Venue network, multi-act touring, and wellness platform with CentenarianOS integration.',
     items: [],
   },
 ]
