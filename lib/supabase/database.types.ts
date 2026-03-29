@@ -478,6 +478,250 @@ export type Database = {
           },
         ]
       }
+      member_module_access: {
+        Row: {
+          granted_at: string | null
+          granted_by: string | null
+          id: string
+          member_id: string
+          module_id: string
+          org_id: string
+          requested_at: string | null
+          status: string
+        }
+        Insert: {
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          member_id: string
+          module_id: string
+          org_id: string
+          requested_at?: string | null
+          status?: string
+        }
+        Update: {
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          member_id?: string
+          module_id?: string
+          org_id?: string
+          requested_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_module_access_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "member_module_access_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      module_tutorials: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          media_type: string | null
+          media_url: string | null
+          module_id: string
+          step_number: number
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          module_id: string
+          step_number: number
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          module_id?: string
+          step_number?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "module_tutorials_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modules: {
+        Row: {
+          created_at: string | null
+          description: string
+          icon: string
+          id: string
+          name: string
+          sort_order: number | null
+          tier: string
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          icon: string
+          id: string
+          name: string
+          sort_order?: number | null
+          tier?: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          icon?: string
+          id?: string
+          name?: string
+          sort_order?: number | null
+          tier?: string
+        }
+        Relationships: []
+      }
+      org_members: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_paid: boolean | null
+          org_id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_paid?: boolean | null
+          org_id: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_paid?: boolean | null
+          org_id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_members_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      org_modules: {
+        Row: {
+          enabled: boolean | null
+          enabled_at: string | null
+          enabled_by: string | null
+          id: string
+          module_id: string
+          org_id: string
+        }
+        Insert: {
+          enabled?: boolean | null
+          enabled_at?: string | null
+          enabled_by?: string | null
+          id?: string
+          module_id: string
+          org_id: string
+        }
+        Update: {
+          enabled?: boolean | null
+          enabled_at?: string | null
+          enabled_by?: string | null
+          id?: string
+          module_id?: string
+          org_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_modules_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "org_modules_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          brand_colors: Json | null
+          created_at: string | null
+          created_by: string | null
+          custom_domain: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          slug: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          subscription_status: string | null
+          subscription_tier: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          brand_colors?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          custom_domain?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          slug: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          brand_colors?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          custom_domain?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          slug?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
+          subscription_tier?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       schedule_items: {
         Row: {
           category: string | null
@@ -658,12 +902,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          display_name: string | null
+          email_notifications: boolean | null
+          home_page: string | null
+          id: string
+          phone: string | null
+          push_notifications: boolean | null
+          theme: string | null
+          timezone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          email_notifications?: boolean | null
+          home_page?: string | null
+          id: string
+          phone?: string | null
+          push_notifications?: boolean | null
+          theme?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          email_notifications?: boolean | null
+          home_page?: string | null
+          id?: string
+          phone?: string | null
+          push_notifications?: boolean | null
+          theme?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_tour_ids: { Args: never; Returns: string[] }
     }
     Enums: {
       [_ in never]: never
