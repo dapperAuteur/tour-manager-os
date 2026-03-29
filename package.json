@@ -1,0 +1,35 @@
+{
+  "name": "tour-manager-os",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "db:types": "npx supabase gen types typescript --local > lib/supabase/database.types.ts",
+    "db:push": "npx supabase db push",
+    "db:seed": "npx supabase db seed",
+    "db:reset": "npx supabase db reset"
+  },
+  "dependencies": {
+    "next": "^15.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "@supabase/supabase-js": "^2.49.4",
+    "@supabase/ssr": "^0.6.1",
+    "lucide-react": "^0.477.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "typescript": "^5.8.3",
+    "@tailwindcss/postcss": "^4.1.4",
+    "tailwindcss": "^4.1.4",
+    "eslint": "^9.24.0",
+    "eslint-config-next": "^15.3.1",
+    "@eslint/eslintrc": "^3.3.1"
+  }
+}

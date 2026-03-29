@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  /* Primary brand colors */
+  --color-primary-50: #f0f5ff;
+  --color-primary-100: #e0eaff;
+  --color-primary-200: #c7d7fe;
+  --color-primary-300: #a4bbfd;
+  --color-primary-400: #7c97fa;
+  --color-primary-500: #5b72f5;
+  --color-primary-600: #4553ea;
+  --color-primary-700: #3740d4;
+  --color-primary-800: #2f35ab;
+  --color-primary-900: #2b3287;
+  --color-primary-950: #1b1e50;
+
+  /* Surface colors */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f9fafb;
+  --color-surface-raised: #ffffff;
+
+  /* Text colors */
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+
+  /* Border */
+  --color-border-default: #e5e7eb;
+  --color-border-strong: #d1d5db;
+
+  /* Status colors */
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+
+  /* Font */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/*
+ * Dark mode overrides.
+ * Uses the .dark class on <html> for manual toggle,
+ * with prefers-color-scheme as fallback.
+ */
+.dark {
+  --color-surface: #0f172a;
+  --color-surface-alt: #1e293b;
+  --color-surface-raised: #1e293b;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  --color-border-default: #334155;
+  --color-border-strong: #475569;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+/* Focus ring utility for accessibility */
+@utility focus-ring {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Skip to main content link for keyboard users */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-to-main:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-primary-600);
+  color: #ffffff;
+  z-index: 9999;
+  font-weight: 600;
+}
