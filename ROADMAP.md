@@ -107,12 +107,18 @@ Last updated: 2026-03-30
 - 📋 Online merch store (Stripe payments)
 - 📋 Tour-exclusive merch drops
 
-## Phase 9: Fan Marketing & Community 📋
-> Email marketing, exclusive content, community forums.
+## Phase 9: Fan Marketing & Community ✅
+> Email marketing and community discussion boards.
 
-- 📋 Fan email list management with segments
-- 📋 Email campaign builder and scheduling
-- 📋 Community discussion boards
+- ✅ Email list management (create lists, add subscribers manually)
+- ✅ Email campaign builder (subject, content, list targeting, scheduling)
+- ✅ Marketing dashboard (subscribers, lists, campaigns, sent count)
+- ✅ Community categories (admin creates, members browse)
+- ✅ Discussion posts with threaded replies
+- ✅ Pin/lock posts (admin moderation)
+- ✅ Author display names on posts and replies
+- 📋 Email sending integration (Resend)
+- 📋 CSV subscriber import
 - 📋 Public event pages per show
 - 📋 Pre/post-show exclusive content
 
