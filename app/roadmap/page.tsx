@@ -207,9 +207,22 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 17+: And More',
+    name: 'Phase 17: Email Integration',
+    status: 'complete',
+    description: 'Send marketing emails with open/click tracking via Resend.',
+    items: [
+      { label: 'Resend email delivery', done: true },
+      { label: 'Open tracking (pixel)', done: true },
+      { label: 'Click tracking', done: true },
+      { label: 'Campaign analytics', done: true },
+      { label: 'Webhook handler (bounces/complaints)', done: true },
+      { label: 'OAuth email (Gmail/Outlook)', done: false },
+    ],
+  },
+  {
+    name: 'Phase 18+: And More',
     status: 'future',
-    description: 'Subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
+    description: 'Public API, white label, venue network, multi-act touring, and wellness tools.',
     items: [],
   },
 ]

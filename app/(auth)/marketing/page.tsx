@@ -112,7 +112,7 @@ export default async function MarketingPage() {
         ) : (
           <div className="space-y-3">
             {data.campaigns.map((campaign) => (
-              <div key={campaign.id} className="flex items-center justify-between rounded-xl border border-border-default bg-surface-raised p-4">
+              <Link key={campaign.id} href={`/marketing/campaigns/${campaign.id}`} className="flex items-center justify-between rounded-xl border border-border-default bg-surface-raised p-4 transition-all hover:border-primary-500/50 hover:shadow-sm">
                 <div>
                   <h3 className="font-medium">{campaign.subject}</h3>
                   <div className="mt-1 flex items-center gap-3 text-xs text-text-muted">
@@ -133,7 +133,7 @@ export default async function MarketingPage() {
                     {campaign.status}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
