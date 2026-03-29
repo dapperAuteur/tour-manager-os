@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/lib/theme/theme-provider'
 import { ThemeScript } from '@/lib/theme/theme-script'
 import { SkipToMain } from '@/components/ui/skip-to-main'
@@ -36,6 +37,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SkipToMain />
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
