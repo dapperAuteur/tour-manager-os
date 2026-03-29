@@ -636,6 +636,171 @@ export type Database = {
           },
         ]
       }
+      merch_inventory: {
+        Row: {
+          created_at: string | null
+          id: string
+          notes: string | null
+          product_id: string
+          quantity_remaining: number
+          quantity_start: number
+          tour_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          product_id: string
+          quantity_remaining?: number
+          quantity_start?: number
+          tour_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          product_id?: string
+          quantity_remaining?: number
+          quantity_start?: number
+          tour_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merch_inventory_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "merch_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "merch_inventory_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      merch_products: {
+        Row: {
+          active: boolean | null
+          category: string | null
+          cost_basis: number | null
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          org_id: string
+          price: number
+          sku: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          category?: string | null
+          cost_basis?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          org_id: string
+          price: number
+          sku?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          category?: string | null
+          cost_basis?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          org_id?: string
+          price?: number
+          sku?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merch_products_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      merch_sales: {
+        Row: {
+          created_at: string | null
+          id: string
+          notes: string | null
+          product_id: string
+          quantity: number
+          show_id: string | null
+          sold_at: string | null
+          sold_by: string | null
+          total: number | null
+          tour_id: string
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          product_id: string
+          quantity: number
+          show_id?: string | null
+          sold_at?: string | null
+          sold_by?: string | null
+          total?: number | null
+          tour_id: string
+          unit_price: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          product_id?: string
+          quantity?: number
+          show_id?: string | null
+          sold_at?: string | null
+          sold_by?: string | null
+          total?: number | null
+          tour_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merch_sales_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "merch_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "merch_sales_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "merch_sales_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       module_tutorials: {
         Row: {
           content: string
@@ -1081,7 +1246,7 @@ export type Database = {
         Row: {
           artist_name: string
           created_at: string | null
-          created_by: string
+          created_by: string | null
           description: string | null
           end_date: string | null
           id: string
@@ -1093,7 +1258,7 @@ export type Database = {
         Insert: {
           artist_name: string
           created_at?: string | null
-          created_by: string
+          created_by?: string | null
           description?: string | null
           end_date?: string | null
           id?: string
@@ -1105,7 +1270,7 @@ export type Database = {
         Update: {
           artist_name?: string
           created_at?: string | null
-          created_by?: string
+          created_by?: string | null
           description?: string | null
           end_date?: string | null
           id?: string
