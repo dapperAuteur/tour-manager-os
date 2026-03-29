@@ -1,0 +1,798 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.4"
+  }
+  public: {
+    Tables: {
+      advance_contacts: {
+        Row: {
+          address: string | null
+          advance_sheet_id: string
+          company_name: string | null
+          contact_name: string | null
+          created_at: string | null
+          email: string | null
+          fax: string | null
+          id: string
+          mobile: string | null
+          notes: string | null
+          phone: string | null
+          role: string
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          advance_sheet_id: string
+          company_name?: string | null
+          contact_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          fax?: string | null
+          id?: string
+          mobile?: string | null
+          notes?: string | null
+          phone?: string | null
+          role: string
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          advance_sheet_id?: string
+          company_name?: string | null
+          contact_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          fax?: string | null
+          id?: string
+          mobile?: string | null
+          notes?: string | null
+          phone?: string | null
+          role?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advance_contacts_advance_sheet_id_fkey"
+            columns: ["advance_sheet_id"]
+            isOneToOne: false
+            referencedRelation: "advance_sheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      advance_other_artists: {
+        Row: {
+          advance_sheet_id: string
+          artist_name: string
+          created_at: string | null
+          id: string
+          set_length_minutes: number | null
+          slot: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          advance_sheet_id: string
+          artist_name: string
+          created_at?: string | null
+          id?: string
+          set_length_minutes?: number | null
+          slot?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          advance_sheet_id?: string
+          artist_name?: string
+          created_at?: string | null
+          id?: string
+          set_length_minutes?: number | null
+          slot?: string | null
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advance_other_artists_advance_sheet_id_fkey"
+            columns: ["advance_sheet_id"]
+            isOneToOne: false
+            referencedRelation: "advance_sheets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      advance_sheets: {
+        Row: {
+          caterer_name: string | null
+          caterer_phone: string | null
+          created_at: string | null
+          curfew_time: string | null
+          delay_unit_type: string | null
+          doors_time: string | null
+          dressing_room_count: number | null
+          dressing_room_location: string | null
+          dressing_room_lockable: boolean | null
+          dressing_room_shower: boolean | null
+          dressing_room_toilet: boolean | null
+          dressing_room_washbasin: boolean | null
+          has_backstage_parking: boolean | null
+          has_rear_door: boolean | null
+          has_smoke_machines: boolean | null
+          has_stage_door: boolean | null
+          hospitality_provider_name: string | null
+          hospitality_provider_phone: string | null
+          id: string
+          meal_times: string | null
+          merch_area_description: string | null
+          merch_split: string | null
+          metadata: Json | null
+          number_of_performances: number | null
+          pa_system: string | null
+          per_diem_amount: number | null
+          per_diem_contact_name: string | null
+          performance_length_minutes: number | null
+          radio_mic_type: string | null
+          reverb_unit_type: string | null
+          security_guard_name: string | null
+          security_guard_phone: string | null
+          show_format: string | null
+          show_id: string
+          smoke_machine_notes: string | null
+          smoking_allowed: boolean | null
+          sound_company_email: string | null
+          sound_company_name: string | null
+          sound_company_phone: string | null
+          soundcheck_time: string | null
+          stage_depth: number | null
+          stage_height: number | null
+          stage_time: string | null
+          stage_width: number | null
+          status: string
+          submitted_at: string | null
+          ticket_price: number | null
+          token: string
+          total_gross: number | null
+          updated_at: string | null
+          venue_address: string | null
+          venue_backstage_phone: string | null
+          venue_capacity: number | null
+          venue_fax: string | null
+          venue_phone: string | null
+          venue_type: string | null
+        }
+        Insert: {
+          caterer_name?: string | null
+          caterer_phone?: string | null
+          created_at?: string | null
+          curfew_time?: string | null
+          delay_unit_type?: string | null
+          doors_time?: string | null
+          dressing_room_count?: number | null
+          dressing_room_location?: string | null
+          dressing_room_lockable?: boolean | null
+          dressing_room_shower?: boolean | null
+          dressing_room_toilet?: boolean | null
+          dressing_room_washbasin?: boolean | null
+          has_backstage_parking?: boolean | null
+          has_rear_door?: boolean | null
+          has_smoke_machines?: boolean | null
+          has_stage_door?: boolean | null
+          hospitality_provider_name?: string | null
+          hospitality_provider_phone?: string | null
+          id?: string
+          meal_times?: string | null
+          merch_area_description?: string | null
+          merch_split?: string | null
+          metadata?: Json | null
+          number_of_performances?: number | null
+          pa_system?: string | null
+          per_diem_amount?: number | null
+          per_diem_contact_name?: string | null
+          performance_length_minutes?: number | null
+          radio_mic_type?: string | null
+          reverb_unit_type?: string | null
+          security_guard_name?: string | null
+          security_guard_phone?: string | null
+          show_format?: string | null
+          show_id: string
+          smoke_machine_notes?: string | null
+          smoking_allowed?: boolean | null
+          sound_company_email?: string | null
+          sound_company_name?: string | null
+          sound_company_phone?: string | null
+          soundcheck_time?: string | null
+          stage_depth?: number | null
+          stage_height?: number | null
+          stage_time?: string | null
+          stage_width?: number | null
+          status?: string
+          submitted_at?: string | null
+          ticket_price?: number | null
+          token?: string
+          total_gross?: number | null
+          updated_at?: string | null
+          venue_address?: string | null
+          venue_backstage_phone?: string | null
+          venue_capacity?: number | null
+          venue_fax?: string | null
+          venue_phone?: string | null
+          venue_type?: string | null
+        }
+        Update: {
+          caterer_name?: string | null
+          caterer_phone?: string | null
+          created_at?: string | null
+          curfew_time?: string | null
+          delay_unit_type?: string | null
+          doors_time?: string | null
+          dressing_room_count?: number | null
+          dressing_room_location?: string | null
+          dressing_room_lockable?: boolean | null
+          dressing_room_shower?: boolean | null
+          dressing_room_toilet?: boolean | null
+          dressing_room_washbasin?: boolean | null
+          has_backstage_parking?: boolean | null
+          has_rear_door?: boolean | null
+          has_smoke_machines?: boolean | null
+          has_stage_door?: boolean | null
+          hospitality_provider_name?: string | null
+          hospitality_provider_phone?: string | null
+          id?: string
+          meal_times?: string | null
+          merch_area_description?: string | null
+          merch_split?: string | null
+          metadata?: Json | null
+          number_of_performances?: number | null
+          pa_system?: string | null
+          per_diem_amount?: number | null
+          per_diem_contact_name?: string | null
+          performance_length_minutes?: number | null
+          radio_mic_type?: string | null
+          reverb_unit_type?: string | null
+          security_guard_name?: string | null
+          security_guard_phone?: string | null
+          show_format?: string | null
+          show_id?: string
+          smoke_machine_notes?: string | null
+          smoking_allowed?: boolean | null
+          sound_company_email?: string | null
+          sound_company_name?: string | null
+          sound_company_phone?: string | null
+          soundcheck_time?: string | null
+          stage_depth?: number | null
+          stage_height?: number | null
+          stage_time?: string | null
+          stage_width?: number | null
+          status?: string
+          submitted_at?: string | null
+          ticket_price?: number | null
+          token?: string
+          total_gross?: number | null
+          updated_at?: string | null
+          venue_address?: string | null
+          venue_backstage_phone?: string | null
+          venue_capacity?: number | null
+          venue_fax?: string | null
+          venue_phone?: string | null
+          venue_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "advance_sheets_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: true
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      flights: {
+        Row: {
+          airline: string | null
+          arrival_city: string | null
+          arrival_time: string | null
+          confirmation_number: string | null
+          connecting_airline: string | null
+          connecting_arrival_city: string | null
+          connecting_arrival_time: string | null
+          connecting_departure_time: string | null
+          connecting_flight_number: string | null
+          created_at: string | null
+          departure_city: string | null
+          departure_time: string | null
+          flight_number: string | null
+          id: string
+          itinerary_day_id: string
+          notes: string | null
+          reserved_by: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          airline?: string | null
+          arrival_city?: string | null
+          arrival_time?: string | null
+          confirmation_number?: string | null
+          connecting_airline?: string | null
+          connecting_arrival_city?: string | null
+          connecting_arrival_time?: string | null
+          connecting_departure_time?: string | null
+          connecting_flight_number?: string | null
+          created_at?: string | null
+          departure_city?: string | null
+          departure_time?: string | null
+          flight_number?: string | null
+          id?: string
+          itinerary_day_id: string
+          notes?: string | null
+          reserved_by?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          airline?: string | null
+          arrival_city?: string | null
+          arrival_time?: string | null
+          confirmation_number?: string | null
+          connecting_airline?: string | null
+          connecting_arrival_city?: string | null
+          connecting_arrival_time?: string | null
+          connecting_departure_time?: string | null
+          connecting_flight_number?: string | null
+          created_at?: string | null
+          departure_city?: string | null
+          departure_time?: string | null
+          flight_number?: string | null
+          id?: string
+          itinerary_day_id?: string
+          notes?: string | null
+          reserved_by?: string | null
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flights_itinerary_day_id_fkey"
+            columns: ["itinerary_day_id"]
+            isOneToOne: false
+            referencedRelation: "itinerary_days"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      itinerary_days: {
+        Row: {
+          bus_call_time: string | null
+          created_at: string | null
+          date: string
+          day_type: string
+          depart_time: string | null
+          distance_miles: number | null
+          drive_time_hours: number | null
+          driver_name: string | null
+          driver_phone: string | null
+          hotel_address: string | null
+          hotel_amenities: string | null
+          hotel_confirmation: string | null
+          hotel_distance_to_venue: string | null
+          hotel_doubles: number | null
+          hotel_fax: string | null
+          hotel_name: string | null
+          hotel_phone: string | null
+          hotel_room_count: number | null
+          hotel_singles: number | null
+          id: string
+          next_arrive_time: string | null
+          next_destination: string | null
+          next_distance_miles: number | null
+          notes: string | null
+          show_id: string | null
+          tour_id: string
+          updated_at: string | null
+          weather_description: string | null
+          weather_temp_high: number | null
+          weather_temp_low: number | null
+        }
+        Insert: {
+          bus_call_time?: string | null
+          created_at?: string | null
+          date: string
+          day_type?: string
+          depart_time?: string | null
+          distance_miles?: number | null
+          drive_time_hours?: number | null
+          driver_name?: string | null
+          driver_phone?: string | null
+          hotel_address?: string | null
+          hotel_amenities?: string | null
+          hotel_confirmation?: string | null
+          hotel_distance_to_venue?: string | null
+          hotel_doubles?: number | null
+          hotel_fax?: string | null
+          hotel_name?: string | null
+          hotel_phone?: string | null
+          hotel_room_count?: number | null
+          hotel_singles?: number | null
+          id?: string
+          next_arrive_time?: string | null
+          next_destination?: string | null
+          next_distance_miles?: number | null
+          notes?: string | null
+          show_id?: string | null
+          tour_id: string
+          updated_at?: string | null
+          weather_description?: string | null
+          weather_temp_high?: number | null
+          weather_temp_low?: number | null
+        }
+        Update: {
+          bus_call_time?: string | null
+          created_at?: string | null
+          date?: string
+          day_type?: string
+          depart_time?: string | null
+          distance_miles?: number | null
+          drive_time_hours?: number | null
+          driver_name?: string | null
+          driver_phone?: string | null
+          hotel_address?: string | null
+          hotel_amenities?: string | null
+          hotel_confirmation?: string | null
+          hotel_distance_to_venue?: string | null
+          hotel_doubles?: number | null
+          hotel_fax?: string | null
+          hotel_name?: string | null
+          hotel_phone?: string | null
+          hotel_room_count?: number | null
+          hotel_singles?: number | null
+          id?: string
+          next_arrive_time?: string | null
+          next_destination?: string | null
+          next_distance_miles?: number | null
+          notes?: string | null
+          show_id?: string | null
+          tour_id?: string
+          updated_at?: string | null
+          weather_description?: string | null
+          weather_temp_high?: number | null
+          weather_temp_low?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "itinerary_days_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "itinerary_days_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      schedule_items: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          id: string
+          itinerary_day_id: string
+          label: string
+          location: string | null
+          notes: string | null
+          sort_order: number | null
+          time: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          id?: string
+          itinerary_day_id: string
+          label: string
+          location?: string | null
+          notes?: string | null
+          sort_order?: number | null
+          time?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          id?: string
+          itinerary_day_id?: string
+          label?: string
+          location?: string | null
+          notes?: string | null
+          sort_order?: number | null
+          time?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedule_items_itinerary_day_id_fkey"
+            columns: ["itinerary_day_id"]
+            isOneToOne: false
+            referencedRelation: "itinerary_days"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shows: {
+        Row: {
+          city: string
+          country: string | null
+          created_at: string | null
+          date: string
+          id: string
+          notes: string | null
+          state: string | null
+          status: string
+          timezone: string | null
+          tour_id: string
+          updated_at: string | null
+          venue_name: string | null
+        }
+        Insert: {
+          city: string
+          country?: string | null
+          created_at?: string | null
+          date: string
+          id?: string
+          notes?: string | null
+          state?: string | null
+          status?: string
+          timezone?: string | null
+          tour_id: string
+          updated_at?: string | null
+          venue_name?: string | null
+        }
+        Update: {
+          city?: string
+          country?: string | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          notes?: string | null
+          state?: string | null
+          status?: string
+          timezone?: string | null
+          tour_id?: string
+          updated_at?: string | null
+          venue_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shows_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tour_members: {
+        Row: {
+          created_at: string | null
+          daily_rate: number | null
+          display_name: string
+          id: string
+          per_diem_rate: number | null
+          role: string
+          tour_id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          daily_rate?: number | null
+          display_name: string
+          id?: string
+          per_diem_rate?: number | null
+          role?: string
+          tour_id: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          daily_rate?: number | null
+          display_name?: string
+          id?: string
+          per_diem_rate?: number | null
+          role?: string
+          tour_id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tour_members_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tours: {
+        Row: {
+          artist_name: string
+          created_at: string | null
+          created_by: string
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          start_date: string | null
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          artist_name: string
+          created_at?: string | null
+          created_by: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          artist_name?: string
+          created_at?: string | null
+          created_by?: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const
