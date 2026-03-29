@@ -1,6 +1,5 @@
-import type { NextConfig } from 'next'
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -15,7 +14,6 @@ const nextConfig: NextConfig = {
   },
   env: {
     // Map Vercel Supabase integration vars to the NEXT_PUBLIC_ names our code expects.
-    // Explicit NEXT_PUBLIC_ values take precedence if set.
     NEXT_PUBLIC_SUPABASE_URL:
       process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '',
     NEXT_PUBLIC_SUPABASE_ANON_KEY:
