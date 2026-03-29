@@ -12,6 +12,8 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 ### Planning & Process
 - Plans go in `./plans/` directory as markdown files.
 - Review this document (CLAUDE.md) after every set of instructions before starting work.
+- **Check `ROADMAP.md` before coding** to understand current status and what phase we're in.
+- **Update `ROADMAP.md`** after completing any feature — mark items ✅ and update the "Last updated" date.
 - When the user says "discuss", present ideas with tradeoffs before building anything.
 
 ### Code & Architecture Patterns

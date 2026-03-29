@@ -147,6 +147,7 @@ npm run db:types     # Generate TypeScript types from Supabase schema
 
 ## Documentation
 
+- [Roadmap](ROADMAP.md) — Public roadmap with current status of all features
 - [Product Plan](plans/tour-manager-os-plan.md) — Full product vision, MVPs, and phased roadmap
 - [SWOT: Supabase vs MongoDB](plans/swot-supabase-vs-mongodb.md) — Database decision analysis
 - [Contributing](CONTRIBUTING.md) — How to contribute

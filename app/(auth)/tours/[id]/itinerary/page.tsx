@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { Calendar, MapPin, Clock, Phone, Hotel, Music, Utensils, Volume2 } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
 import { getItineraryForTour } from '@/lib/itinerary/queries'
-import { Header } from '@/components/layout/header'
 
 export const metadata: Metadata = {
   title: 'Tour Itinerary',
@@ -12,16 +9,10 @@ export const metadata: Metadata = {
 
 export default async function ItineraryPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: tourId } = await params
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login')
-
   const { shows, itineraryDays, tour } = await getItineraryForTour(tourId)
 
   return (
-    <>
-      <Header />
-      <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
         <Link href={`/tours/${tourId}`} className="mb-4 inline-block text-sm text-text-muted hover:text-text-secondary">
           &larr; Back to Tour
         </Link>
@@ -245,6 +236,5 @@ export default async function ItineraryPage({ params }: { params: Promise<{ id: 
           </div>
         )}
       </main>
-    </>
   )
 }

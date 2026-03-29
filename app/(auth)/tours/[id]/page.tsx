@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { Plus, Send, MapPin, Calendar, Clock, ExternalLink, FileText } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getTour } from '@/lib/tours/queries'
-import { Header } from '@/components/layout/header'
 
 export const metadata: Metadata = {
   title: 'Tour Details',
@@ -23,10 +21,6 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) {
-    redirect('/login')
-  }
-
   const tour = await getTour(id)
 
   const shows = (tour.shows || []).sort(
@@ -34,13 +28,11 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
   )
 
   const isManager = tour.tour_members?.some(
-    (m) => m.user_id === user.id && m.role === 'manager'
+    (m) => m.user_id === user?.id && m.role === 'manager'
   )
 
   return (
-    <>
-      <Header />
-      <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         {/* Tour header */}
         <div className="mb-8">
           <Link href="/dashboard" className="mb-2 inline-block text-sm text-text-muted hover:text-text-secondary">
@@ -183,6 +175,5 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
           </div>
         </div>
       </main>
-    </>
   )
 }

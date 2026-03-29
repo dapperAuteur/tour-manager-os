@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/header'
 
 export const metadata: Metadata = {
   title: 'Log In',
+  robots: { index: false, follow: false },
 }
 
 export default function LoginPage() {

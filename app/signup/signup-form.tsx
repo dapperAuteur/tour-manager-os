@@ -1,8 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { Check, X } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+
+const PASSWORD_MIN_LENGTH = 16
+const MAX_REPEATED_CHARS = 3
+
+function validatePassword(pw: string) {
+  const checks = [
+    { label: `At least ${PASSWORD_MIN_LENGTH} characters`, pass: pw.length >= PASSWORD_MIN_LENGTH },
+    { label: 'Uppercase letter (A-Z)', pass: /[A-Z]/.test(pw) },
+    { label: 'Lowercase letter (a-z)', pass: /[a-z]/.test(pw) },
+    { label: 'Number (0-9)', pass: /[0-9]/.test(pw) },
+    { label: 'Symbol (!@#$%...)', pass: /[^A-Za-z0-9]/.test(pw) },
+    {
+      label: `No more than ${MAX_REPEATED_CHARS} repeated characters in a row`,
+      pass: !new RegExp(`(.)\\1{${MAX_REPEATED_CHARS},}`).test(pw),
+    },
+  ]
+  return checks
+}
 
 export function SignupForm() {
   const [email, setEmail] = useState('')
@@ -12,9 +31,18 @@ export function SignupForm() {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const passwordChecks = useMemo(() => validatePassword(password), [password])
+  const passwordValid = password.length > 0 && passwordChecks.every((c) => c.pass)
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+
+    if (!passwordValid) {
+      setError('Password does not meet all requirements.')
+      return
+    }
+
     setLoading(true)
 
     const supabase = createClient()
@@ -98,17 +126,36 @@ export function SignupForm() {
           type="password"
           required
           aria-required="true"
-          minLength={8}
+          minLength={PASSWORD_MIN_LENGTH}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          aria-describedby="password-requirements"
           className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm transition-colors focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:bg-surface-alt"
-          placeholder="Minimum 8 characters"
+          placeholder="Min 16 chars, mixed case, numbers, symbols"
         />
+
+        {/* Password strength checklist */}
+        {password.length > 0 && (
+          <ul id="password-requirements" className="mt-2 space-y-1" aria-label="Password requirements">
+            {passwordChecks.map((check) => (
+              <li key={check.label} className="flex items-center gap-2 text-xs">
+                {check.pass ? (
+                  <Check className="h-3 w-3 text-success-600 dark:text-success-500" aria-hidden="true" />
+                ) : (
+                  <X className="h-3 w-3 text-error-500" aria-hidden="true" />
+                )}
+                <span className={check.pass ? 'text-success-600 dark:text-success-500' : 'text-text-muted'}>
+                  {check.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || !passwordValid}
         className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-surface"
       >
         {loading ? 'Creating account...' : 'Create account'}

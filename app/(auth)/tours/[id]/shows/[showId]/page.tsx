@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { MapPin, Phone, Mail, Clock, Users, Music, Utensils, Volume2, ExternalLink } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
 import { getShow } from '@/lib/tours/queries'
-import { Header } from '@/components/layout/header'
 
 export const metadata: Metadata = {
   title: 'Show Details',
@@ -37,10 +34,6 @@ function Card({ title, icon: Icon, children }: { title: string; icon: React.Comp
 
 export default async function ShowDetailPage({ params }: { params: Promise<{ id: string; showId: string }> }) {
   const { id: tourId, showId } = await params
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login')
-
   const show = await getShow(showId)
   const advance = show.advance_sheets?.[0]
   const contacts = advance?.advance_contacts || []
@@ -48,9 +41,7 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
   const advanceLink = advance?.token ? `/advance/${advance.token}` : null
 
   return (
-    <>
-      <Header />
-      <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+    <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <Link href={`/tours/${tourId}`} className="mb-4 inline-block text-sm text-text-muted hover:text-text-secondary">
           &larr; Back to Tour
         </Link>
@@ -202,6 +193,5 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
           </div>
         )}
       </main>
-    </>
   )
 }
