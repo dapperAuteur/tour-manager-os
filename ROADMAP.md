@@ -86,13 +86,15 @@ Last updated: 2026-03-30
 - ✅ Midnight data reset via Vercel cron job
 - ✅ Full CRUD for demo users (data resets nightly)
 
-## Phase 7: Landing Pages 📋
+## Phase 7: Landing Pages ✅
 > Dedicated pages per user type and per module with demo login buttons.
 
-- 📋 Main landing page (hero, features, pricing, FAQ)
-- 📋 Per user type (/for/tour-managers, /for/musicians, /for/crew, /for/venues, /for/fans)
-- 📋 Per module feature pages (/features/[slug]) with screenshots and benefits
-- 📋 "Try as demo" button on each page
+- ✅ Main landing page — feature cards link to detail pages, user-type section, footer nav
+- ✅ Per user type: /for/tour-managers, /for/musicians, /for/crew, /for/venues, /for/fans
+- ✅ Per module: /features/[slug] for all 11 modules with benefits, user types, demo CTA
+- ✅ Public roadmap page (/roadmap) with phase status and item checklists
+- ✅ Sitemap updated with all public pages
+- ✅ OG metadata on all landing pages
 
 ## Phase 8: Merch Empire 📋
 > Inventory tracking, per-show sales, online merch store.
