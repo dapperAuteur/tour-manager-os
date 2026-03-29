@@ -7,11 +7,30 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Tour Manager OS',
+    default: 'Tour Manager OS — Tour Management Built for Musicians',
     template: '%s | Tour Manager OS',
   },
   description:
-    'Comprehensive tour management platform for touring musicians. Digital advance sheets, itineraries, finances, merch, and more.',
+    'Replace spreadsheets and fragmented tools with one platform. Digital advance sheets, auto-generated itineraries, tour finances, merch, and more — built for touring musicians.',
+  metadataBase: new URL('https://tour.witus.online'),
+  openGraph: {
+    type: 'website',
+    siteName: 'Tour Manager OS',
+    title: 'Tour Manager OS — Tour Management Built for Musicians',
+    description:
+      'Replace spreadsheets and fragmented tools with one platform. Digital advance sheets, auto-generated itineraries, tour finances, merch, and more.',
+    url: 'https://tour.witus.online',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tour Manager OS — Tour Management Built for Musicians',
+    description:
+      'Replace spreadsheets and fragmented tools with one platform. Digital advance sheets, auto-generated itineraries, tour finances, merch, and more.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export const viewport: Viewport = {

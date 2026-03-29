@@ -326,6 +326,67 @@ The final product incorporates features from ALL 9 final visions. MVP 1 is the s
 - Version history for updated documents
 - Offline access for pinned/starred documents
 
+### SEO, Social Media & Marketing Optimization
+
+Every page must be optimized for search engines, social media previews, and marketing:
+
+**Required Metadata (all pages):**
+- Unique `<title>` via Next.js `metadata.title` — descriptive, under 60 chars
+- `<meta name="description">` — compelling, 120-160 chars, includes keywords
+- Canonical URL via `metadata.alternates.canonical`
+- `robots` meta — index public pages, noindex authenticated/private pages
+
+**Open Graph (all public pages):**
+- `og:title` — matches or improves on `<title>`
+- `og:description` — optimized for social sharing
+- `og:image` — 1200x630 branded preview image (auto-generated or template)
+- `og:url` — canonical URL
+- `og:type` — `website` for landing pages, `article` for blog/academy content
+- `og:site_name` — "Tour Manager OS"
+
+**Twitter Cards (all public pages):**
+- `twitter:card` — `summary_large_image`
+- `twitter:title`, `twitter:description`, `twitter:image`
+- `twitter:site` — platform Twitter handle (when available)
+
+**Structured Data / JSON-LD (where applicable):**
+- Landing page: `Organization` schema
+- Module feature pages: `SoftwareApplication` schema
+- Academy courses: `Course` schema
+- Public event pages (future): `Event` + `MusicEvent` schema
+- FAQ pages: `FAQPage` schema
+
+**Page-specific requirements:**
+
+| Page | Title Pattern | Index | OG Image |
+|------|--------------|-------|----------|
+| `/` (landing) | "Tour Manager OS — Tour Management Built for Musicians" | Yes | Branded hero |
+| `/for/[type]` | "Tour Manager OS for [Type]" | Yes | Role-specific |
+| `/features/[slug]` | "[Module Name] — Tour Manager OS" | Yes | Module screenshot |
+| `/login` | "Log In — Tour Manager OS" | No | N/A |
+| `/signup` | "Sign Up — Tour Manager OS" | No | N/A |
+| `/advance/[token]` | "[Artist] Advance Sheet — [Venue]" | No | N/A |
+| `/dashboard` | "Dashboard — Tour Manager OS" | No | N/A |
+| `/tours/[id]` | "[Tour Name] — Tour Manager OS" | No | N/A |
+| `/tours/[id]/itinerary` | "Itinerary — [Tour Name]" | No | N/A |
+| `/settings` | "Settings — Tour Manager OS" | No | N/A |
+| `/academy` | "Academy — Learn Tour Manager OS" | Yes | Branded |
+| `/academy/[course]` | "[Course Title] — Tour Manager OS Academy" | Yes | Course thumbnail |
+| `/community` | "Community — Tour Manager OS" | No | N/A |
+
+**Technical SEO:**
+- `sitemap.xml` auto-generated via Next.js `app/sitemap.ts` (public pages only)
+- `robots.txt` via `app/robots.ts` — allow crawling of public pages, block authenticated routes
+- Proper heading hierarchy (`h1` → `h2` → `h3`) on every page
+- Alt text on all images
+- Semantic HTML (`<main>`, `<nav>`, `<article>`, `<section>`)
+- Fast page loads (target < 2s LCP) — Server Components, minimal client JS
+
+**Social sharing helpers:**
+- Public event pages get a "Share" button with pre-filled text for Twitter/Facebook/copy link
+- Academy courses have social share buttons
+- Landing pages have proper OG images that look good when shared on Slack, Discord, Twitter, Facebook, LinkedIn
+
 ### Localization & Time
 - All dates/times display in the user's local timezone
 - Timezone auto-detected from browser, overridable in settings
