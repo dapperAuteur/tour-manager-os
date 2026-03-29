@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-03-29
+Last updated: 2026-03-30
 
 ## Legend
 - ✅ Complete
@@ -38,24 +38,29 @@ Last updated: 2026-03-29
 - ✅ Vercel Analytics
 - ✅ Vercel deployment with Supabase integration
 
-## Phase 3: Module System & Feature Gating 📋
+## Phase 3: Module System & Feature Gating ✅
 > Toggle features on/off per organization. Members opt in to modules.
 
-- 📋 Module registry (database table with module metadata)
-- 📋 Organization-level module toggle (admin enables/disables)
-- 📋 Member-level opt-in / request access
-- 📋 Middleware + nav filtering based on module access
+- ✅ Module registry (11 modules seeded: advance-sheets, itineraries, finances, show-day, merch, fan-engagement, community, documents, production, academy, wellness)
+- ✅ Organization creation and management
+- ✅ Organization-level module toggle (admin enables/disables with switch controls)
+- ✅ Member-level opt-in / request access with approval workflow
+- ✅ Nav sidebar with Modules and Admin sections
 - 📋 Per-module tutorial (3-5 step walkthrough on first access)
 
-## Phase 4: Tour Money Tracker 📋
+## Phase 4: Tour Money Tracker ✅
 > Real-time P&L per show and per tour. Per-member financial views.
 
-- 📋 Expense tracking by category (travel, hotel, per diem, meals, equipment, crew)
-- 📋 Receipt capture (phone camera upload)
-- 📋 Per-show revenue (guarantee, ticket sales, merch)
-- 📋 Tour P&L dashboard (revenue vs expenses, running total)
-- 📋 Per-member financial view (share, per diem balance, personal expenses)
-- 📋 CSV export for accountant/tax prep
+- ✅ Expense tracking by category (travel, hotel, per diem, meals, equipment, crew, merch, marketing, insurance, other)
+- ✅ Add expense form with show association and tax-deductible flag
+- ✅ Show revenue tracking (guarantee, ticket sales, merch, other)
+- ✅ Tour P&L dashboard (total revenue, total expenses, net profit, expenses by category)
+- ✅ Per-member financial view (/me/finances — expenses, payouts, owed, tax deductible)
+- ✅ CSV export for expenses
+- ✅ Settlements and member payouts tables
+- 📋 Receipt capture with AI scanning (Gemini vision API)
+- 📋 Receipt image viewing linked to transactions
+- 📋 Expense cost splitting between team members
 
 ## Phase 5: Show Day App 📋
 > Mobile-first daily companion for each band member.

@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield } from 'lucide-react'
+import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/me/finances', label: 'My Finances', icon: DollarSign },
   { href: '/modules', label: 'Modules', icon: Blocks },
   { href: '/settings', label: 'Settings', icon: Settings },
 ]
