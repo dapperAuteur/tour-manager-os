@@ -133,13 +133,18 @@ Last updated: 2026-03-30
 - 📋 Setlist collaboration
 - 📋 Days-off planner with local suggestions
 
-## Phase 11: Help & Feedback 📋
-> RAG-powered help, conversational feedback system.
+## Phase 11: Help & Feedback ✅
+> Help center and conversational feedback system.
 
-- 📋 AI help assistant (Gemini + pgvector)
-- 📋 Conversational feedback threads
-- 📋 Admin notification on new feedback
-- 📋 In-thread admin responses
+- ✅ Help center with searchable articles (7 seeded: getting started, advance sheets, finances, show day, merch, polls, accessibility)
+- ✅ Article detail pages with markdown-like rendering
+- ✅ Conversational feedback threads (bug/feature/question/praise)
+- ✅ Threaded messages with sender names and admin badges
+- ✅ Admin feedback management with status control (open → in_progress → resolved → closed)
+- ✅ Admin sees user name on every thread with link context
+- ✅ User notifications on admin replies
+- ✅ Priority levels (low/normal/high/urgent)
+- 📋 AI-powered help (Gemini + pgvector semantic search)
 
 ## Phase 12: Admin Dashboard 📋
 > Analytics, metrics, logs, user impact tracking.
