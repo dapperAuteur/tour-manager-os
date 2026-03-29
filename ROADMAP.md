@@ -76,14 +76,15 @@ Last updated: 2026-03-30
 - 📋 Push notifications for schedule changes
 - 📋 Weather integration
 
-## Phase 6: Demo System 📋
+## Phase 6: Demo System ✅
 > Pre-configured demo accounts with realistic data for try-before-you-buy.
 
-- 📋 Demo users (Tour Manager, Band Member, Crew, Venue Contact, Fan)
-- 📋 Single-button demo login (no email/password)
-- 📋 Realistic seed data ("The Roadwell Family" — tours, shows, finances, merch)
-- 📋 Demo banner with signup CTA
-- 📋 Daily data reset
+- ✅ Demo users (Tour Manager, Band Member, Crew, Free/Read-Only)
+- ✅ Single-button demo login — choose role, instant access, no signup
+- ✅ Realistic seed data ("The Roadwell Family" — 2 tours, 12 shows, advance sheets, expenses, revenue, hotels, contacts)
+- ✅ Demo banner with signup CTA shown on all authenticated pages
+- ✅ Midnight data reset via Vercel cron job
+- ✅ Full CRUD for demo users (data resets nightly)
 
 ## Phase 7: Landing Pages 📋
 > Dedicated pages per user type and per module with demo login buttons.
