@@ -200,16 +200,21 @@ Last updated: 2026-03-30
 - 📋 Auto-generated crew call sheets
 - 📋 Rider compliance checklists
 
-## Phase 16: Subscriptions & Billing 💡
-> Stripe-powered lifetime + annual subscriptions.
+## Phase 16: Subscriptions, CSV, & Email Docs ✅
+> Billing, data import/export, and email setup documentation.
 
-- 💡 Lifetime membership ($103.29 — first 100 sales)
-- 💡 Annual subscription ($103.29/yr — after 100 lifetime sold)
-- 💡 Stripe checkout + recurring billing
-- 💡 Paid vs free user enforcement
-- 💡 Admin promo code creation
-- 💡 Lifetime sales counter on admin dashboard
-- 💡 Upgrade/downgrade flows
+- ✅ Subscription system (lifetime $103.29 one-time + annual $103.29/yr after 100 lifetime sold)
+- ✅ Pricing page with lifetime spots counter and annual unlock status
+- ✅ Admin subscriptions dashboard (lifetime sold/remaining, annual count, total revenue)
+- ✅ Promo code system (percentage/fixed discounts, max uses, expiry, lifetime grants)
+- ✅ Stripe checkout API route (ready for STRIPE_SECRET_KEY config)
+- ✅ CSV templates for 7 data types (shows, expenses, contacts, equipment, merch, subscribers, state income)
+- ✅ Data Import/Export page with template downloads
+- ✅ Email setup documentation in Help Center (Resend setup, DNS, API key, testing)
+- ✅ Email Marketing academy course (3 lessons: building lists, campaigns, admin setup)
+- 📋 Stripe Checkout session creation (needs Stripe price IDs configured)
+- 📋 CSV import wizard with column mapping and validation
+- 📋 Webhook handler for Stripe events
 
 ## Phase 17: Email Integration 💡
 > Send/receive emails from within the app using user's own business email.
