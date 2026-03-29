@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Music, FileSpreadsheet, DollarSign, Calendar, ShoppingBag, Users } from 'lucide-react'
+import { Music, FileSpreadsheet, DollarSign, Calendar, ShoppingBag, Users, ArrowRight } from 'lucide-react'
 import { Header } from '@/components/layout/header'
 
 const features = [
@@ -7,32 +7,46 @@ const features = [
     icon: FileSpreadsheet,
     title: 'Digital Advance Sheets',
     description: 'Smart web forms that venues fill out online. No more emailing spreadsheets.',
+    slug: 'advance-sheets',
   },
   {
     icon: Calendar,
     title: 'Auto-Generated Itineraries',
     description: 'Daily schedules built automatically from venue data. Print or view on any device.',
+    slug: 'itineraries',
   },
   {
     icon: DollarSign,
     title: 'Tour Finances',
     description: 'Real-time P&L per show. Receipt capture, expense tracking, and tax-ready exports.',
+    slug: 'tour-finances',
   },
   {
     icon: Music,
     title: 'Show Day Companion',
     description: 'Open your phone, see your whole day. Soundcheck, doors, showtime — all at a glance.',
+    slug: 'show-day',
   },
   {
     icon: ShoppingBag,
     title: 'Merch Management',
     description: 'Inventory tracking, per-show sales, and an online store for fans.',
+    slug: 'merch-management',
   },
   {
     icon: Users,
     title: 'Fan Engagement',
     description: 'Marketing emails, exclusive content, community forums, and event pages.',
+    slug: 'fan-engagement',
   },
+]
+
+const userTypes = [
+  { label: 'Tour Managers', href: '/for/tour-managers', description: 'Run the show from one dashboard' },
+  { label: 'Musicians', href: '/for/musicians', description: 'Know your day, know your money' },
+  { label: 'Crew', href: '/for/crew', description: 'Every production detail, one app' },
+  { label: 'Venues', href: '/for/venues', description: 'One form, no login required' },
+  { label: 'Fans', href: '/for/fans', description: 'Exclusive content and community' },
 ]
 
 export default function HomePage() {
@@ -60,7 +74,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/login"
+              href="/signup"
               className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-surface"
             >
               Get Started
@@ -76,14 +90,15 @@ export default function HomePage() {
 
         {/* Features */}
         <section aria-labelledby="features-heading" className="py-16">
-          <h2 id="features-heading" className="sr-only">
-            Features
+          <h2 id="features-heading" className="mb-8 text-center text-2xl font-bold">
+            Everything You Need on the Road
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
-              <article
-                key={feature.title}
-                className="rounded-xl border border-border-default bg-surface-raised p-6 transition-shadow hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20"
+              <Link
+                key={feature.slug}
+                href={`/features/${feature.slug}`}
+                className="group rounded-xl border border-border-default bg-surface-raised p-6 transition-all hover:border-primary-500/50 hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20"
               >
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900">
                   <feature.icon
@@ -91,16 +106,53 @@ export default function HomePage() {
                     aria-hidden="true"
                   />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold">{feature.title}</h3>
-                <p className="text-sm text-text-secondary">{feature.description}</p>
-              </article>
+                <h3 className="mb-2 text-lg font-semibold group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                  {feature.title}
+                </h3>
+                <p className="mb-3 text-sm text-text-secondary">{feature.description}</p>
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-primary-600 dark:text-primary-400">
+                  Learn more <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* User types */}
+        <section aria-labelledby="users-heading" className="py-16">
+          <h2 id="users-heading" className="mb-3 text-center text-2xl font-bold">
+            Built for Every Role
+          </h2>
+          <p className="mb-8 text-center text-text-secondary">
+            Whether you manage the tour, play the show, or run the production — there&apos;s a view for you.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {userTypes.map((ut) => (
+              <Link
+                key={ut.href}
+                href={ut.href}
+                className="rounded-xl border border-border-default bg-surface-raised p-5 text-center transition-all hover:border-primary-500/50 hover:shadow-sm"
+              >
+                <p className="font-semibold">{ut.label}</p>
+                <p className="mt-1 text-xs text-text-muted">{ut.description}</p>
+              </Link>
             ))}
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-border-default py-8 text-center text-sm text-text-muted">
-          <p>Tour Manager OS</p>
+        <footer className="border-t border-border-default py-8">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-text-muted">
+            <Link href="/roadmap" className="hover:text-text-secondary">Roadmap</Link>
+            <Link href="/for/tour-managers" className="hover:text-text-secondary">Tour Managers</Link>
+            <Link href="/for/musicians" className="hover:text-text-secondary">Musicians</Link>
+            <Link href="/for/crew" className="hover:text-text-secondary">Crew</Link>
+            <Link href="/for/venues" className="hover:text-text-secondary">Venues</Link>
+            <Link href="/for/fans" className="hover:text-text-secondary">Fans</Link>
+            <Link href="/login" className="hover:text-text-secondary">Log In</Link>
+            <Link href="/signup" className="hover:text-text-secondary">Sign Up</Link>
+          </div>
+          <p className="mt-4 text-center text-sm text-text-muted">Tour Manager OS</p>
         </footer>
       </main>
     </>
