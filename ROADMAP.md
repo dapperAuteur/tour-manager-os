@@ -96,14 +96,16 @@ Last updated: 2026-03-30
 - ✅ Sitemap updated with all public pages
 - ✅ OG metadata on all landing pages
 
-## Phase 8: Merch Empire 📋
-> Inventory tracking, per-show sales, online merch store.
+## Phase 8: Merch Empire ✅
+> Inventory tracking, per-show sales, merch P&L.
 
-- 📋 Merch inventory management (SKUs, quantities, cost basis)
-- 📋 Per-show merch sales tracking
+- ✅ Product catalog (name, SKU, category, price, cost basis)
+- ✅ Inventory tracking per tour (start quantity, remaining)
+- ✅ Per-show merch sales recording with auto inventory update
+- ✅ Merch P&L dashboard (revenue, cost, profit, units sold, top sellers)
+- ✅ Demo data: 5 products, inventory, 11 sales across 3 shows
 - 📋 Online merch store (Stripe payments)
 - 📋 Tour-exclusive merch drops
-- 📋 Merch P&L separate from show P&L
 
 ## Phase 9: Fan Marketing & Community 📋
 > Email marketing, exclusive content, community forums.
