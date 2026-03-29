@@ -13,6 +13,25 @@ Architectural rules and constraints for Tour Manager OS. These are non-negotiabl
 - API keys for the public API are hashed before storage (`api_keys.key_hash`)
 - Never log or expose secrets, tokens, or API keys in client-side code or error messages
 
+### Password Policy
+
+Enforced both in Supabase (server-side) and in the signup form (client-side):
+
+- Minimum **16 characters**
+- Must contain at least one **uppercase letter** (A-Z)
+- Must contain at least one **lowercase letter** (a-z)
+- Must contain at least one **number** (0-9)
+- Must contain at least one **symbol** (!@#$%^&*...)
+- No more than **3 repeated characters** in a row (e.g., `aaaa` fails)
+
+The signup form shows a real-time checklist as the user types. The submit button is disabled until all requirements pass.
+
+### OTP Login
+
+- 6-digit numeric code sent to email
+- Configured in Supabase Dashboard (Authentication → Providers → Email)
+- Code expires in 10 minutes
+
 ### Data Protection
 
 - Never store passwords — Supabase Auth handles this
