@@ -220,9 +220,21 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 18+: And More',
+    name: 'Phase 18: Public API',
+    status: 'complete',
+    description: 'RESTful API with key management, docs, and request logging.',
+    items: [
+      { label: 'API key system (hashed, scoped)', done: true },
+      { label: 'Endpoints: tours, shows, itineraries', done: true },
+      { label: 'Developer docs page', done: true },
+      { label: 'Request logging', done: true },
+      { label: 'Rate limiting enforcement', done: false },
+    ],
+  },
+  {
+    name: 'Phase 19+: And More',
     status: 'future',
-    description: 'Public API, white label, venue network, multi-act touring, and wellness tools.',
+    description: 'White label, venue network, multi-act touring, and wellness tools.',
     items: [],
   },
 ]

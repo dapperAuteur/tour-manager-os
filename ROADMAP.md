@@ -232,13 +232,20 @@ Last updated: 2026-03-30
 - 📋 OAuth-connected email (Gmail/Outlook API) for sending from user's own address
 - 📋 Emails appear in user's regular inbox
 
-## Phase 18: Public API 💡
+## Phase 18: Public API ✅
 > RESTful API for third-party integrations.
 
-- 💡 API key authentication
-- 💡 Rate limiting per tier
-- 💡 OpenAPI/Swagger docs
-- 💡 Webhook support
+- ✅ API key system (SHA-256 hashed, prefix display, scopes, rate limits)
+- ✅ Key management page (/admin/api-keys) — create, view, revoke
+- ✅ One-time key display with copy button (never shown again)
+- ✅ API endpoints: GET /api/v1/tours, GET /api/v1/shows, GET /api/v1/itineraries
+- ✅ Request logging (method, path, status, response time, IP)
+- ✅ Developer docs page (/developers) — getting started, auth, endpoints, errors
+- ✅ Free tier for testing, paid subscription for production use
+- ✅ Webhook table ready (org-scoped, event filtering, secret hash)
+- 📋 Additional endpoints (finances, merch, contacts)
+- 📋 Rate limiting enforcement middleware
+- 📋 OpenAPI/Swagger spec generation
 
 ## Phase 19: White Label 💡
 > Branded versions for other bands/organizations.
