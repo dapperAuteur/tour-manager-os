@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Plus, Send, MapPin, Calendar, Clock, ExternalLink, FileText } from 'lucide-react'
+import { Plus, Send, MapPin, Calendar, Clock, ExternalLink, FileText, DollarSign } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getTour } from '@/lib/tours/queries'
 
@@ -63,6 +63,13 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
           >
             <FileText className="h-4 w-4" aria-hidden="true" />
             View Itinerary
+          </Link>
+          <Link
+            href={`/tours/${id}/finances`}
+            className="inline-flex items-center gap-2 rounded-lg border border-border-default px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            <DollarSign className="h-4 w-4" aria-hidden="true" />
+            Finances
           </Link>
         </div>
 

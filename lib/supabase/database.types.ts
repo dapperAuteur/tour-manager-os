@@ -293,6 +293,72 @@ export type Database = {
           },
         ]
       }
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string | null
+          date: string
+          description: string | null
+          id: string
+          is_tax_deductible: boolean | null
+          member_id: string | null
+          notes: string | null
+          receipt_url: string | null
+          show_id: string | null
+          status: string
+          tour_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string | null
+          date: string
+          description?: string | null
+          id?: string
+          is_tax_deductible?: boolean | null
+          member_id?: string | null
+          notes?: string | null
+          receipt_url?: string | null
+          show_id?: string | null
+          status?: string
+          tour_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          is_tax_deductible?: boolean | null
+          member_id?: string | null
+          notes?: string | null
+          receipt_url?: string | null
+          show_id?: string | null
+          status?: string
+          tour_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       flights: {
         Row: {
           airline: string | null
@@ -522,6 +588,50 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      member_payouts: {
+        Row: {
+          amount: number
+          created_at: string | null
+          id: string
+          member_id: string
+          notes: string | null
+          paid: boolean | null
+          paid_at: string | null
+          settlement_id: string
+          type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          id?: string
+          member_id: string
+          notes?: string | null
+          paid?: boolean | null
+          paid_at?: string | null
+          settlement_id: string
+          type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          id?: string
+          member_id?: string
+          notes?: string | null
+          paid?: boolean | null
+          paid_at?: string | null
+          settlement_id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_payouts_settlement_id_fkey"
+            columns: ["settlement_id"]
+            isOneToOne: false
+            referencedRelation: "settlements"
             referencedColumns: ["id"]
           },
         ]
@@ -762,6 +872,110 @@ export type Database = {
             columns: ["itinerary_day_id"]
             isOneToOne: false
             referencedRelation: "itinerary_days"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      settlements: {
+        Row: {
+          created_at: string | null
+          id: string
+          net_profit: number | null
+          notes: string | null
+          settlement_date: string | null
+          show_id: string
+          total_expenses: number | null
+          total_revenue: number | null
+          tour_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          net_profit?: number | null
+          notes?: string | null
+          settlement_date?: string | null
+          show_id: string
+          total_expenses?: number | null
+          total_revenue?: number | null
+          tour_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          net_profit?: number | null
+          notes?: string | null
+          settlement_date?: string | null
+          show_id?: string
+          total_expenses?: number | null
+          total_revenue?: number | null
+          tour_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "settlements_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: true
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "settlements_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      show_revenue: {
+        Row: {
+          created_at: string | null
+          guarantee: number | null
+          id: string
+          merch_sales: number | null
+          notes: string | null
+          other_revenue: number | null
+          other_revenue_description: string | null
+          show_id: string
+          ticket_sales: number | null
+          total_revenue: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          guarantee?: number | null
+          id?: string
+          merch_sales?: number | null
+          notes?: string | null
+          other_revenue?: number | null
+          other_revenue_description?: string | null
+          show_id: string
+          ticket_sales?: number | null
+          total_revenue?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          guarantee?: number | null
+          id?: string
+          merch_sales?: number | null
+          notes?: string | null
+          other_revenue?: number | null
+          other_revenue_description?: string | null
+          show_id?: string
+          ticket_sales?: number | null
+          total_revenue?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "show_revenue_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: true
+            referencedRelation: "shows"
             referencedColumns: ["id"]
           },
         ]
