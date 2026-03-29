@@ -629,6 +629,47 @@ export type Database = {
         }
         Relationships: []
       }
+      custom_domains: {
+        Row: {
+          created_at: string | null
+          domain: string
+          id: string
+          org_id: string
+          ssl_provisioned: boolean | null
+          updated_at: string | null
+          verification_token: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          domain: string
+          id?: string
+          org_id: string
+          ssl_provisioned?: boolean | null
+          updated_at?: string | null
+          verification_token?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          domain?: string
+          id?: string
+          org_id?: string
+          ssl_provisioned?: boolean | null
+          updated_at?: string | null
+          verification_token?: string | null
+          verified?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "custom_domains_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deduction_categories: {
         Row: {
           description: string | null
@@ -1853,8 +1894,15 @@ export type Database = {
       organizations: {
         Row: {
           brand_colors: Json | null
+          brand_favicon_url: string | null
+          brand_font: string | null
+          brand_logo_url: string | null
+          brand_name: string | null
+          brand_primary_color: string | null
+          brand_tagline: string | null
           created_at: string | null
           created_by: string | null
+          custom_css: string | null
           custom_domain: string | null
           id: string
           logo_url: string | null
@@ -1865,11 +1913,19 @@ export type Database = {
           subscription_status: string | null
           subscription_tier: string | null
           updated_at: string | null
+          white_label_enabled: boolean | null
         }
         Insert: {
           brand_colors?: Json | null
+          brand_favicon_url?: string | null
+          brand_font?: string | null
+          brand_logo_url?: string | null
+          brand_name?: string | null
+          brand_primary_color?: string | null
+          brand_tagline?: string | null
           created_at?: string | null
           created_by?: string | null
+          custom_css?: string | null
           custom_domain?: string | null
           id?: string
           logo_url?: string | null
@@ -1880,11 +1936,19 @@ export type Database = {
           subscription_status?: string | null
           subscription_tier?: string | null
           updated_at?: string | null
+          white_label_enabled?: boolean | null
         }
         Update: {
           brand_colors?: Json | null
+          brand_favicon_url?: string | null
+          brand_font?: string | null
+          brand_logo_url?: string | null
+          brand_name?: string | null
+          brand_primary_color?: string | null
+          brand_tagline?: string | null
           created_at?: string | null
           created_by?: string | null
+          custom_css?: string | null
           custom_domain?: string | null
           id?: string
           logo_url?: string | null
@@ -1895,6 +1959,7 @@ export type Database = {
           subscription_status?: string | null
           subscription_tier?: string | null
           updated_at?: string | null
+          white_label_enabled?: boolean | null
         }
         Relationships: []
       }
