@@ -216,15 +216,21 @@ Last updated: 2026-03-30
 - 📋 CSV import wizard with column mapping and validation
 - 📋 Webhook handler for Stripe events
 
-## Phase 17: Email Integration 💡
-> Send/receive emails from within the app using user's own business email.
+## Phase 17: Email Integration ✅
+> Send marketing emails with open/click tracking via Resend.
 
-- 💡 OAuth-connected email (Gmail/Outlook API)
-- 💡 Send emails from the app using user's business address
-- 💡 Emails recorded in app AND appear in user's regular inbox
-- 💡 Email open tracking via Resend tracking pixel
-- 💡 Click tracking on campaign links
-- 💡 Open/click stats on email campaign dashboard
+- ✅ Resend SDK integration for email delivery
+- ✅ Campaign send action with batch processing (10 at a time)
+- ✅ Open tracking via 1x1 pixel (auto-increments opened_count)
+- ✅ Click tracking via redirect endpoint (auto-increments clicked_count)
+- ✅ Unsubscribe link with confirmation page
+- ✅ Campaign detail page with analytics (recipients, opens, clicks, open/click rates)
+- ✅ Send button with confirmation dialog
+- ✅ Resend webhook handler (bounces auto-unsubscribe, spam complaints auto-unsubscribe)
+- ✅ HTML email template with tracking pixel and footer
+- ✅ Graceful fallback when Resend not configured
+- 📋 OAuth-connected email (Gmail/Outlook API) for sending from user's own address
+- 📋 Emails appear in user's regular inbox
 
 ## Phase 18: Public API 💡
 > RESTful API for third-party integrations.
