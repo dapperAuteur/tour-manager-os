@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle } from 'lucide-react'
+import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
@@ -21,8 +21,11 @@ const navItems = [
 ]
 
 const adminItems = [
-  { href: '/admin/modules', label: 'Manage Modules', icon: Shield },
+  { href: '/admin/dashboard', label: 'Dashboard', icon: BarChart3 },
+  { href: '/admin/users', label: 'Users', icon: Users },
+  { href: '/admin/modules', label: 'Modules', icon: Shield },
   { href: '/admin/feedback', label: 'Feedback', icon: MessageSquare },
+  { href: '/admin/logs', label: 'Logs', icon: ScrollText },
 ]
 
 interface AppNavProps {

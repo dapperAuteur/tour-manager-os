@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Plus, MessageSquare } from 'lucide-react'
 import { getUserFeedbackThreads } from '@/lib/feedback/queries'
+import { SearchBar } from '@/components/ui/search-bar'
 
 export const metadata: Metadata = { title: 'Feedback', robots: { index: false } }
 
@@ -16,8 +17,9 @@ const categoryLabels: Record<string, string> = {
   bug: 'Bug', feature: 'Feature Request', question: 'Question', praise: 'Praise', other: 'Other',
 }
 
-export default async function FeedbackPage() {
-  const threads = await getUserFeedbackThreads()
+export default async function FeedbackPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams
+  const threads = await getUserFeedbackThreads(q)
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -30,6 +32,8 @@ export default async function FeedbackPage() {
           <Plus className="h-4 w-4" aria-hidden="true" /> New Feedback
         </Link>
       </div>
+
+      <SearchBar basePath="/feedback" placeholder="Search feedback..." initialQuery={q} />
 
       {threads.length === 0 ? (
         <div className="rounded-xl border border-border-default bg-surface-raised p-8 text-center">

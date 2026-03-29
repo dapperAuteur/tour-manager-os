@@ -12,12 +12,22 @@ const categoryIcons: Record<string, string> = {
   'general': '📖',
 }
 
+interface HelpArticle {
+  id: string
+  title: string
+  slug: string
+  content: string
+  category: string
+  module_id: string | null
+  tags: string[] | null
+}
+
 export default async function HelpPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q } = await searchParams
-  const articles = await getHelpArticles(q)
+  const articles = (await getHelpArticles(q)) as HelpArticle[]
 
   // Group by category
-  const grouped: Record<string, typeof articles> = {}
+  const grouped: Record<string, HelpArticle[]> = {}
   for (const article of articles) {
     if (!grouped[article.category]) grouped[article.category] = []
     grouped[article.category].push(article)

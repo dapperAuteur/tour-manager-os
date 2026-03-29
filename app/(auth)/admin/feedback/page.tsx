@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { MessageSquare } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { isSuperAdmin } from '@/lib/auth/super-admin'
+import { SearchBar } from '@/components/ui/search-bar'
 import { getAllFeedbackThreads } from '@/lib/feedback/queries'
 
 export const metadata: Metadata = { title: 'Manage Feedback', robots: { index: false } }
@@ -21,14 +22,15 @@ const priorityColors: Record<string, string> = {
   urgent: 'text-error-500',
 }
 
-export default async function AdminFeedbackPage() {
+export default async function AdminFeedbackPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user || !isSuperAdmin(user.email)) {
     return <main id="main-content" className="mx-auto max-w-4xl px-4 py-8"><p className="text-text-secondary">Admin access required.</p></main>
   }
 
-  const threads = await getAllFeedbackThreads()
+  const threads = await getAllFeedbackThreads(q)
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -39,6 +41,8 @@ export default async function AdminFeedbackPage() {
         </div>
         <span className="rounded-full bg-primary-500/20 px-3 py-1 text-xs font-medium text-primary-600 dark:text-primary-400">Super Admin</span>
       </div>
+
+      <SearchBar basePath="/admin/feedback" placeholder="Search feedback threads..." initialQuery={q} />
 
       {threads.length === 0 ? (
         <div className="rounded-xl border border-border-default bg-surface-raised p-8 text-center">

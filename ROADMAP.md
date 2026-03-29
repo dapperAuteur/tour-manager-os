@@ -146,15 +146,19 @@ Last updated: 2026-03-30
 - ✅ Priority levels (low/normal/high/urgent)
 - 📋 AI-powered help (Gemini + pgvector semantic search)
 
-## Phase 12: Admin Dashboard 📋
-> Analytics, metrics, logs, user impact tracking.
+## Phase 12: Admin Dashboard ✅
+> Analytics, metrics, logs, user management.
 
+- ✅ Admin dashboard (/admin/dashboard) — platform stats: users, orgs, tours, shows
+- ✅ Financial metrics — total revenue, expenses, merch revenue across all orgs
+- ✅ Feedback metrics — total threads, open/in-progress count
+- ✅ User management (/admin/users) — all users with email, org, role, paid status, join date, last sign-in
+- ✅ Activity logs (/admin/logs) — action, user, resource, timestamp
+- ✅ Fuzzy search on help articles and feedback threads (pg_trgm)
+- ✅ Reusable search bar component
 - 📋 User engagement metrics (DAU/WAU/MAU, session duration)
-- 📋 Tour metrics (tours created, shows managed, advance sheets)
-- 📋 Financial metrics (revenue tracked, expenses logged)
 - 📋 Module adoption rates
-- 📋 Activity logs
-- 📋 User impact dashboard (for presentations)
+- 📋 Charts and graphs (Recharts)
 
 ## Phase 13: Academy / LMS 📋
 > Courses teaching users how to use the platform.
