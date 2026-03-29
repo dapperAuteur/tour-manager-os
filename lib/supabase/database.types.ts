@@ -2073,6 +2073,54 @@ export type Database = {
           },
         ]
       }
+      promo_codes: {
+        Row: {
+          active: boolean | null
+          applies_to: string
+          code: string
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          discount_type: string
+          discount_value: number
+          expires_at: string | null
+          id: string
+          is_lifetime_grant: boolean | null
+          max_uses: number | null
+          times_used: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          applies_to?: string
+          code: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          discount_type: string
+          discount_value: number
+          expires_at?: string | null
+          id?: string
+          is_lifetime_grant?: boolean | null
+          max_uses?: number | null
+          times_used?: number | null
+        }
+        Update: {
+          active?: boolean | null
+          applies_to?: string
+          code?: string
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          discount_type?: string
+          discount_value?: number
+          expires_at?: string | null
+          id?: string
+          is_lifetime_grant?: boolean | null
+          max_uses?: number | null
+          times_used?: number | null
+        }
+        Relationships: []
+      }
       schedule_items: {
         Row: {
           category: string | null
@@ -2451,6 +2499,68 @@ export type Database = {
           },
         ]
       }
+      subscriptions: {
+        Row: {
+          amount: number
+          cancelled_at: string | null
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          org_id: string | null
+          promo_code_id: string | null
+          started_at: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_payment_intent_id: string | null
+          stripe_subscription_id: string | null
+          type: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          cancelled_at?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          org_id?: string | null
+          promo_code_id?: string | null
+          started_at?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_subscription_id?: string | null
+          type: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          cancelled_at?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          org_id?: string | null
+          promo_code_id?: string | null
+          started_at?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_subscription_id?: string | null
+          type?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tour_members: {
         Row: {
           created_at: string | null
@@ -2698,7 +2808,15 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      lifetime_sales_stats: {
+        Row: {
+          active_annual_count: number | null
+          lifetime_remaining: number | null
+          paid_lifetime_count: number | null
+          total_revenue: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_user_tour_ids: { Args: never; Returns: string[] }

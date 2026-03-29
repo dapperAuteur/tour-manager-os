@@ -194,7 +194,20 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 16+: And More',
+    name: 'Phase 16: Subscriptions, CSV, & Email Docs',
+    status: 'complete',
+    description: 'Billing, CSV templates, and email setup documentation.',
+    items: [
+      { label: 'Subscription system (lifetime + annual)', done: true },
+      { label: 'Pricing page with lifetime counter', done: true },
+      { label: 'Admin promo code management', done: true },
+      { label: 'CSV templates (7 data types)', done: true },
+      { label: 'Email setup docs (Help + Academy)', done: true },
+      { label: 'Stripe Checkout integration', done: false },
+    ],
+  },
+  {
+    name: 'Phase 17+: And More',
     status: 'future',
     description: 'Subscriptions, email integration, public API, white label, venue network, multi-act touring, and wellness tools.',
     items: [],
