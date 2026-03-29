@@ -293,6 +293,271 @@ export type Database = {
           },
         ]
       }
+      community_categories: {
+        Row: {
+          access_level: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          org_id: string
+          slug: string
+          sort_order: number | null
+        }
+        Insert: {
+          access_level?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          org_id: string
+          slug: string
+          sort_order?: number | null
+        }
+        Update: {
+          access_level?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          org_id?: string
+          slug?: string
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_categories_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_posts: {
+        Row: {
+          author_id: string
+          category_id: string
+          content: string
+          created_at: string | null
+          id: string
+          locked: boolean | null
+          pinned: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id: string
+          category_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          locked?: boolean | null
+          pinned?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string
+          category_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          locked?: boolean | null
+          pinned?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "community_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_replies: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string | null
+          id: string
+          post_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          post_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          post_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "community_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_campaigns: {
+        Row: {
+          clicked_count: number | null
+          content: string
+          created_at: string | null
+          created_by: string | null
+          id: string
+          list_id: string | null
+          opened_count: number | null
+          org_id: string
+          recipients_count: number | null
+          scheduled_at: string | null
+          sent_at: string | null
+          status: string
+          subject: string
+          updated_at: string | null
+        }
+        Insert: {
+          clicked_count?: number | null
+          content: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          list_id?: string | null
+          opened_count?: number | null
+          org_id: string
+          recipients_count?: number | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: string
+          subject: string
+          updated_at?: string | null
+        }
+        Update: {
+          clicked_count?: number | null
+          content?: string
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          list_id?: string | null
+          opened_count?: number | null
+          org_id?: string
+          recipients_count?: number | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_campaigns_list_id_fkey"
+            columns: ["list_id"]
+            isOneToOne: false
+            referencedRelation: "email_lists"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_campaigns_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_lists: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          id: string
+          name: string
+          org_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          org_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          org_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_lists_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_subscribers: {
+        Row: {
+          city: string | null
+          email: string
+          id: string
+          list_id: string
+          name: string | null
+          source: string | null
+          subscribed_at: string | null
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          city?: string | null
+          email: string
+          id?: string
+          list_id: string
+          name?: string | null
+          source?: string | null
+          subscribed_at?: string | null
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          city?: string | null
+          email?: string
+          id?: string
+          list_id?: string
+          name?: string | null
+          source?: string | null
+          subscribed_at?: string | null
+          unsubscribed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_subscribers_list_id_fkey"
+            columns: ["list_id"]
+            isOneToOne: false
+            referencedRelation: "email_lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       expenses: {
         Row: {
           amount: number
