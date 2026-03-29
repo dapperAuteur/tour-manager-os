@@ -2,13 +2,18 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Music, Settings, LogOut, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/modules', label: 'Modules', icon: Blocks },
   { href: '/settings', label: 'Settings', icon: Settings },
+]
+
+const adminItems = [
+  { href: '/admin/modules', label: 'Manage Modules', icon: Shield },
 ]
 
 interface AppNavProps {
@@ -94,6 +99,36 @@ export function AppNav({ userName }: AppNavProps) {
               )
             })}
           </ul>
+
+          {/* Admin section */}
+          <div className="mt-6">
+            <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Admin</p>
+            <ul className="flex flex-col gap-1">
+              {adminItems.map((item) => {
+                const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`
+                        flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors
+                        focus:outline-none focus:ring-2 focus:ring-primary-500
+                        ${isActive
+                          ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
+                          : 'text-text-secondary hover:bg-surface-alt hover:text-text-primary'
+                        }
+                      `}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      <item.icon className="h-4 w-4" aria-hidden="true" />
+                      {item.label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         </div>
 
         {/* User footer */}
