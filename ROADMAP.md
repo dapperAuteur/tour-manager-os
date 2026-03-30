@@ -301,6 +301,21 @@ Last updated: 2026-03-30
 - 📋 Days-off wellness suggestions (gyms, spas, parks near venues)
 - 📋 Wearable integration (via CentenarianOS)
 
+## Roadmap Completions ✅
+> Quick wins and new features from user feedback.
+
+- ✅ Persistent header with nav links (Roadmap, Demo, Log In, Sign Up) on all public pages
+- ✅ Site footer with Product, For, Resources, Account sections on all public pages
+- ✅ Setlist management — songs with title, duration, key, tempo, encore, team comments
+- ✅ Travel arrangements — hotels, flights, rental cars, bus, equipment rental per tour
+- ✅ Blog system — posts with video/audio embeds, cross-module tagging (shows, products, venues)
+- ✅ Audio sharing — song demos with team comments and timestamp markers
+- ✅ Multiple venue contacts on venue profiles
+- ✅ CSV subscriber import for email lists
+- ✅ Auto-populate state income from show revenue (DB function)
+- ✅ Venues are public (anyone can browse, reducing redundancy)
+- ✅ Contact sharing across teams via public venue directory
+
 ---
 
 ## How to Request Features

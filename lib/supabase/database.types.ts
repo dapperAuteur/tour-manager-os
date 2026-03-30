@@ -464,6 +464,109 @@ export type Database = {
           },
         ]
       }
+      audio_comments: {
+        Row: {
+          audio_id: string
+          content: string
+          created_at: string | null
+          id: string
+          timestamp_seconds: number | null
+          user_id: string
+        }
+        Insert: {
+          audio_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          timestamp_seconds?: number | null
+          user_id: string
+        }
+        Update: {
+          audio_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          timestamp_seconds?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audio_comments_audio_id_fkey"
+            columns: ["audio_id"]
+            isOneToOne: false
+            referencedRelation: "shared_audio"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_posts: {
+        Row: {
+          audio_url: string | null
+          author_id: string | null
+          content: string
+          cover_image_url: string | null
+          created_at: string | null
+          excerpt: string | null
+          id: string
+          linked_products: Json | null
+          linked_shows: Json | null
+          linked_venues: Json | null
+          org_id: string
+          published: boolean | null
+          slug: string
+          tags: Json | null
+          title: string
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          audio_url?: string | null
+          author_id?: string | null
+          content: string
+          cover_image_url?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          linked_products?: Json | null
+          linked_shows?: Json | null
+          linked_venues?: Json | null
+          org_id: string
+          published?: boolean | null
+          slug: string
+          tags?: Json | null
+          title: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          audio_url?: string | null
+          author_id?: string | null
+          content?: string
+          cover_image_url?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          linked_products?: Json | null
+          linked_shows?: Json | null
+          linked_venues?: Json | null
+          org_id?: string
+          published?: boolean | null
+          slug?: string
+          tags?: Json | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       checkin_responses: {
         Row: {
           checkin_id: string
@@ -2500,6 +2603,133 @@ export type Database = {
           },
         ]
       }
+      setlist_comments: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          setlist_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          setlist_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          setlist_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "setlist_comments_setlist_id_fkey"
+            columns: ["setlist_id"]
+            isOneToOne: false
+            referencedRelation: "setlists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      setlist_songs: {
+        Row: {
+          created_at: string | null
+          duration_seconds: number | null
+          id: string
+          is_encore: boolean | null
+          key: string | null
+          notes: string | null
+          setlist_id: string
+          sort_order: number | null
+          tempo: number | null
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          duration_seconds?: number | null
+          id?: string
+          is_encore?: boolean | null
+          key?: string | null
+          notes?: string | null
+          setlist_id: string
+          sort_order?: number | null
+          tempo?: number | null
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          duration_seconds?: number | null
+          id?: string
+          is_encore?: boolean | null
+          key?: string | null
+          notes?: string | null
+          setlist_id?: string
+          sort_order?: number | null
+          tempo?: number | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "setlist_songs_setlist_id_fkey"
+            columns: ["setlist_id"]
+            isOneToOne: false
+            referencedRelation: "setlists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      setlists: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          id: string
+          name: string
+          show_id: string | null
+          status: string | null
+          tour_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          name?: string
+          show_id?: string | null
+          status?: string | null
+          tour_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          name?: string
+          show_id?: string | null
+          status?: string | null
+          tour_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "setlists_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "setlists_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       settlements: {
         Row: {
           created_at: string | null
@@ -2601,6 +2831,47 @@ export type Database = {
             columns: ["tour_id"]
             isOneToOne: false
             referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shared_audio: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration_seconds: number | null
+          file_url: string
+          id: string
+          org_id: string
+          title: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration_seconds?: number | null
+          file_url: string
+          id?: string
+          org_id: string
+          title: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration_seconds?: number | null
+          file_url?: string
+          id?: string
+          org_id?: string
+          title?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_audio_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -3083,6 +3354,78 @@ export type Database = {
         }
         Relationships: []
       }
+      travel_arrangements: {
+        Row: {
+          address: string | null
+          arrangement_type: string
+          booked_by: string | null
+          check_in: string | null
+          check_out: string | null
+          confirmation_number: string | null
+          cost: number | null
+          created_at: string | null
+          id: string
+          notes: string | null
+          phone: string | null
+          show_id: string | null
+          status: string | null
+          tour_id: string
+          updated_at: string | null
+          vendor_name: string | null
+        }
+        Insert: {
+          address?: string | null
+          arrangement_type: string
+          booked_by?: string | null
+          check_in?: string | null
+          check_out?: string | null
+          confirmation_number?: string | null
+          cost?: number | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          show_id?: string | null
+          status?: string | null
+          tour_id: string
+          updated_at?: string | null
+          vendor_name?: string | null
+        }
+        Update: {
+          address?: string | null
+          arrangement_type?: string
+          booked_by?: string | null
+          check_in?: string | null
+          check_out?: string | null
+          confirmation_number?: string | null
+          cost?: number | null
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          show_id?: string | null
+          status?: string | null
+          tour_id?: string
+          updated_at?: string | null
+          vendor_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "travel_arrangements_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "travel_arrangements_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_course_progress: {
         Row: {
           completed_at: string | null
@@ -3197,6 +3540,50 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      venue_contacts: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          is_primary: boolean | null
+          name: string
+          notes: string | null
+          phone: string | null
+          role: string
+          venue_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          role: string
+          venue_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          role?: string
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venue_contacts_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venue_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       venue_notes: {
         Row: {
@@ -3569,6 +3956,10 @@ export type Database = {
     }
     Functions: {
       get_user_tour_ids: { Args: never; Returns: string[] }
+      populate_state_income: {
+        Args: { p_tour_id: string; p_user_id: string }
+        Returns: number
+      }
       search_feedback_threads: {
         Args: { query: string }
         Returns: {

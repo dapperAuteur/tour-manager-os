@@ -52,6 +52,44 @@ export async function addSubscriber(listId: string, formData: FormData) {
   return { success: true }
 }
 
+export async function importSubscribersCsv(listId: string, csvContent: string) {
+  const supabase = await createClient()
+
+  const lines = csvContent.trim().split('\n')
+  if (lines.length < 2) return { error: 'CSV must have a header row and at least one data row' }
+
+  const headers = lines[0].split(',').map((h) => h.trim().toLowerCase().replace(/"/g, ''))
+  const emailIdx = headers.findIndex((h) => h === 'email')
+  const nameIdx = headers.findIndex((h) => h === 'name')
+  const cityIdx = headers.findIndex((h) => h === 'city')
+
+  if (emailIdx === -1) return { error: 'CSV must have an "email" column' }
+
+  const subscribers = []
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split(',').map((c) => c.trim().replace(/"/g, ''))
+    const email = cols[emailIdx]
+    if (!email || !email.includes('@')) continue
+
+    subscribers.push({
+      list_id: listId,
+      email,
+      name: nameIdx >= 0 ? cols[nameIdx] || null : null,
+      city: cityIdx >= 0 ? cols[cityIdx] || null : null,
+      source: 'import' as const,
+    })
+  }
+
+  if (subscribers.length === 0) return { error: 'No valid email addresses found in CSV' }
+
+  const { error } = await supabase.from('email_subscribers').upsert(subscribers, { onConflict: 'list_id,email' })
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/marketing')
+  return { success: true, count: subscribers.length }
+}
+
 export async function createCampaign(orgId: string, formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
