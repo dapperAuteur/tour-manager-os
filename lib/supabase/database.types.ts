@@ -3782,6 +3782,65 @@ export type Database = {
           },
         ]
       }
+      venue_stages: {
+        Row: {
+          capacity: number | null
+          created_at: string | null
+          has_monitors: boolean | null
+          id: string
+          is_indoor: boolean
+          name: string
+          notes: string | null
+          pa_system: string | null
+          sort_order: number | null
+          stage_depth: number | null
+          stage_height: number | null
+          stage_type: string
+          stage_width: number | null
+          venue_id: string
+        }
+        Insert: {
+          capacity?: number | null
+          created_at?: string | null
+          has_monitors?: boolean | null
+          id?: string
+          is_indoor?: boolean
+          name: string
+          notes?: string | null
+          pa_system?: string | null
+          sort_order?: number | null
+          stage_depth?: number | null
+          stage_height?: number | null
+          stage_type: string
+          stage_width?: number | null
+          venue_id: string
+        }
+        Update: {
+          capacity?: number | null
+          created_at?: string | null
+          has_monitors?: boolean | null
+          id?: string
+          is_indoor?: boolean
+          name?: string
+          notes?: string | null
+          pa_system?: string | null
+          sort_order?: number | null
+          stage_depth?: number | null
+          stage_height?: number | null
+          stage_type?: string
+          stage_width?: number | null
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venue_stages_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venue_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       warmup_routines: {
         Row: {
           created_at: string | null
@@ -3820,6 +3879,59 @@ export type Database = {
           title?: string
         }
         Relationships: []
+      }
+      weather_cache: {
+        Row: {
+          city: string
+          date: string
+          description: string | null
+          fetched_at: string | null
+          icon: string | null
+          id: string
+          precipitation_pct: number | null
+          show_id: string
+          state: string | null
+          temp_high_f: number | null
+          temp_low_f: number | null
+          wind_mph: number | null
+        }
+        Insert: {
+          city: string
+          date: string
+          description?: string | null
+          fetched_at?: string | null
+          icon?: string | null
+          id?: string
+          precipitation_pct?: number | null
+          show_id: string
+          state?: string | null
+          temp_high_f?: number | null
+          temp_low_f?: number | null
+          wind_mph?: number | null
+        }
+        Update: {
+          city?: string
+          date?: string
+          description?: string | null
+          fetched_at?: string | null
+          icon?: string | null
+          id?: string
+          precipitation_pct?: number | null
+          show_id?: string
+          state?: string | null
+          temp_high_f?: number | null
+          temp_low_f?: number | null
+          wind_mph?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weather_cache_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: true
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       webhooks: {
         Row: {
@@ -3956,6 +4068,10 @@ export type Database = {
     }
     Functions: {
       get_user_tour_ids: { Args: never; Returns: string[] }
+      get_venue_prefill: {
+        Args: { p_city: string; p_venue_name: string }
+        Returns: Json
+      }
       populate_state_income: {
         Args: { p_tour_id: string; p_user_id: string }
         Returns: number

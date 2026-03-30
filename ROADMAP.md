@@ -315,6 +315,12 @@ Last updated: 2026-03-30
 - ✅ Auto-populate state income from show revenue (DB function)
 - ✅ Venues are public (anyone can browse, reducing redundancy)
 - ✅ Contact sharing across teams via public venue directory
+- ✅ Full CRUD: edit, delete, duplicate across all modules (reusable RecordActions component)
+- ✅ Recharts analytics charts: ExpenseChart (bar), RevenueChart (line), ModuleChart (pie)
+- ✅ Weather integration on Show Day (Open-Meteo API, cached in DB)
+- ✅ Smart advance pre-fill from past venue data (get_venue_prefill DB function)
+- ✅ Venue stages/spaces — multiple stages per venue (indoor/outdoor, dimensions, PA)
+- ✅ Weather cache table for show dates
 
 ---
 

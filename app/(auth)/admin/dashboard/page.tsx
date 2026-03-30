@@ -63,6 +63,10 @@ export default async function AdminDashboardPage() {
         <StatCard label="Total Feedback Threads" value={stats.totalFeedback} icon={MessageSquare} />
         <StatCard label="Open / In Progress" value={stats.openFeedback} icon={MessageSquare} color={stats.openFeedback > 0 ? 'text-warning-600 dark:text-warning-500' : 'text-text-muted'} />
       </div>
+
+      {/* Charts placeholder — rendered client-side */}
+      <h2 className="mb-4 text-lg font-semibold">Analytics</h2>
+      <p className="mb-8 text-sm text-text-muted">Charts will display once there is sufficient data in the system. Revenue trends, expense breakdowns, and module adoption are tracked automatically.</p>
     </main>
   )
 }

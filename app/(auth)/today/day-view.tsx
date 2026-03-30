@@ -1,9 +1,17 @@
 import Link from 'next/link'
 import {
   MapPin, Phone, Clock, Hotel, Utensils, Volume2, Users, Navigation,
-  Music, ArrowRight, Cigarette,
+  Music, ArrowRight, Cigarette, Cloud, Thermometer, Droplets, Wind,
 } from 'lucide-react'
 import type { ShowDayData } from '@/lib/showday/queries'
+
+interface WeatherData {
+  temp_high_f: number
+  temp_low_f: number
+  description: string
+  precipitation_pct: number
+  wind_mph: number
+}
 
 function TimeBlock({ time, label, tz }: { time: string | null; label: string; tz: string }) {
   if (!time) return null
@@ -39,7 +47,7 @@ function tzAbbr(tz: string): string {
   }
 }
 
-export function DayView({ data }: { data: ShowDayData }) {
+export function DayView({ data, weather }: { data: ShowDayData; weather?: WeatherData | null }) {
   const { show, advance, contacts, itinerary, prevShow, nextShow } = data
   const tz = tzAbbr(show.timezone)
   const tourName = show.tours?.name || ''
@@ -63,6 +71,16 @@ export function DayView({ data }: { data: ShowDayData }) {
         </h2>
         <p className="mt-1 text-sm text-text-muted">Show Day &bull; {tz}</p>
       </div>
+
+      {/* Weather */}
+      {weather && (
+        <div className="flex items-center justify-center gap-6 rounded-xl border border-border-default bg-surface-raised p-3 text-sm">
+          <span className="flex items-center gap-1"><Cloud className="h-4 w-4 text-text-muted" aria-hidden="true" /> {weather.description}</span>
+          <span className="flex items-center gap-1"><Thermometer className="h-4 w-4 text-text-muted" aria-hidden="true" /> {weather.temp_high_f}&deg;/{weather.temp_low_f}&deg;F</span>
+          {weather.precipitation_pct > 0 && <span className="flex items-center gap-1"><Droplets className="h-4 w-4 text-text-muted" aria-hidden="true" /> {weather.precipitation_pct}%</span>}
+          {weather.wind_mph > 0 && <span className="flex items-center gap-1"><Wind className="h-4 w-4 text-text-muted" aria-hidden="true" /> {weather.wind_mph} mph</span>}
+        </div>
+      )}
 
       {/* Travel from */}
       {prevShow && itinerary?.distance_miles && (
