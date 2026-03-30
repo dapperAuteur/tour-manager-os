@@ -74,7 +74,7 @@ Last updated: 2026-03-30
 - ✅ Next destination preview
 - ✅ Day off view when no show scheduled
 - 📋 Push notifications for schedule changes
-- 📋 Weather integration
+- ✅ Weather integration (Open-Meteo, cached per show)
 
 ## Phase 6: Demo System ✅
 > Pre-configured demo accounts with realistic data for try-before-you-buy.
@@ -117,8 +117,8 @@ Last updated: 2026-03-30
 - ✅ Discussion posts with threaded replies
 - ✅ Pin/lock posts (admin moderation)
 - ✅ Author display names on posts and replies
-- 📋 Email sending integration (Resend)
-- 📋 CSV subscriber import
+- ✅ Email sending integration (Resend)
+- ✅ CSV subscriber import
 - 📋 Public event pages per show
 - 📋 Pre/post-show exclusive content
 
@@ -130,7 +130,7 @@ Last updated: 2026-03-30
 - ✅ Shared photo/video albums per tour with media management
 - ✅ Hub index page with Polls, Practice, Albums sections
 - ✅ 404 pages (public and authenticated)
-- 📋 Setlist collaboration
+- ✅ Setlist collaboration (songs, comments, team discussion)
 - 📋 Days-off planner with local suggestions
 
 ## Phase 11: Help & Feedback ✅
@@ -158,7 +158,7 @@ Last updated: 2026-03-30
 - ✅ Reusable search bar component
 - 📋 User engagement metrics (DAU/WAU/MAU, session duration)
 - 📋 Module adoption rates
-- 📋 Charts and graphs (Recharts)
+- ✅ Charts and graphs (Recharts — bar, line, pie)
 
 ## Phase 13: Academy / LMS ✅
 > Courses teaching users how to use the platform.
@@ -172,7 +172,7 @@ Last updated: 2026-03-30
 - 📋 Certificates of completion (PDF)
 - 📋 Admin course/lesson editor
 - 📋 Video lesson support
-- 📋 Admin education tool (codebase reference)
+- ✅ Admin education tool (5-lesson course: Stripe, email, Supabase, Vercel, codebase for presentations)
 
 ## Phase 14: Musician Tax Platform ✅
 > State-by-state tax tracking, deductions, year-end export.
@@ -186,7 +186,7 @@ Last updated: 2026-03-30
 - ✅ Income detail table
 - ✅ CSV tax export (state + deduction summaries + detail records)
 - 📋 QuickBooks/Xero integration
-- 📋 Auto-populate state income from show revenue
+- ✅ Auto-populate state income from show revenue (DB function)
 
 ## Phase 15: Production Bible ✅
 > Equipment inventory, stage plots, input lists, and venue notes.
@@ -212,9 +212,9 @@ Last updated: 2026-03-30
 - ✅ Data Import/Export page with template downloads
 - ✅ Email setup documentation in Help Center (Resend setup, DNS, API key, testing)
 - ✅ Email Marketing academy course (3 lessons: building lists, campaigns, admin setup)
-- 📋 Stripe Checkout session creation (needs Stripe price IDs configured)
+- ✅ Stripe Checkout session creation
+- ✅ Webhook handler for Stripe events (checkout, cancellation, payment failure)
 - 📋 CSV import wizard with column mapping and validation
-- 📋 Webhook handler for Stripe events
 
 ## Phase 17: Email Integration ✅
 > Send marketing emails with open/click tracking via Resend.
@@ -270,7 +270,7 @@ Last updated: 2026-03-30
 - ✅ Venue notes integration (from Production Bible)
 - ✅ Auto-create venue profiles from advance sheet data
 - ✅ Times-played counter and last-played date
-- 📋 Smart advance pre-fill from past venue data
+- ✅ Smart advance pre-fill from past venue data
 - 📋 Venue photos
 - 📋 Map view with Leaflet
 
@@ -315,6 +315,15 @@ Last updated: 2026-03-30
 - ✅ Auto-populate state income from show revenue (DB function)
 - ✅ Venues are public (anyone can browse, reducing redundancy)
 - ✅ Contact sharing across teams via public venue directory
+- ✅ Full CRUD: edit, delete, duplicate across all modules (reusable RecordActions component)
+- ✅ Recharts analytics charts (bar, line, pie) for admin dashboard
+- ✅ Weather integration on Show Day (Open-Meteo, cached)
+- ✅ Smart advance pre-fill from past venue data (DB function)
+- ✅ Venue stages/spaces — multiple stages per venue (indoor/outdoor)
+- ✅ Stripe Checkout session creation with webhook handler
+- ✅ Stripe webhook: checkout.session.completed, subscription.deleted, invoice.payment_failed
+- ✅ 7 admin help articles seeded (Stripe, push notifications, Cloudinary, Supabase, Vercel, codebase, dev workflow)
+- ✅ Admin education academy course (5 lessons: Stripe, email, Supabase, Vercel, codebase for presentations)
 
 ---
 
