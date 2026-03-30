@@ -464,6 +464,41 @@ export type Database = {
           },
         ]
       }
+      checkin_responses: {
+        Row: {
+          checkin_id: string
+          created_at: string | null
+          id: string
+          mood: number | null
+          response: string
+          user_id: string
+        }
+        Insert: {
+          checkin_id: string
+          created_at?: string | null
+          id?: string
+          mood?: number | null
+          response: string
+          user_id: string
+        }
+        Update: {
+          checkin_id?: string
+          created_at?: string | null
+          id?: string
+          mood?: number | null
+          response?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checkin_responses_checkin_id_fkey"
+            columns: ["checkin_id"]
+            isOneToOne: false
+            referencedRelation: "family_checkins"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_categories: {
         Row: {
           access_level: string | null
@@ -963,6 +998,38 @@ export type Database = {
             columns: ["tour_id"]
             isOneToOne: false
             referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      family_checkins: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          id: string
+          org_id: string
+          prompt: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          org_id: string
+          prompt: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          id?: string
+          org_id?: string
+          prompt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_checkins_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -3328,6 +3395,45 @@ export type Database = {
           },
         ]
       }
+      warmup_routines: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          difficulty: string | null
+          duration_minutes: number | null
+          id: string
+          is_system: boolean | null
+          routine_type: string
+          steps: Json | null
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          difficulty?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_system?: boolean | null
+          routine_type: string
+          steps?: Json | null
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          difficulty?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_system?: boolean | null
+          routine_type?: string
+          steps?: Json | null
+          title?: string
+        }
+        Relationships: []
+      }
       webhooks: {
         Row: {
           active: boolean | null
@@ -3368,6 +3474,83 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wellness_logs: {
+        Row: {
+          created_at: string | null
+          date: string
+          energy_level: number | null
+          exercised: boolean | null
+          hydration_glasses: number | null
+          id: string
+          meals_eaten: number | null
+          mood: number | null
+          notes: string | null
+          performance_rating: number | null
+          show_id: string | null
+          sleep_hours: number | null
+          sleep_quality: number | null
+          stress_level: number | null
+          timezone_from: string | null
+          timezone_to: string | null
+          updated_at: string | null
+          user_id: string
+          voice_condition: number | null
+          warmup_completed: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          energy_level?: number | null
+          exercised?: boolean | null
+          hydration_glasses?: number | null
+          id?: string
+          meals_eaten?: number | null
+          mood?: number | null
+          notes?: string | null
+          performance_rating?: number | null
+          show_id?: string | null
+          sleep_hours?: number | null
+          sleep_quality?: number | null
+          stress_level?: number | null
+          timezone_from?: string | null
+          timezone_to?: string | null
+          updated_at?: string | null
+          user_id: string
+          voice_condition?: number | null
+          warmup_completed?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          energy_level?: number | null
+          exercised?: boolean | null
+          hydration_glasses?: number | null
+          id?: string
+          meals_eaten?: number | null
+          mood?: number | null
+          notes?: string | null
+          performance_rating?: number | null
+          show_id?: string | null
+          sleep_hours?: number | null
+          sleep_quality?: number | null
+          stress_level?: number | null
+          timezone_from?: string | null
+          timezone_to?: string | null
+          updated_at?: string | null
+          user_id?: string
+          voice_condition?: number | null
+          warmup_completed?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wellness_logs_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
             referencedColumns: ["id"]
           },
         ]

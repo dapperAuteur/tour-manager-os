@@ -286,19 +286,20 @@ Last updated: 2026-03-30
 - 📋 Cross-act messaging/communication channels
 - 📋 Festival mode (multiple stages)
 
-## Phase 22: Wellness Platform 💡
+## Phase 22: Wellness Platform ✅
 > Health and wellbeing tools for life on the road, powered by CentenarianOS and Rise Wellness.
 
-- 💡 Sleep tracking relative to timezone changes
-- 💡 Vocal/physical warmup reminders with embedded routines
-- 💡 Mood/energy tracking per show
-- 💡 Burnout detection (schedule density + self-reported energy)
-- 💡 Hydration and rest reminders
-- 💡 Days-off wellness suggestions (gyms, spas, parks near venues)
-- 💡 Rise Wellness of Indiana mental health resource card
-- 💡 Links to CentenarianOS public exercise library (free, no account needed)
-- 💡 CentenarianOS promotion page with benefits and CTA to join
-- 💡 Medical disclaimer component
+- ✅ Daily wellness log: sleep (hours + quality), energy, mood, stress, hydration, meals, exercise, warmup, performance rating, voice condition
+- ✅ 7-day averages dashboard (sleep, energy, mood, voice)
+- ✅ Warmup routines: 3 seeded (Vocal Basic, Physical Stage Ready, Breathing Recovery) with step-by-step instructions and timing
+- ✅ Family check-ins: group prompts with mood emoji responses
+- ✅ Rise Wellness of Indiana mental health resource card
+- ✅ CentenarianOS promotion page (/wellness-resources) with exercise library links, workout links, platform CTA
+- ✅ Medical disclaimer component
+- ✅ Links to CentenarianOS public exercise library (110+ free exercises)
+- 📋 Burnout detection (schedule density + self-reported energy alerts)
+- 📋 Days-off wellness suggestions (gyms, spas, parks near venues)
+- 📋 Wearable integration (via CentenarianOS)
 
 ---
 

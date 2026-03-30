@@ -268,9 +268,16 @@ const phases: Phase[] = [
   },
   {
     name: 'Phase 22: Wellness Platform',
-    status: 'future',
-    description: 'Health and wellbeing tools with CentenarianOS integration and Rise Wellness resources.',
-    items: [],
+    status: 'complete',
+    description: 'Daily wellness tracking, warmup routines, family check-ins, and CentenarianOS integration.',
+    items: [
+      { label: 'Daily wellness log (12 metrics)', done: true },
+      { label: 'Warmup routines (vocal, physical, breathing)', done: true },
+      { label: 'Family check-ins with mood tracking', done: true },
+      { label: 'Rise Wellness mental health card', done: true },
+      { label: 'CentenarianOS exercise library links', done: true },
+      { label: 'Burnout detection', done: false },
+    ],
   },
 ]
 
