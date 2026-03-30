@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Vote, CalendarCheck, ImageIcon } from 'lucide-react'
+import { Vote, CalendarCheck, ImageIcon, Music } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Family Hub', robots: { index: false } }
 
@@ -8,6 +8,7 @@ const sections = [
   { href: '/hub/polls', label: 'Polls', description: 'Group decisions and voting', icon: Vote },
   { href: '/hub/practice', label: 'Practice', description: 'Schedule rehearsals and sessions', icon: CalendarCheck },
   { href: '/hub/albums', label: 'Albums', description: 'Shared photos and videos from tours', icon: ImageIcon },
+  { href: '/hub/audio', label: 'Audio', description: 'Share song demos and discuss', icon: Music },
 ]
 
 export default function HubPage() {

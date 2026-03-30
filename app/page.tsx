@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Music, FileSpreadsheet, DollarSign, Calendar, ShoppingBag, Users, ArrowRight } from 'lucide-react'
 import { Header } from '@/components/layout/header'
+import { SiteFooter } from '@/components/layout/site-footer'
 
 const features = [
   {
@@ -140,21 +141,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="border-t border-border-default py-8">
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-text-muted">
-            <Link href="/roadmap" className="hover:text-text-secondary">Roadmap</Link>
-            <Link href="/for/tour-managers" className="hover:text-text-secondary">Tour Managers</Link>
-            <Link href="/for/musicians" className="hover:text-text-secondary">Musicians</Link>
-            <Link href="/for/crew" className="hover:text-text-secondary">Crew</Link>
-            <Link href="/for/venues" className="hover:text-text-secondary">Venues</Link>
-            <Link href="/for/fans" className="hover:text-text-secondary">Fans</Link>
-            <Link href="/login" className="hover:text-text-secondary">Log In</Link>
-            <Link href="/signup" className="hover:text-text-secondary">Sign Up</Link>
-          </div>
-          <p className="mt-4 text-center text-sm text-text-muted">Tour Manager OS</p>
-        </footer>
       </main>
+      <SiteFooter />
     </>
   )
 }
