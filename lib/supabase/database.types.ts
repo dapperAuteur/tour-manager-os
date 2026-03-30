@@ -1963,6 +1963,73 @@ export type Database = {
         }
         Relationships: []
       }
+      package_acts: {
+        Row: {
+          act_name: string
+          act_type: string
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string | null
+          id: string
+          org_id: string | null
+          package_id: string
+          set_length_minutes: number | null
+          sort_order: number | null
+          tour_id: string | null
+        }
+        Insert: {
+          act_name: string
+          act_type?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          org_id?: string | null
+          package_id: string
+          set_length_minutes?: number | null
+          sort_order?: number | null
+          tour_id?: string | null
+        }
+        Update: {
+          act_name?: string
+          act_type?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          org_id?: string | null
+          package_id?: string
+          set_length_minutes?: number | null
+          sort_order?: number | null
+          tour_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "package_acts_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "package_acts_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "tour_packages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "package_acts_tour_id_fkey"
+            columns: ["tour_id"]
+            isOneToOne: false
+            referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       per_diem_log: {
         Row: {
           city: string | null
@@ -2228,6 +2295,48 @@ export type Database = {
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      production_timeline: {
+        Row: {
+          created_at: string | null
+          date: string
+          id: string
+          package_id: string
+          show_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          id?: string
+          package_id: string
+          show_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          id?: string
+          package_id?: string
+          show_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "production_timeline_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "tour_packages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "production_timeline_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
             referencedColumns: ["id"]
           },
         ]
@@ -2720,6 +2829,60 @@ export type Database = {
           },
         ]
       }
+      timeline_blocks: {
+        Row: {
+          act_id: string | null
+          block_type: string
+          created_at: string | null
+          end_time: string | null
+          id: string
+          label: string
+          notes: string | null
+          sort_order: number | null
+          start_time: string
+          timeline_id: string
+        }
+        Insert: {
+          act_id?: string | null
+          block_type: string
+          created_at?: string | null
+          end_time?: string | null
+          id?: string
+          label: string
+          notes?: string | null
+          sort_order?: number | null
+          start_time: string
+          timeline_id: string
+        }
+        Update: {
+          act_id?: string | null
+          block_type?: string
+          created_at?: string | null
+          end_time?: string | null
+          id?: string
+          label?: string
+          notes?: string | null
+          sort_order?: number | null
+          start_time?: string
+          timeline_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timeline_blocks_act_id_fkey"
+            columns: ["act_id"]
+            isOneToOne: false
+            referencedRelation: "package_acts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timeline_blocks_timeline_id_fkey"
+            columns: ["timeline_id"]
+            isOneToOne: false
+            referencedRelation: "production_timeline"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tour_members: {
         Row: {
           created_at: string | null
@@ -2760,6 +2923,56 @@ export type Database = {
             columns: ["tour_id"]
             isOneToOne: false
             referencedRelation: "tours"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tour_packages: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          org_id: string | null
+          package_type: string
+          start_date: string | null
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          org_id?: string | null
+          package_type?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          org_id?: string | null
+          package_type?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tour_packages_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]

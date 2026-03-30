@@ -14,6 +14,7 @@ const navItems = [
   { href: '/merch', label: 'Merch', icon: ShoppingBag },
   { href: '/production', label: 'Production', icon: Wrench },
   { href: '/venues', label: 'Venues', icon: MapPin },
+  { href: '/packages', label: 'Multi-Act', icon: Music },
   { href: '/marketing', label: 'Marketing', icon: Mail },
   { href: '/community', label: 'Community', icon: MessageCircle },
   { href: '/hub', label: 'Family Hub', icon: Users },
