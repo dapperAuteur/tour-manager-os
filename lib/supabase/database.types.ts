@@ -2965,6 +2965,156 @@ export type Database = {
           },
         ]
       }
+      venue_profiles: {
+        Row: {
+          address: string | null
+          capacity: number | null
+          city: string
+          country: string | null
+          created_at: string | null
+          created_from_advance_sheet: string | null
+          dressing_room_count: number | null
+          email: string | null
+          has_backstage_parking: boolean | null
+          has_rear_door: boolean | null
+          has_stage_door: boolean | null
+          id: string
+          last_played_at: string | null
+          lat: number | null
+          lng: number | null
+          name: string
+          pa_system: string | null
+          phone: string | null
+          photo_urls: Json | null
+          stage_depth: number | null
+          stage_height: number | null
+          stage_width: number | null
+          state: string | null
+          times_played: number | null
+          updated_at: string | null
+          venue_type: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          capacity?: number | null
+          city: string
+          country?: string | null
+          created_at?: string | null
+          created_from_advance_sheet?: string | null
+          dressing_room_count?: number | null
+          email?: string | null
+          has_backstage_parking?: boolean | null
+          has_rear_door?: boolean | null
+          has_stage_door?: boolean | null
+          id?: string
+          last_played_at?: string | null
+          lat?: number | null
+          lng?: number | null
+          name: string
+          pa_system?: string | null
+          phone?: string | null
+          photo_urls?: Json | null
+          stage_depth?: number | null
+          stage_height?: number | null
+          stage_width?: number | null
+          state?: string | null
+          times_played?: number | null
+          updated_at?: string | null
+          venue_type?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          capacity?: number | null
+          city?: string
+          country?: string | null
+          created_at?: string | null
+          created_from_advance_sheet?: string | null
+          dressing_room_count?: number | null
+          email?: string | null
+          has_backstage_parking?: boolean | null
+          has_rear_door?: boolean | null
+          has_stage_door?: boolean | null
+          id?: string
+          last_played_at?: string | null
+          lat?: number | null
+          lng?: number | null
+          name?: string
+          pa_system?: string | null
+          phone?: string | null
+          photo_urls?: Json | null
+          stage_depth?: number | null
+          stage_height?: number | null
+          stage_width?: number | null
+          state?: string | null
+          times_played?: number | null
+          updated_at?: string | null
+          venue_type?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      venue_ratings: {
+        Row: {
+          created_at: string | null
+          dressing_room_rating: number | null
+          hospitality_rating: number | null
+          id: string
+          load_in_rating: number | null
+          org_id: string
+          overall_rating: number
+          review: string | null
+          show_date: string | null
+          sound_rating: number | null
+          user_id: string | null
+          venue_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          dressing_room_rating?: number | null
+          hospitality_rating?: number | null
+          id?: string
+          load_in_rating?: number | null
+          org_id: string
+          overall_rating: number
+          review?: string | null
+          show_date?: string | null
+          sound_rating?: number | null
+          user_id?: string | null
+          venue_id: string
+        }
+        Update: {
+          created_at?: string | null
+          dressing_room_rating?: number | null
+          hospitality_rating?: number | null
+          id?: string
+          load_in_rating?: number | null
+          org_id?: string
+          overall_rating?: number
+          review?: string | null
+          show_date?: string | null
+          sound_rating?: number | null
+          user_id?: string | null
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venue_ratings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "venue_ratings_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venue_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       webhooks: {
         Row: {
           active: boolean | null
@@ -3048,6 +3198,19 @@ export type Database = {
           slug: string
           tags: string[]
           title: string
+        }[]
+      }
+      search_venues: {
+        Args: { query: string; venue_type_filter?: string }
+        Returns: {
+          capacity: number
+          city: string
+          id: string
+          name: string
+          similarity: number
+          state: string
+          times_played: number
+          venue_type: string
         }[]
       }
       show_limit: { Args: never; Returns: number }

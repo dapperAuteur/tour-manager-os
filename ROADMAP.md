@@ -260,12 +260,19 @@ Last updated: 2026-03-30
 - 📋 Dynamic theme injection from org branding at runtime
 - 📋 Multi-tenant domain routing middleware
 
-## Phase 20: Venue Network 💡
-> Crowd-sourced venue database, smart advance pre-fill.
+## Phase 20: Venue Network ✅
+> Crowd-sourced venue database built from advance sheets.
 
-- 💡 Venue profiles with ratings and photos
-- 💡 Smart advance (pre-fill from past data)
-- 💡 Venue search and discovery
+- ✅ Venue directory with fuzzy search (pg_trgm) and type filtering
+- ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
+- ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
+- ✅ Review text with show date
+- ✅ Venue notes integration (from Production Bible)
+- ✅ Auto-create venue profiles from advance sheet data
+- ✅ Times-played counter and last-played date
+- 📋 Smart advance pre-fill from past venue data
+- 📋 Venue photos
+- 📋 Map view with Leaflet
 
 ## Phase 21: Multi-Act Touring 💡
 > Festival mode, cross-act coordination.

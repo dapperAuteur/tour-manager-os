@@ -243,9 +243,21 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 20+: And More',
+    name: 'Phase 20: Venue Network',
+    status: 'complete',
+    description: 'Crowd-sourced venue database with ratings, reviews, and fuzzy search.',
+    items: [
+      { label: 'Venue directory with fuzzy search', done: true },
+      { label: 'Star ratings (5 categories)', done: true },
+      { label: 'Auto-create from advance sheets', done: true },
+      { label: 'Venue notes integration', done: true },
+      { label: 'Smart advance pre-fill', done: false },
+    ],
+  },
+  {
+    name: 'Phase 21+: And More',
     status: 'future',
-    description: 'Venue network, multi-act touring, and wellness platform with CentenarianOS integration.',
+    description: 'Multi-act touring and wellness platform with CentenarianOS integration.',
     items: [],
   },
 ]
