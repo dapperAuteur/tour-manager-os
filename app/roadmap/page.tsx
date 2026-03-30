@@ -255,9 +255,21 @@ const phases: Phase[] = [
     ],
   },
   {
-    name: 'Phase 21+: And More',
+    name: 'Phase 21: Multi-Act Touring',
+    status: 'complete',
+    description: 'Tour packages, act management, and shared production timelines.',
+    items: [
+      { label: 'Tour packages (tour/festival/residency)', done: true },
+      { label: 'Act management with contacts', done: true },
+      { label: 'Shared production timeline', done: true },
+      { label: 'Timeline blocks per act', done: true },
+      { label: 'Cross-act messaging', done: false },
+    ],
+  },
+  {
+    name: 'Phase 22: Wellness Platform',
     status: 'future',
-    description: 'Multi-act touring and wellness platform with CentenarianOS integration.',
+    description: 'Health and wellbeing tools with CentenarianOS integration and Rise Wellness resources.',
     items: [],
   },
 ]

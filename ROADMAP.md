@@ -274,12 +274,17 @@ Last updated: 2026-03-30
 - 📋 Venue photos
 - 📋 Map view with Leaflet
 
-## Phase 21: Multi-Act Touring 💡
-> Festival mode, cross-act coordination.
+## Phase 21: Multi-Act Touring ✅
+> Tour packages, festival mode, cross-act coordination.
 
-- 💡 Multi-act schedule coordination
-- 💡 Shared production timelines
-- 💡 Festival mode (multiple stages/days)
+- ✅ Tour packages (tour/festival/residency types with status tracking)
+- ✅ Act management (headliner/support/opener/special guest, set length, contacts)
+- ✅ Production timeline — per-date shared timeline across all acts
+- ✅ Timeline blocks: load-in, soundcheck, changeover, performance, doors, meet & greet, break, curfew
+- ✅ Act-specific blocks (assign to individual act or all)
+- ✅ Date selector for multi-day events
+- 📋 Cross-act messaging/communication channels
+- 📋 Festival mode (multiple stages)
 
 ## Phase 22: Wellness Platform 💡
 > Health and wellbeing tools for life on the road, powered by CentenarianOS and Rise Wellness.
