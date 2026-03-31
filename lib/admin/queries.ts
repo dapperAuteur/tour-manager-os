@@ -26,6 +26,14 @@ export async function getAdminDashboardStats() {
   const feedbackThreads = feedbackRes.data || []
   const openFeedback = feedbackThreads.filter((f) => f.status === 'open' || f.status === 'in_progress').length
 
+  // User type breakdown
+  const { data: profiles } = await supabase.from('user_profiles').select('user_type')
+  const userTypeBreakdown: Record<string, number> = {}
+  for (const p of profiles || []) {
+    const type = p.user_type || 'not_set'
+    userTypeBreakdown[type] = (userTypeBreakdown[type] || 0) + 1
+  }
+
   return {
     totalUsers,
     totalOrgs,
@@ -36,6 +44,7 @@ export async function getAdminDashboardStats() {
     totalMerchRevenue,
     totalFeedback: feedbackThreads.length,
     openFeedback,
+    userTypeBreakdown,
   }
 }
 

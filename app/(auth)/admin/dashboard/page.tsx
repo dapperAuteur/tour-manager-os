@@ -57,6 +57,19 @@ export default async function AdminDashboardPage() {
         <StatCard label="Merch Revenue" value={fmt(stats.totalMerchRevenue)} icon={ShoppingBag} color="text-primary-600 dark:text-primary-400" />
       </div>
 
+      {/* User type breakdown */}
+      <h2 className="mb-4 text-lg font-semibold">User Types</h2>
+      <div className="mb-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {Object.entries(stats.userTypeBreakdown)
+          .sort(([, a], [, b]) => b - a)
+          .map(([type, count]) => (
+            <div key={type} className="flex items-center justify-between rounded-lg border border-border-default bg-surface-raised px-4 py-3">
+              <span className="text-sm capitalize">{type.replace('_', ' ')}</span>
+              <span className="text-sm font-bold">{count}</span>
+            </div>
+          ))}
+      </div>
+
       {/* Feedback stats */}
       <h2 className="mb-4 text-lg font-semibold">Feedback</h2>
       <div className="mb-8 grid gap-4 sm:grid-cols-2">

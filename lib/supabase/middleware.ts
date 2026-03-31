@@ -43,6 +43,9 @@ export async function updateSession(request: NextRequest) {
     '/',
     '/login',
     '/signup',
+    '/pricing',
+    '/roadmap',
+    '/wellness-resources',
     '/auth/callback',
     '/advance', // public advance sheet forms
     '/for/',    // landing pages
@@ -58,6 +61,26 @@ export async function updateSession(request: NextRequest) {
     url.pathname = '/login'
     url.searchParams.set('redirect', request.nextUrl.pathname)
     return NextResponse.redirect(url)
+  }
+
+  // Onboarding redirect: check if authenticated user needs to pick a role
+  // Skip for: public paths, /onboarding itself, /api routes, demo users
+  if (user && !isPublicPath && !request.nextUrl.pathname.startsWith('/onboarding') && !request.nextUrl.pathname.startsWith('/api')) {
+    // Check for demo users by email pattern
+    const isDemoEmail = user.email?.includes('demo-') && user.email?.endsWith('@awews.com')
+    if (!isDemoEmail) {
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('user_type')
+        .eq('id', user.id)
+        .single()
+
+      if (profile && !profile.user_type) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/onboarding'
+        return NextResponse.redirect(url)
+      }
+    }
   }
 
   return supabaseResponse
