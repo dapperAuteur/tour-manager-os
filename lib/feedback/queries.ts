@@ -28,13 +28,48 @@ export async function getThreadWithMessages(threadId: string) {
 
   if (error) throw error
 
-  const { data: messages } = await supabase
+  // Query messages without the broken PostgREST join
+  const { data: rawMessages } = await supabase
     .from('feedback_messages')
-    .select('*, user_profiles:sender_id(display_name)')
+    .select('*')
     .eq('thread_id', threadId)
     .order('created_at', { ascending: true })
 
-  return { thread, messages: messages || [] }
+  // If RLS blocks admin messages, fall back to admin client
+  let messages = rawMessages || []
+  if (messages.length === 0 || !messages.some((m) => m.sender_role === 'admin')) {
+    // Try admin client to get all messages including admin replies
+    const { createAdminClient } = await import('@/lib/supabase/admin')
+    const adminClient = createAdminClient()
+    const { data: allMessages } = await adminClient
+      .from('feedback_messages')
+      .select('*')
+      .eq('thread_id', threadId)
+      .order('created_at', { ascending: true })
+    if (allMessages && allMessages.length > messages.length) {
+      messages = allMessages
+    }
+  }
+
+  // Enrich with sender display names
+  const senderIds = [...new Set(messages.map((m) => m.sender_id).filter(Boolean))]
+  let senderMap = new Map<string, string | null>()
+  if (senderIds.length > 0) {
+    const { createAdminClient } = await import('@/lib/supabase/admin')
+    const adminClient = createAdminClient()
+    const { data: profiles } = await adminClient
+      .from('user_profiles')
+      .select('id, display_name')
+      .in('id', senderIds)
+    senderMap = new Map((profiles || []).map((p) => [p.id, p.display_name]))
+  }
+
+  const enrichedMessages = messages.map((m) => ({
+    ...m,
+    user_profiles: { display_name: senderMap.get(m.sender_id) || null },
+  }))
+
+  return { thread, messages: enrichedMessages }
 }
 
 // Admin queries — bypass RLS

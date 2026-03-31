@@ -16,6 +16,14 @@ export default async function FeedbackThreadPage({ params }: { params: Promise<{
   const { threadId } = await params
   const { thread, messages } = await getThreadWithMessages(threadId)
 
+  // Mark notifications as read for this thread
+  const { createClient } = await import('@/lib/supabase/server')
+  const supabase = await createClient()
+  await supabase
+    .from('feedback_notifications')
+    .update({ read: true })
+    .eq('thread_id', threadId)
+
   return (
     <main id="main-content" className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <Link href="/feedback" className="mb-4 inline-block text-sm text-text-muted hover:text-text-secondary">&larr; All Feedback</Link>

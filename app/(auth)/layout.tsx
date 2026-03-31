@@ -33,9 +33,16 @@ export default async function AuthLayout({
     isAdmin = !!orgMember
   }
 
+  // Get unread feedback notification count
+  const { count: unreadFeedback } = await supabase
+    .from('feedback_notifications')
+    .select('*', { count: 'exact', head: true })
+    .eq('recipient_id', user.id)
+    .eq('read', false)
+
   return (
     <div className="flex min-h-screen">
-      <AppNav userName={displayName} isAdmin={isAdmin} />
+      <AppNav userName={displayName} isAdmin={isAdmin} unreadFeedback={unreadFeedback || 0} />
       <div className="flex-1">
         {isDemo && <DemoBanner />}
         {children}
