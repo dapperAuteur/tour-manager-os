@@ -43,9 +43,10 @@ const adminItems = [
 
 interface AppNavProps {
   userName: string
+  isAdmin?: boolean
 }
 
-export function AppNav({ userName }: AppNavProps) {
+export function AppNav({ userName, isAdmin = false }: AppNavProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -125,8 +126,8 @@ export function AppNav({ userName }: AppNavProps) {
             })}
           </ul>
 
-          {/* Admin section */}
-          <div className="mt-6">
+          {/* Admin section — only visible to admins */}
+          {isAdmin && <div className="mt-6">
             <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Admin</p>
             <ul className="flex flex-col gap-1">
               {adminItems.map((item) => {
@@ -153,7 +154,7 @@ export function AppNav({ userName }: AppNavProps) {
                 )
               })}
             </ul>
-          </div>
+          </div>}
         </div>
 
         {/* User footer */}
