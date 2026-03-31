@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ThemeProvider } from '@/lib/theme/theme-provider'
 import { ThemeScript } from '@/lib/theme/theme-script'
 import { SkipToMain } from '@/components/ui/skip-to-main'
 import { HelpBubble } from '@/components/ui/help-bubble'
+import { PostHogProvider } from '@/components/analytics/posthog-provider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -55,10 +57,13 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-surface text-text-primary antialiased">
         <ThemeProvider>
-          <SkipToMain />
-          {children}
-          <HelpBubble />
-          <Analytics />
+          <PostHogProvider>
+            <SkipToMain />
+            {children}
+            <HelpBubble />
+            <Analytics />
+            <SpeedInsights />
+          </PostHogProvider>
         </ThemeProvider>
       </body>
     </html>

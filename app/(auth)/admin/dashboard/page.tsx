@@ -76,6 +76,55 @@ export default async function AdminDashboardPage() {
         <StatCard label="Total Feedback Threads" value={stats.totalFeedback} icon={MessageSquare} />
         <StatCard label="Open / In Progress" value={stats.openFeedback} icon={MessageSquare} color={stats.openFeedback > 0 ? 'text-warning-600 dark:text-warning-500' : 'text-text-muted'} />
       </div>
+
+      {/* Product Analytics */}
+      <h2 className="mb-4 text-lg font-semibold">Product Analytics</h2>
+      <div className="mb-8 rounded-xl border border-border-default bg-surface-raised p-6">
+        {process.env.NEXT_PUBLIC_POSTHOG_KEY ? (
+          <div className="space-y-3">
+            <p className="text-sm text-text-secondary">
+              PostHog is active. View detailed analytics including funnels, session recordings, and user journeys on your PostHog dashboard.
+            </p>
+            <div className="flex gap-3">
+              <a
+                href={`${process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.posthog.com'}/project`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
+              >
+                Open PostHog Dashboard
+              </a>
+              <a
+                href="https://vercel.com/analytics"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt"
+              >
+                Vercel Analytics
+              </a>
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg bg-surface-alt p-3 text-center">
+                <p className="text-xs text-text-muted">Tracking</p>
+                <p className="mt-1 text-sm font-semibold">Page Views, Events, Sessions</p>
+              </div>
+              <div className="rounded-lg bg-surface-alt p-3 text-center">
+                <p className="text-xs text-text-muted">Funnels</p>
+                <p className="mt-1 text-sm font-semibold">Signup → Onboard → Pay</p>
+              </div>
+              <div className="rounded-lg bg-surface-alt p-3 text-center">
+                <p className="text-xs text-text-muted">Recordings</p>
+                <p className="mt-1 text-sm font-semibold">Session Replays</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <p className="mb-3 text-sm text-text-secondary">PostHog is not configured yet. Set up product analytics to track user behavior, funnels, and session recordings.</p>
+            <p className="text-xs text-text-muted">Add NEXT_PUBLIC_POSTHOG_KEY to your environment variables. See Help Center → PostHog Setup for instructions.</p>
+          </div>
+        )}
+      </div>
     </main>
   )
 }
