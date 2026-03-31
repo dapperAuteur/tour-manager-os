@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/lib/theme/theme-provider'
 import { ThemeScript } from '@/lib/theme/theme-script'
 import { SkipToMain } from '@/components/ui/skip-to-main'
+import { HelpBubble } from '@/components/ui/help-bubble'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function RootLayout({
         <ThemeProvider>
           <SkipToMain />
           {children}
+          <HelpBubble />
           <Analytics />
         </ThemeProvider>
       </body>
