@@ -34,6 +34,7 @@ export function SiteFooter() {
           <div>
             <h3 className="mb-3 text-sm font-semibold">Resources</h3>
             <ul className="space-y-2 text-sm text-text-secondary">
+              <li><Link href="/pricing" className="hover:text-text-primary">Pricing</Link></li>
               <li><Link href="/roadmap" className="hover:text-text-primary">Roadmap</Link></li>
               <li><Link href="/wellness-resources" className="hover:text-text-primary">Wellness Resources</Link></li>
               <li><Link href="/login?demo=true" className="hover:text-text-primary">Try Demo</Link></li>

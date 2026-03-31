@@ -91,6 +91,7 @@ export function LandingPage({ title, subtitle, description, benefits, demoLabel,
         <footer className="border-t border-border-default py-8 text-center text-sm text-text-muted">
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/" className="hover:text-text-secondary">Home</Link>
+            <Link href="/pricing" className="hover:text-text-secondary">Pricing</Link>
             <Link href="/roadmap" className="hover:text-text-secondary">Roadmap</Link>
             <Link href="/login" className="hover:text-text-secondary">Log In</Link>
             <Link href="/signup" className="hover:text-text-secondary">Sign Up</Link>

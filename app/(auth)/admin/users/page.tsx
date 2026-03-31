@@ -37,6 +37,7 @@ export default async function AdminUsersPage() {
               <tr className="border-b border-border-default text-left text-xs text-text-muted">
                 <th className="pb-3 pr-4" scope="col">User</th>
                 <th className="pb-3 pr-4" scope="col">Email</th>
+                <th className="pb-3 pr-4" scope="col">Type</th>
                 <th className="pb-3 pr-4" scope="col">Organization</th>
                 <th className="pb-3 pr-4" scope="col">Role</th>
                 <th className="pb-3 pr-4" scope="col">Paid</th>
@@ -61,6 +62,7 @@ export default async function AdminUsersPage() {
                       </div>
                     </td>
                     <td className="py-3 pr-4 text-text-secondary">{u.email}</td>
+                    <td className="py-3 pr-4 capitalize text-text-secondary">{u.profile?.user_type?.replace('_', ' ') || <span className="text-text-muted">—</span>}</td>
                     <td className="py-3 pr-4">{orgName || <span className="text-text-muted">—</span>}</td>
                     <td className="py-3 pr-4 capitalize">{orgRole || <span className="text-text-muted">—</span>}</td>
                     <td className="py-3 pr-4">
