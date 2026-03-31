@@ -44,9 +44,10 @@ const adminItems = [
 interface AppNavProps {
   userName: string
   isAdmin?: boolean
+  unreadFeedback?: number
 }
 
-export function AppNav({ userName, isAdmin = false }: AppNavProps) {
+export function AppNav({ userName, isAdmin = false, unreadFeedback = 0 }: AppNavProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -119,7 +120,12 @@ export function AppNav({ userName, isAdmin = false }: AppNavProps) {
                     aria-current={isActive ? 'page' : undefined}
                   >
                     <item.icon className="h-4 w-4" aria-hidden="true" />
-                    {item.label}
+                    <span className="flex-1">{item.label}</span>
+                    {item.href === '/feedback' && unreadFeedback > 0 && (
+                      <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error-500 px-1.5 text-xs font-bold text-white" aria-label={`${unreadFeedback} unread`}>
+                        {unreadFeedback}
+                      </span>
+                    )}
                   </Link>
                 </li>
               )
