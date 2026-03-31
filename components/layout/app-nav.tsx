@@ -6,6 +6,7 @@ import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, Doll
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
+// Feature modules — the core touring tools
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/today', label: 'Today', icon: CalendarDays },
@@ -20,9 +21,17 @@ const navItems = [
   { href: '/community', label: 'Community', icon: MessageCircle },
   { href: '/hub', label: 'Family Hub', icon: Users },
   { href: '/wellness', label: 'Wellness', icon: Heart },
+]
+
+// Support & Learn
+const supportItems = [
   { href: '/academy', label: 'Academy', icon: GraduationCap },
-  { href: '/help', label: 'Help', icon: HelpCircle },
+  { href: '/help', label: 'Help Center', icon: HelpCircle },
   { href: '/feedback', label: 'Feedback', icon: MessageSquare },
+]
+
+// Tools & Settings
+const toolsItems = [
   { href: '/developers', label: 'API Docs', icon: Code2 },
   { href: '/data', label: 'Import/Export', icon: Database },
   { href: '/pricing', label: 'Pricing', icon: CreditCard },
@@ -30,6 +39,7 @@ const navItems = [
   { href: '/settings', label: 'Settings', icon: Settings },
 ]
 
+// Admin
 const adminItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: BarChart3 },
   { href: '/admin/users', label: 'Users', icon: Users },
@@ -57,6 +67,39 @@ export function AppNav({ userName, isAdmin = false, unreadFeedback = 0 }: AppNav
     await supabase.auth.signOut()
     router.push('/login')
     router.refresh()
+  }
+
+  function NavLink({ href, label, icon: Icon, badge }: { href: string; label: string; icon: React.ComponentType<{ className?: string }>; badge?: number }) {
+    const isActive = pathname === href || pathname.startsWith(href + '/')
+    return (
+      <li>
+        <Link
+          href={href}
+          onClick={() => setMobileOpen(false)}
+          className={`
+            flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors
+            focus:outline-none focus:ring-2 focus:ring-primary-500
+            ${isActive
+              ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
+              : 'text-text-secondary hover:bg-surface-alt hover:text-text-primary'
+            }
+          `}
+          aria-current={isActive ? 'page' : undefined}
+        >
+          <Icon className="h-4 w-4" aria-hidden="true" />
+          <span className="flex-1">{label}</span>
+          {badge && badge > 0 ? (
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error-500 px-1.5 text-xs font-bold text-white" aria-label={`${badge} unread`}>
+              {badge}
+            </span>
+          ) : null}
+        </Link>
+      </li>
+    )
+  }
+
+  function SectionHeading({ label }: { label: string }) {
+    return <p className="mb-2 mt-6 px-3 text-xs font-semibold uppercase tracking-wider text-text-muted">{label}</p>
   }
 
   return (
@@ -99,85 +142,78 @@ export function AppNav({ userName, isAdmin = false, unreadFeedback = 0 }: AppNav
           <span className="text-sm font-semibold">Tour Manager OS</span>
         </div>
 
-        {/* Nav items */}
+        {/* Scrollable nav */}
         <div className="flex-1 overflow-y-auto px-3 py-4">
-          {/* Help & Feedback — visible on mobile (replaces floating bubble) */}
-          <div className="mb-4 flex gap-2 sm:hidden">
+          {/* Mobile quick access — Support & Learn */}
+          <div className="mb-4 space-y-2 sm:hidden">
             <Link
-              href="/help"
+              href="/academy"
               onClick={() => setMobileOpen(false)}
-              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-default py-2 text-xs font-medium transition-colors hover:bg-surface-alt"
+              className="flex items-center justify-center gap-2 rounded-lg border border-primary-500/30 bg-primary-500/5 py-2.5 text-xs font-medium text-primary-600 transition-colors hover:bg-primary-500/10 dark:text-primary-400"
             >
-              <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" /> Help
+              <GraduationCap className="h-4 w-4" aria-hidden="true" /> Academy
             </Link>
-            <Link
-              href="/feedback"
-              onClick={() => setMobileOpen(false)}
-              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-default py-2 text-xs font-medium transition-colors hover:bg-surface-alt"
-            >
-              <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" /> Feedback
-            </Link>
+            <div className="flex gap-2">
+              <Link
+                href="/help"
+                onClick={() => setMobileOpen(false)}
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-default py-2.5 text-xs font-medium transition-colors hover:bg-surface-alt"
+              >
+                <HelpCircle className="h-4 w-4" aria-hidden="true" /> Help
+              </Link>
+              <Link
+                href="/feedback"
+                onClick={() => setMobileOpen(false)}
+                className="relative flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-default py-2.5 text-xs font-medium transition-colors hover:bg-surface-alt"
+              >
+                <MessageSquare className="h-4 w-4" aria-hidden="true" /> Feedback
+                {unreadFeedback > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-error-500 px-1 text-[10px] font-bold text-white">
+                    {unreadFeedback}
+                  </span>
+                )}
+              </Link>
+            </div>
           </div>
+
+          {/* Feature modules */}
           <ul className="flex flex-col gap-1">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`
-                      flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors
-                      focus:outline-none focus:ring-2 focus:ring-primary-500
-                      ${isActive
-                        ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
-                        : 'text-text-secondary hover:bg-surface-alt hover:text-text-primary'
-                      }
-                    `}
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    <item.icon className="h-4 w-4" aria-hidden="true" />
-                    <span className="flex-1">{item.label}</span>
-                    {item.href === '/feedback' && unreadFeedback > 0 && (
-                      <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error-500 px-1.5 text-xs font-bold text-white" aria-label={`${unreadFeedback} unread`}>
-                        {unreadFeedback}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              )
-            })}
+            {navItems.map((item) => (
+              <NavLink key={item.href} {...item} />
+            ))}
           </ul>
 
-          {/* Admin section — only visible to admins */}
-          {isAdmin && <div className="mt-6">
-            <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-text-muted">Admin</p>
-            <ul className="flex flex-col gap-1">
-              {adminItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`
-                        flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors
-                        focus:outline-none focus:ring-2 focus:ring-primary-500
-                        ${isActive
-                          ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
-                          : 'text-text-secondary hover:bg-surface-alt hover:text-text-primary'
-                        }
-                      `}
-                      aria-current={isActive ? 'page' : undefined}
-                    >
-                      <item.icon className="h-4 w-4" aria-hidden="true" />
-                      {item.label}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>}
+          {/* Support & Learn */}
+          <SectionHeading label="Support & Learn" />
+          <ul className="flex flex-col gap-1">
+            {supportItems.map((item) => (
+              <NavLink
+                key={item.href}
+                {...item}
+                badge={item.href === '/feedback' ? unreadFeedback : undefined}
+              />
+            ))}
+          </ul>
+
+          {/* Tools & Settings */}
+          <SectionHeading label="Tools & Settings" />
+          <ul className="flex flex-col gap-1">
+            {toolsItems.map((item) => (
+              <NavLink key={item.href} {...item} />
+            ))}
+          </ul>
+
+          {/* Admin */}
+          {isAdmin && (
+            <>
+              <SectionHeading label="Admin" />
+              <ul className="flex flex-col gap-1">
+                {adminItems.map((item) => (
+                  <NavLink key={item.href} {...item} />
+                ))}
+              </ul>
+            </>
+          )}
         </div>
 
         {/* User footer */}
