@@ -103,7 +103,7 @@ export function HelpBubble() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-white shadow-lg transition-transform hover:scale-105 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-surface"
+        className="fixed bottom-6 right-6 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-white shadow-lg transition-transform hover:scale-105 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-surface sm:flex"
         aria-label={open ? 'Close help menu' : 'Get help, leave feedback, or report a bug'}
       >
         {open ? <X className="h-6 w-6" aria-hidden="true" /> : <LifeBuoy className="h-6 w-6" aria-hidden="true" />}
@@ -112,7 +112,7 @@ export function HelpBubble() {
       {/* Panel */}
       {open && (
         <div
-          className="fixed bottom-24 right-6 z-50 w-80 overflow-hidden rounded-2xl border border-border-default bg-surface shadow-2xl sm:w-96"
+          className="fixed bottom-24 right-6 z-50 hidden w-80 overflow-hidden rounded-2xl border border-border-default bg-surface shadow-2xl sm:block sm:w-96"
           role="dialog"
           aria-label="Help and feedback"
         >

@@ -101,6 +101,23 @@ export function AppNav({ userName, isAdmin = false, unreadFeedback = 0 }: AppNav
 
         {/* Nav items */}
         <div className="flex-1 overflow-y-auto px-3 py-4">
+          {/* Help & Feedback — visible on mobile (replaces floating bubble) */}
+          <div className="mb-4 flex gap-2 sm:hidden">
+            <Link
+              href="/help"
+              onClick={() => setMobileOpen(false)}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-default py-2 text-xs font-medium transition-colors hover:bg-surface-alt"
+            >
+              <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" /> Help
+            </Link>
+            <Link
+              href="/feedback"
+              onClick={() => setMobileOpen(false)}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-default py-2 text-xs font-medium transition-colors hover:bg-surface-alt"
+            >
+              <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" /> Feedback
+            </Link>
+          </div>
           <ul className="flex flex-col gap-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
