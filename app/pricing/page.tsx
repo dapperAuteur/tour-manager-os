@@ -18,38 +18,38 @@ const roles = [
   {
     icon: Music,
     title: 'Artists',
-    description: 'Manage your own touring — schedule, finances, merch, fan engagement. Everything in one place.',
-    modules: ['Show Day', 'Finances', 'Merch', 'Marketing'],
+    description: 'You handle your own business. Stop juggling spreadsheets, texts, and emails. See your schedule, know your money, sell your merch, and connect with fans — all from one place.',
+    highlights: ['Daily schedule on your phone', 'Tour P&L at a glance', 'Merch sales tracking', 'Fan email marketing'],
   },
   {
     icon: Users,
     title: 'Tour Managers',
-    description: 'Run tours for your artists — advance sheets, itineraries, team management, budgets.',
-    modules: ['Advance Sheets', 'Itineraries', 'Finances', 'Production'],
+    description: 'Send venues a link instead of emailing Excel files. Itineraries generate themselves. Track budgets in real time. Manage your whole team from one dashboard.',
+    highlights: ['Digital advance sheets', 'Auto-generated itineraries', 'Real-time tour budgets', 'Team & module management'],
   },
   {
     icon: Music,
     title: 'Band Members',
-    description: 'See your daily schedule, track personal finances, collaborate on setlists, stay healthy on the road.',
-    modules: ['Show Day', 'My Finances', 'Setlists', 'Wellness'],
+    description: 'Open your phone and see your whole day. Know when soundcheck is, where the hotel is, and how much you\'re earning. Vote on setlists. Warm up before the show.',
+    highlights: ['Show day companion', 'Personal finance tracking', 'Setlist collaboration', 'Pre-show warmup routines'],
   },
   {
     icon: Wrench,
     title: 'Crew',
-    description: 'Production specs, stage plots, input lists, equipment inventory, and venue notes that persist.',
-    modules: ['Production Bible', 'Show Day', 'Documents', 'Venue Notes'],
+    description: 'Every load-in detail, every stage dimension, every patch sheet — in one app. Add notes about venues that stick around for the next time you\'re back.',
+    highlights: ['Stage plots & input lists', 'Equipment inventory', 'Venue notes that persist', 'Production timeline'],
   },
   {
     icon: MapPin,
     title: 'Venue Contacts',
-    description: 'Fill out advance sheets online — no login required. Your venue data saves for future shows.',
-    modules: ['Advance Sheets'],
+    description: 'You\'ll get a link from the tour manager. Fill out the form — no account needed. Your venue info saves for next time so you never fill it out twice.',
+    highlights: ['No login required', 'Simple web form', 'Data saves for return shows', 'Instant confirmation'],
   },
   {
     icon: Heart,
     title: 'Fans',
-    description: 'Exclusive content, merch store, community forums, and show notifications.',
-    modules: ['Community', 'Merch Store', 'Events'],
+    description: 'Get closer to the music. Behind-the-scenes content, merch drops, community conversations, and tour date notifications for your city.',
+    highlights: ['Exclusive content', 'Merch store', 'Community forums', 'Show notifications'],
   },
 ]
 
@@ -106,13 +106,14 @@ export default async function PricingPage() {
             </p>
 
             <ul className="mb-8 space-y-3 text-left text-sm">
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> All modules — no feature limits</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Full CRUD — create, edit, duplicate, delete</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> CSV import/export and PDF reports</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> API access for integrations</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Priority support</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Venues fill out a form — your itinerary writes itself</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> See your whole day on your phone — soundcheck, doors, showtime</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Know if the tour is making money — P&L per show</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Track merch sales and see what&apos;s actually selling</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> File taxes easier — expenses categorized, state income tracked</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Works offline — your schedule is there even in dead zones</li>
               {!stats.showAnnual && (
-                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Never expires — lifetime access</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" /> Pay once, access forever — never expires</li>
               )}
             </ul>
 
@@ -142,11 +143,14 @@ export default async function PricingPage() {
                 <role.icon className="mb-3 h-8 w-8 text-primary-600 dark:text-primary-400" aria-hidden="true" />
                 <h3 className="mb-2 text-lg font-semibold">{role.title}</h3>
                 <p className="mb-4 text-sm text-text-secondary">{role.description}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {role.modules.map((mod) => (
-                    <span key={mod} className="rounded-full bg-surface-alt px-2 py-0.5 text-xs text-text-muted">{mod}</span>
+                <ul className="space-y-1.5">
+                  {role.highlights.map((h) => (
+                    <li key={h} className="flex items-center gap-2 text-xs text-text-muted">
+                      <CheckCircle2 className="h-3 w-3 shrink-0 text-success-600 dark:text-success-500" aria-hidden="true" />
+                      {h}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
@@ -166,7 +170,7 @@ export default async function PricingPage() {
             </div>
             <div>
               <h3 className="font-semibold">Can free users access the app?</h3>
-              <p className="mt-1 text-sm text-text-secondary">Free users get read-only access. Paid members get full CRUD — create, edit, duplicate, and delete across all modules.</p>
+              <p className="mt-1 text-sm text-text-secondary">Free users can view schedules and data. Paid members can create tours, add shows, track expenses, manage merch, and use every feature fully.</p>
             </div>
             <div>
               <h3 className="font-semibold">Can I invite band members who aren&apos;t paid?</h3>
