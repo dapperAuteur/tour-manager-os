@@ -14,11 +14,18 @@ export default async function AdminSubscriptionsPage() {
     return <main id="main-content" className="p-8"><p className="text-text-secondary">Admin access required.</p></main>
   }
 
-  const [stats, subscriptions, promos] = await Promise.all([
-    getLifetimeSalesStats(),
-    getAllSubscriptions(),
-    getPromoCodes(),
-  ])
+  let stats, subscriptions, promos
+  try {
+    ;[stats, subscriptions, promos] = await Promise.all([
+      getLifetimeSalesStats(),
+      getAllSubscriptions(),
+      getPromoCodes(),
+    ])
+  } catch {
+    stats = { paid_lifetime_count: 0, active_annual_count: 0, total_revenue: 0, lifetime_remaining: 100, annual_unlocked: false }
+    subscriptions = []
+    promos = []
+  }
 
   const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
 

@@ -17,13 +17,8 @@ export async function getUserSubscription(userId: string) {
 
 export async function getLifetimeSalesStats() {
   const supabase = createAdminClient()
-  const { data } = await supabase
-    .from('lifetime_sales_stats' as 'subscriptions')
-    .select('*')
-    .single()
 
-  // Fallback if view doesn't work via PostgREST
-  if (!data) {
+  try {
     const { data: subs } = await supabase
       .from('subscriptions')
       .select('type, status, amount')
@@ -40,9 +35,15 @@ export async function getLifetimeSalesStats() {
       lifetime_remaining: 100 - paidLifetime,
       annual_unlocked: paidLifetime >= 100,
     }
+  } catch {
+    return {
+      paid_lifetime_count: 0,
+      active_annual_count: 0,
+      total_revenue: 0,
+      lifetime_remaining: 100,
+      annual_unlocked: false,
+    }
   }
-
-  return { ...data, annual_unlocked: (data as Record<string, number>).paid_lifetime_count >= 100 }
 }
 
 export async function getAllSubscriptions() {
