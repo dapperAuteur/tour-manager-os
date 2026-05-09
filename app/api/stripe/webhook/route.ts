@@ -70,7 +70,7 @@ async function issueTickets(
     const links = rows
       .map(
         (r, i) =>
-          `<li><a href="${origin}/tickets/${r.id}">Ticket ${i + 1}</a></li>`,
+          `<li><a href="${origin}/tickets/${r.id}?token=${encodeURIComponent(r.signature)}">Ticket ${i + 1}</a></li>`,
       )
       .join('')
     try {
