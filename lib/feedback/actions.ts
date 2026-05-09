@@ -91,16 +91,15 @@ export async function sendFeedbackMessage(threadId: string, formData: FormData) 
 
       // Send email notification
       try {
-        const { getResend, DEFAULT_FROM } = await import('@/lib/email/resend')
-        const resend = getResend()
-        if (resend) {
+        const { sendEmail, isMailgunConfigured } = await import('@/lib/email/mailgun')
+        if (isMailgunConfigured()) {
           // Get user email
           const { data: userData } = await client.auth.admin.getUserById(thread.user_id)
           if (userData?.user?.email) {
-            await resend.emails.send({
-              from: DEFAULT_FROM,
+            await sendEmail({
               to: userData.user.email,
               subject: `Reply to your feedback: "${thread.subject}"`,
+              tags: ['feedback', 'feedback:reply'],
               html: `
                 <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:20px;">
                   <h2 style="margin:0 0 16px;">You have a reply on your feedback</h2>
