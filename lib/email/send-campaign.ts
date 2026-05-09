@@ -1,10 +1,10 @@
 'use server'
 
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getResend, DEFAULT_FROM } from './resend'
+import { sendEmail, isMailgunConfigured } from './mailgun'
 
 export async function sendCampaign(campaignId: string) {
-  const resend = getResend()
+  const mailgunReady = isMailgunConfigured()
   const supabase = createAdminClient()
 
   // Get campaign
@@ -38,8 +38,8 @@ export async function sendCampaign(campaignId: string) {
     .update({ status: 'sending' })
     .eq('id', campaignId)
 
-  if (!resend) {
-    // Resend not configured — simulate send
+  if (!mailgunReady) {
+    // Mailgun not configured — simulate send
     await supabase
       .from('email_campaigns')
       .update({
@@ -49,10 +49,10 @@ export async function sendCampaign(campaignId: string) {
       })
       .eq('id', campaignId)
 
-    return { success: true, message: 'Campaign marked as sent (Resend not configured — emails not actually delivered)', count: subscribers.length }
+    return { success: true, message: 'Campaign marked as sent (Mailgun not configured — emails not actually delivered)', count: subscribers.length }
   }
 
-  // Send via Resend
+  // Send via Mailgun
   let sentCount = 0
   const errors: string[] = []
 
@@ -76,11 +76,11 @@ export async function sendCampaign(campaignId: string) {
 
     const results = await Promise.allSettled(
       batch.map((sub) =>
-        resend.emails.send({
-          from: DEFAULT_FROM,
+        sendEmail({
           to: sub.email,
           subject: campaign.subject,
           html: htmlContent,
+          tags: ['campaign', `campaign:${campaignId}`],
         })
       )
     )

@@ -121,7 +121,7 @@ const phases: Phase[] = [
       { label: 'Campaign builder with scheduling', done: true },
       { label: 'Community categories and posts', done: true },
       { label: 'Threaded replies', done: true },
-      { label: 'Email sending (Resend)', done: false },
+      { label: 'Email sending (Mailgun)', done: false },
     ],
   },
   {
@@ -209,9 +209,9 @@ const phases: Phase[] = [
   {
     name: 'Phase 17: Email Integration',
     status: 'complete',
-    description: 'Send marketing emails with open/click tracking via Resend.',
+    description: 'Send marketing emails with open/click tracking via Mailgun.',
     items: [
-      { label: 'Resend email delivery', done: true },
+      { label: 'Mailgun email delivery', done: true },
       { label: 'Open tracking (pixel)', done: true },
       { label: 'Click tracking', done: true },
       { label: 'Campaign analytics', done: true },
