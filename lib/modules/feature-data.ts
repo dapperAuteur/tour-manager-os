@@ -151,6 +151,20 @@ export const featurePages: Record<string, FeaturePageData> = {
     userTypes: ['Musicians', 'Crew'],
     status: 'coming-soon',
   },
+  'ticketing': {
+    name: 'Ticketing',
+    tagline: 'Sell tickets, scan QR codes at the door, audit every entry',
+    description: 'Stripe Checkout for sales, signed-QR codes that can\'t be forged, and a web-based door scanner that works on any phone — no native app required.',
+    benefits: [
+      { title: 'Sell via Stripe', description: 'Public per-show buy page with multiple ticket types (GA, VIP, Reserved). Guest checkout supported. Tickets emailed automatically with QR-code links.' },
+      { title: 'Anti-Counterfeit QR', description: 'Each ticket carries an HMAC signature derived from a server-only secret. Photos of valid QRs only work once — atomic single-use enforcement at the database level.' },
+      { title: 'Web Scanner', description: 'Any modern phone with a camera becomes a door scanner. Live tally, manual fallback, vibration feedback. Logged-in tour staff only.' },
+      { title: 'Live Manager View', description: 'Real-time dashboard: tickets sold, scan rate, gross revenue, refunds, per-type breakdown, and a 50-event scan log including forged-code attempts.' },
+      { title: 'Refund-Aware', description: 'Stripe refunds flip the ticket status automatically. Re-scanned refunded tickets are rejected and returned to inventory.' },
+    ],
+    userTypes: ['Tour Managers', 'Crew', 'Fans'],
+    status: 'available',
+  },
 }
 
 export function getFeaturePageData(slug: string): FeaturePageData | null {
