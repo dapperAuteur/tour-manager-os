@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-04-01
+Last updated: 2026-05-09
 
 ## Legend
 - ✅ Complete
@@ -300,6 +300,22 @@ Last updated: 2026-04-01
 - 📋 Burnout detection (schedule density + self-reported energy alerts)
 - 📋 Days-off wellness suggestions (gyms, spas, parks near venues)
 - 📋 Wearable integration (via CentenarianOS)
+
+## Phase 24: Ticketing System ✅
+> Sell tickets, scan QR codes at the door, audit every entry. Anti-counterfeit signed QRs.
+
+- ✅ Schema: `ticket_types`, `tickets`, `scan_logs` with RLS for tour staff + purchasers
+- ✅ Stripe Checkout flow: `POST /api/tickets/checkout` with inventory check, guest checkout
+- ✅ Webhook ticket issuance: HMAC-signed QR codes, atomic `quantity_sold` increment, refund handling
+- ✅ Public buy page at `/shows/[id]/tickets` — type picker, qty, guest email
+- ✅ Holder page at `/tickets/[id]` — token-authed QR display, status-aware (used / refunded / void)
+- ✅ Door scanner at `/tours/[id]/shows/[showId]/scanner` — @zxing/browser camera scan, manual fallback, vibration feedback
+- ✅ Manager dashboard at `/tours/[id]/shows/[showId]/tickets` — sold/scanned/revenue/refunded, per-type breakdown, scan log
+- ✅ Mailgun email delivery of ticket links with `?token=<sig>`
+- ✅ `ticketing` module in `featurePages` registry → landing page at `/features/ticketing`
+- 📋 Stripe Connect split payments to artist/venue/crew (Phase 24.1)
+- 📋 Apple/Google Wallet `.pkpass` ticket delivery
+- 📋 Offline scanner cache (IndexedDB + reconciliation)
 
 ## Roadmap Completions ✅
 > Quick wins and new features from user feedback.
