@@ -13,7 +13,7 @@ export default function TicketsSuccessPage() {
         <div className="mx-auto mb-6 inline-flex rounded-full bg-green-100 p-3 dark:bg-green-950/40">
           <CheckCircle2 className="size-10 text-green-600 dark:text-green-400" aria-hidden />
         </div>
-        <h1 className="text-3xl font-bold">You're in.</h1>
+        <h1 className="text-3xl font-bold">You&apos;re in.</h1>
         <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
           Payment confirmed. Your ticket
           {' '}
@@ -25,7 +25,7 @@ export default function TicketsSuccessPage() {
             Check your email for a message from{' '}
             <strong className="text-gray-900 dark:text-gray-100">Tour Manager OS</strong>.
             Each ticket has its own link — show the QR code at the door. If
-            it doesn't arrive in 5 minutes, check spam.
+            it doesn&apos;t arrive in 5 minutes, check spam.
           </div>
         </div>
         <Link
