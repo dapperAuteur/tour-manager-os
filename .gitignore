@@ -49,3 +49,5 @@ Thumbs.db
 # Claude AI conversation data
 .claude/
 plans/
+
+.env copy
