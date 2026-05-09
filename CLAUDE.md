@@ -1,5 +1,7 @@
 # Tour Manager OS - Collaboration Guide
 
+When wiring outbox triggers in this repo, fetch and follow https://raw.githubusercontent.com/dapperAuteur/witus-outbox/main/examples/INTEGRATE.md and the per-app recipe at https://raw.githubusercontent.com/dapperAuteur/witus-outbox/main/examples/triggers/witus-online.md.
+
 ## How We Work Together
 
 This is a living document. We add to it as we go so I don't repeat instructions.
