@@ -10,7 +10,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 export type AiConfigKey = 'chat_model' | 'embedding_model' | 'vision_model'
 
 const DEFAULTS: Record<AiConfigKey, string> = {
-  chat_model: 'cerebras/llama-3.3-70b',
+  chat_model: 'cerebras/llama3.3-70b',
   embedding_model: 'mistral/mistral-embed',
   vision_model: 'openrouter/anthropic/claude-3.5-sonnet',
 }

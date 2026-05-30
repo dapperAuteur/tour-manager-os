@@ -22,6 +22,12 @@ import {
   runProviderHealthChecks,
   updateAiModelAction,
 } from '@/lib/admin/ai'
+import {
+  TIER_LABELS,
+  TIER_TONE,
+  formatCost,
+  getModelPricing,
+} from '@/lib/ai/pricing'
 
 interface EmbeddingsStats {
   total: number
@@ -53,16 +59,26 @@ interface AiControlsProps {
 
 const MODEL_PRESETS: Record<AiConfigKey, { value: string; label: string }[]> = {
   chat_model: [
-    { value: 'cerebras/llama-3.3-70b', label: 'Cerebras Llama 3.3 70B (fastest)' },
-    { value: 'openrouter/anthropic/claude-3.5-sonnet', label: 'OpenRouter → Claude 3.5 Sonnet (highest quality)' },
+    { value: 'cerebras/llama3.3-70b', label: 'Cerebras Llama 3.3 70B (fastest)' },
+    { value: 'cerebras/llama3.1-8b', label: 'Cerebras Llama 3.1 8B (cheapest)' },
+    { value: 'cerebras/qwen-3-32b', label: 'Cerebras Qwen 3 32B' },
+    {
+      value: 'openrouter/anthropic/claude-3.5-sonnet',
+      label: 'OpenRouter → Claude 3.5 Sonnet (highest quality)',
+    },
+    { value: 'openrouter/openai/gpt-4o-mini', label: 'OpenRouter → GPT-4o mini' },
     { value: 'mistral/mistral-large-latest', label: 'Mistral Large (balanced)' },
+    { value: 'mistral/mistral-small-latest', label: 'Mistral Small (cheap)' },
     {
       value: 'together/meta-llama/Llama-3.3-70B-Instruct-Turbo',
       label: 'Together → Llama 3.3 70B Turbo',
     },
   ],
   embedding_model: [
-    { value: 'mistral/mistral-embed', label: 'Mistral mistral-embed (1024 dims — matches schema)' },
+    {
+      value: 'mistral/mistral-embed',
+      label: 'Mistral mistral-embed (1024 dims — matches schema)',
+    },
   ],
   vision_model: [
     {
@@ -199,7 +215,9 @@ export function AiControls({
           {resolved.map((row) => {
             const presets = MODEL_PRESETS[row.key] || []
             const draftDiffers = drafts[row.key] !== row.resolved
-            const customMode = !presets.some((p) => p.value === drafts[row.key])
+            const isPreset = presets.some((p) => p.value === drafts[row.key])
+            const draftPricing = getModelPricing(drafts[row.key])
+            const resolvedPricing = getModelPricing(row.resolved)
             return (
               <li key={row.key} className="px-4 py-4">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -217,52 +235,54 @@ export function AiControls({
                     {row.source}
                   </span>
                 </div>
-                <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                  <label className="block">
-                    <span className="block text-xs text-text-muted">
-                      Preset
-                    </span>
-                    <select
-                      value={
-                        presets.some((p) => p.value === drafts[row.key])
-                          ? drafts[row.key]
-                          : '__custom__'
-                      }
-                      onChange={(e) => {
-                        const v = e.target.value
-                        if (v === '__custom__') return
-                        setDrafts({ ...drafts, [row.key]: v })
-                      }}
-                      className="mt-1 w-full rounded-md border border-border-default bg-surface-base px-2 py-1.5 font-mono text-xs"
-                    >
-                      {presets.map((p) => (
-                        <option key={p.value} value={p.value}>
-                          {p.label}
-                        </option>
-                      ))}
-                      <option value="__custom__">Custom…</option>
-                    </select>
-                  </label>
-                  <label className="block">
-                    <span className="block text-xs text-text-muted">
-                      provider/model
-                    </span>
-                    <input
-                      type="text"
-                      value={drafts[row.key]}
-                      onChange={(e) =>
-                        setDrafts({ ...drafts, [row.key]: e.target.value })
-                      }
-                      className="mt-1 w-full rounded-md border border-border-default bg-surface-base px-2 py-1.5 font-mono text-xs"
-                    />
-                    {customMode && (
-                      <span className="text-[10px] text-text-muted">
-                        Custom value — not in preset list
-                      </span>
-                    )}
-                  </label>
+
+                <div className="mt-2 rounded-md border border-border-default bg-surface-base p-2 text-xs">
+                  <span className="text-text-muted">Currently using:</span>{' '}
+                  <code className="font-mono">{row.resolved}</code>
+                  <PricingBadge pricing={resolvedPricing} className="ml-2" />
                 </div>
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-text-muted">
+
+                <label className="mt-3 block">
+                  <span className="block text-xs text-text-muted">
+                    Choose model
+                  </span>
+                  <select
+                    value={isPreset ? drafts[row.key] : ''}
+                    onChange={(e) => {
+                      const v = e.target.value
+                      if (!v) return
+                      setDrafts({ ...drafts, [row.key]: v })
+                    }}
+                    className="mt-1 w-full rounded-md border border-border-default bg-surface-base px-2 py-1.5 text-xs"
+                  >
+                    {!isPreset && (
+                      <option value="">
+                        — custom env value (not in preset list) —
+                      </option>
+                    )}
+                    {presets.map((p) => {
+                      const pricing = getModelPricing(p.value)
+                      const cost = pricing.inputPerM
+                        ? ` · ${formatCost(pricing.inputPerM)}${pricing.outputPerM ? ` in / ${formatCost(pricing.outputPerM)} out` : ''}`
+                        : ''
+                      return (
+                        <option key={p.value} value={p.value}>
+                          [{TIER_LABELS[pricing.tier]}] {p.label}
+                          {cost}
+                        </option>
+                      )
+                    })}
+                  </select>
+                </label>
+
+                {isPreset && (
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                    <PricingBadge pricing={draftPricing} />
+                    <span className="text-text-muted">{draftPricing.note}</span>
+                  </div>
+                )}
+
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-text-muted">
                   <span>
                     env (<code className="font-mono">{envFor(row.key)}</code>):{' '}
                     {row.envValue ? (
@@ -276,6 +296,7 @@ export function AiControls({
                     default: <code className="font-mono">{row.defaultValue}</code>
                   </span>
                 </div>
+
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button
                     type="button"
@@ -310,6 +331,12 @@ export function AiControls({
             )
           })}
         </ul>
+        <p className="border-t border-border-default px-4 py-3 text-xs text-text-muted">
+          Need a model not in this list? Add a new entry to{' '}
+          <code className="font-mono">lib/ai/pricing.ts</code> and{' '}
+          <code className="font-mono">MODEL_PRESETS</code> in this file, then deploy.
+          We removed the free-text field so typos can&apos;t brick the agent.
+        </p>
       </section>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -482,6 +509,29 @@ function envFor(key: AiConfigKey): string {
     case 'vision_model':
       return 'AI_VISION_MODEL'
   }
+}
+
+function PricingBadge({
+  pricing,
+  className = '',
+}: {
+  pricing: ReturnType<typeof getModelPricing>
+  className?: string
+}) {
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${TIER_TONE[pricing.tier]} ${className}`}
+      title={pricing.note}
+    >
+      {TIER_LABELS[pricing.tier]}
+      {pricing.inputPerM !== null && (
+        <span className="ml-1 font-normal normal-case opacity-75">
+          {formatCost(pricing.inputPerM)}
+          {pricing.outputPerM !== null && ` / ${formatCost(pricing.outputPerM)}`}
+        </span>
+      )}
+    </span>
+  )
 }
 
 function Stat({ label, value }: { label: string; value: number }) {
