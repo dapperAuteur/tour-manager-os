@@ -73,3 +73,11 @@ export async function togglePinPost(postId: string, pinned: boolean) {
   revalidatePath('/community')
   return { success: true }
 }
+
+export async function toggleLockPost(postId: string, locked: boolean) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('community_posts').update({ locked }).eq('id', postId)
+  if (error) return { error: error.message }
+  revalidatePath('/community')
+  return { success: true }
+}
