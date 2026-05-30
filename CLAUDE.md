@@ -15,7 +15,10 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 - Plans go in `./plans/` directory as markdown files.
 - Review this document (CLAUDE.md) after every set of instructions before starting work.
 - **Check `ROADMAP.md` before coding** to understand current status and what phase we're in.
-- **Update `ROADMAP.md`** after completing any feature — mark items ✅ and update the "Last updated" date.
+- **Update BOTH roadmaps after every shipped feature** so the public-facing version never drifts from reality:
+  1. `ROADMAP.md` (repo root) — internal source of truth; mark items ✅ / 📋 / 🚧 / 💡, update "Last updated" date, add a phase entry for any new phase.
+  2. `app/roadmap/page.tsx` (`/roadmap` web page) — the public-visible version users browse; add/update the matching entry in the `phases` array with `done: true/false` items.
+  Both must stay aligned on phase number, name, and status of each item. If a claim turns out to be inaccurate (e.g. package not installed, function not wired), downgrade to 📋 immediately with a one-line reason — never leave aspirational ✅ entries.
 - When the user says "discuss", present ideas with tradeoffs before building anything.
 
 ### Code & Architecture Patterns
@@ -57,7 +60,7 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 
 ### What to Avoid
 - Never merge feature branches into main — user handles all merges
-- `plans/ideas-to-discuss-later.md` is a scratchpad — do NOT add items from it to the plan or implement them unless the user explicitly asks
+- `plans/future/ideas-to-discuss-later.md` is a scratchpad — do NOT add items from it to the plan or implement them unless the user explicitly asks
 
 ### What Works Well
 - (We'll add to this as we go)

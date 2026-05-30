@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-09
+Last updated: 2026-05-29
 
 ## Legend
 - ✅ Complete
@@ -74,7 +74,7 @@ Last updated: 2026-05-09
 - ✅ Next destination preview
 - ✅ Day off view when no show scheduled
 - 📋 Push notifications for schedule changes
-- ✅ Weather integration (Open-Meteo, cached per show)
+- 📋 Weather integration (Open-Meteo, cached per show) — `weather_cache` table exists, fetch/UI not yet wired
 
 ## Phase 6: Demo System ✅
 > Pre-configured demo accounts with realistic data for try-before-you-buy.
@@ -117,7 +117,7 @@ Last updated: 2026-05-09
 - ✅ Discussion posts with threaded replies
 - ✅ Pin/lock posts (admin moderation)
 - ✅ Author display names on posts and replies
-- ✅ Email sending integration (Resend)
+- ✅ Email sending integration (Mailgun)
 - ✅ CSV subscriber import
 - 📋 Public event pages per show
 - 📋 Pre/post-show exclusive content
@@ -158,7 +158,7 @@ Last updated: 2026-05-09
 - ✅ Reusable search bar component
 - 📋 User engagement metrics (DAU/WAU/MAU, session duration)
 - 📋 Module adoption rates
-- ✅ Charts and graphs (Recharts — bar, line, pie)
+- 📋 Charts and graphs (Recharts — bar, line, pie) — package not yet installed; only stat cards rendered
 
 ## Phase 13: Academy / LMS ✅
 > Courses teaching users how to use the platform.
@@ -210,25 +210,25 @@ Last updated: 2026-05-09
 - ✅ Stripe checkout API route (ready for STRIPE_SECRET_KEY config)
 - ✅ CSV templates for 7 data types (shows, expenses, contacts, equipment, merch, subscribers, state income)
 - ✅ Data Import/Export page with template downloads
-- ✅ Email setup documentation in Help Center (Resend setup, DNS, API key, testing)
+- ✅ Email setup documentation in Help Center (Mailgun setup, DNS, API key, testing)
 - ✅ Email Marketing academy course (3 lessons: building lists, campaigns, admin setup)
 - ✅ Stripe Checkout session creation
 - ✅ Webhook handler for Stripe events (checkout, cancellation, payment failure)
 - 📋 CSV import wizard with column mapping and validation
 
 ## Phase 17: Email Integration ✅
-> Send marketing emails with open/click tracking via Resend.
+> Send marketing emails with open/click tracking via Mailgun.
 
-- ✅ Resend SDK integration for email delivery
+- ✅ Mailgun integration for email delivery (direct fetch client, region-aware)
 - ✅ Campaign send action with batch processing (10 at a time)
 - ✅ Open tracking via 1x1 pixel (auto-increments opened_count)
 - ✅ Click tracking via redirect endpoint (auto-increments clicked_count)
 - ✅ Unsubscribe link with confirmation page
 - ✅ Campaign detail page with analytics (recipients, opens, clicks, open/click rates)
 - ✅ Send button with confirmation dialog
-- ✅ Resend webhook handler (bounces auto-unsubscribe, spam complaints auto-unsubscribe)
+- ✅ Mailgun webhook handler with HMAC signature verification (permanent failures + complaints auto-unsubscribe)
 - ✅ HTML email template with tracking pixel and footer
-- ✅ Graceful fallback when Resend not configured
+- ✅ Graceful fallback when Mailgun not configured
 - 📋 OAuth-connected email (Gmail/Outlook API) for sending from user's own address
 - 📋 Emails appear in user's regular inbox
 
@@ -268,9 +268,9 @@ Last updated: 2026-05-09
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
-- ✅ Auto-create venue profiles from advance sheet data
+- 📋 Auto-create venue profiles from advance sheet data — `createVenueFromAdvanceSheet()` exists in `lib/venues/actions.ts` but not yet called from advance submission
 - ✅ Times-played counter and last-played date
-- ✅ Smart advance pre-fill from past venue data
+- 📋 Smart advance pre-fill from past venue data — no DB function yet; advance form uses current sheet's `defaultValue` only
 - 📋 Venue photos
 - 📋 Map view with Leaflet
 
@@ -332,14 +332,24 @@ Last updated: 2026-05-09
 - ✅ Venues are public (anyone can browse, reducing redundancy)
 - ✅ Contact sharing across teams via public venue directory
 - ✅ Full CRUD: edit, delete, duplicate across all modules (reusable RecordActions component)
-- ✅ Recharts analytics charts (bar, line, pie) for admin dashboard
-- ✅ Weather integration on Show Day (Open-Meteo, cached)
-- ✅ Smart advance pre-fill from past venue data (DB function)
-- ✅ Venue stages/spaces — multiple stages per venue (indoor/outdoor)
+- 📋 Recharts analytics charts (bar, line, pie) for admin dashboard — package not installed; only stat cards rendered
+- 📋 Weather integration on Show Day (Open-Meteo, cached) — `weather_cache` table exists; fetch + UI not yet wired
+- 📋 Smart advance pre-fill from past venue data (DB function) — function not written; form uses current sheet only
+- 📋 Venue stages/spaces — multiple stages per venue (indoor/outdoor) — no `venue_stages` table; single stage columns only
 - ✅ Stripe Checkout session creation with webhook handler
 - ✅ Stripe webhook: checkout.session.completed, subscription.deleted, invoice.payment_failed
 - ✅ 7 admin help articles seeded (Stripe, push notifications, Cloudinary, Supabase, Vercel, codebase, dev workflow)
-- ✅ Admin education academy course (5 lessons: Stripe, email, Supabase, Vercel, codebase for presentations)
+- 📋 Admin education academy course (5 lessons: Stripe, email, Supabase, Vercel, codebase for presentations) — course not seeded yet
+
+## Built since Phase 22 (not previously listed above)
+
+- ✅ Mailgun email migration (replaced Resend across send-campaign, feedback, webhook)
+- ✅ Tours INSERT...RETURNING RLS fix (migration `028`)
+- ✅ User-type onboarding column (migration `027`)
+- ✅ PostHog product analytics + Vercel Speed Insights
+- ✅ Global help bubble on every authenticated page
+- ✅ Sidebar nav reorganized into grouped sections
+- ✅ Witus-outbox integration scaffolding (signed-webhook sender reference)
 
 ---
 
