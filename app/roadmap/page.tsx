@@ -145,7 +145,7 @@ const phases: Phase[] = [
       { label: 'Help center with fuzzy search', done: true },
       { label: 'Feedback threads with admin replies', done: true },
       { label: 'Admin feedback management', done: true },
-      { label: 'AI-powered help (Gemini)', done: false },
+      { label: 'AI-powered help (pgvector + Vercel AI Gateway + LangSmith)', done: true },
     ],
   },
   {
