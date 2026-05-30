@@ -209,15 +209,18 @@ export async function runProviderHealthChecks(): Promise<ProviderHealth[]> {
 
 // Reuses embedText for embedding-capable models. For chat-only
 // models (cerebras llama, together llama), uses a one-token completion.
-async function pingProvider(model: string): Promise<boolean> {
-  const isEmbedding = model.includes('embed')
+// Routes through the direct-provider resolver so the Vercel AI
+// Gateway credit-card requirement doesn't gate health checks.
+async function pingProvider(modelString: string): Promise<boolean> {
+  const isEmbedding = modelString.includes('embed')
   if (isEmbedding) {
     const vec = await embedText('ping')
     return Array.isArray(vec) && vec.length > 0
   }
   const { generateText } = await import('ai')
+  const { resolveChatModel } = await import('@/lib/ai/providers')
   const result = await generateText({
-    model,
+    model: resolveChatModel(modelString),
     prompt: 'Reply with one word: ok',
     maxOutputTokens: 8,
   })
