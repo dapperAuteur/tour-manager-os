@@ -87,8 +87,17 @@ export interface MailgunSignature {
 }
 
 export function verifyMailgunSignature(sig: MailgunSignature): boolean {
-  const apiKey = process.env.MAILGUN_API_KEY
-  if (!apiKey) return false
+  // Mailgun has TWO keys: the API key (for the sending API, named
+  // MAILGUN_API_KEY) and the HTTP-webhook signing key (used to verify
+  // inbound events). They are different. Add the webhook signing key
+  // from Mailgun → Sending → Webhooks → "HTTP webhook signing key"
+  // as MAILGUN_WEBHOOK_SIGNING_KEY. Falls back to MAILGUN_API_KEY for
+  // backward compatibility but Mailgun's webhook signatures only
+  // verify against the webhook signing key, so 401s are expected
+  // without it.
+  const signingKey =
+    process.env.MAILGUN_WEBHOOK_SIGNING_KEY || process.env.MAILGUN_API_KEY
+  if (!signingKey) return false
   if (!sig.timestamp || !sig.token || !sig.signature) return false
 
   const ageSec = Math.floor(Date.now() / 1000) - Number(sig.timestamp)
@@ -96,7 +105,7 @@ export function verifyMailgunSignature(sig: MailgunSignature): boolean {
     return false
   }
 
-  const expected = createHmac('sha256', apiKey)
+  const expected = createHmac('sha256', signingKey)
     .update(sig.timestamp + sig.token)
     .digest('hex')
   const a = Buffer.from(expected)
