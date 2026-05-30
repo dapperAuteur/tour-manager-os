@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { LifeBuoy, X, MessageSquare, HelpCircle, Bug, Upload, Send } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
+import { submitHelpBubbleFeedback } from '@/lib/feedback/actions'
 
 type Tab = 'menu' | 'feedback' | 'bug'
 
@@ -16,6 +16,7 @@ export function HelpBubble() {
   const [files, setFiles] = useState<File[]>([])
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
@@ -26,6 +27,7 @@ export function HelpBubble() {
     setCategory('question')
     setFiles([])
     setSent(false)
+    setError(null)
   }
 
   function handleClose() {
@@ -44,54 +46,28 @@ export function HelpBubble() {
     if (!subject.trim() || !content.trim()) return
 
     setLoading(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    setError(null)
 
-    if (!user) {
-      router.push('/login')
-      return
-    }
-
-    // Get org
-    const { data: orgMember } = await supabase
-      .from('org_members')
-      .select('org_id')
-      .eq('user_id', user.id)
-      .limit(1)
-      .single()
-
-    // Create thread
-    const { data: thread, error } = await supabase
-      .from('feedback_threads')
-      .insert({
-        user_id: user.id,
-        org_id: orgMember?.org_id || null,
-        subject,
-        category,
-        priority: category === 'bug' ? 'high' : 'normal',
-      })
-      .select('id')
-      .single()
-
-    if (error || !thread) {
-      setLoading(false)
-      return
-    }
-
-    // Build message with file info
+    // Build message with file info (attachment upload is still a placeholder)
     let message = content
     if (files.length > 0) {
       message += '\n\n---\nAttachments: ' + files.map((f) => `${f.name} (${(f.size / 1024).toFixed(0)} KB)`).join(', ')
       message += '\n(Upload to Cloudinary or Supabase Storage to attach files — feature coming soon)'
     }
 
-    // Add message
-    await supabase.from('feedback_messages').insert({
-      thread_id: thread.id,
-      sender_id: user.id,
-      sender_role: 'user',
-      content: message,
-    })
+    // Submit via the server action so the feedback is stored in Supabase AND
+    // mirrored to the WitUS Inbox (the HMAC secret must stay server-side).
+    const result = await submitHelpBubbleFeedback({ subject, category, content: message })
+
+    if ('error' in result) {
+      setLoading(false)
+      if (result.error === 'Not authenticated') {
+        router.push('/login')
+        return
+      }
+      setError(result.error)
+      return
+    }
 
     setSent(true)
     setLoading(false)
@@ -169,6 +145,11 @@ export function HelpBubble() {
           {/* Feedback / Bug form */}
           {(tab === 'feedback' || tab === 'bug') && !sent && (
             <form onSubmit={handleSubmit} className="p-4 space-y-3">
+              {error && (
+                <p role="alert" className="rounded-lg border border-error-500/40 bg-error-500/10 px-3 py-2 text-xs text-error-500">
+                  {error}
+                </p>
+              )}
               <div>
                 <label htmlFor="bubble-subject" className="mb-1 block text-xs font-medium">
                   {tab === 'bug' ? 'What happened?' : 'Subject'}
