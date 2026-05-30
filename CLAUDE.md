@@ -19,6 +19,13 @@ This is a living document. We add to it as we go so I don't repeat instructions.
   1. `ROADMAP.md` (repo root) — internal source of truth; mark items ✅ / 📋 / 🚧 / 💡, update "Last updated" date, add a phase entry for any new phase.
   2. `app/roadmap/page.tsx` (`/roadmap` web page) — the public-visible version users browse; add/update the matching entry in the `phases` array with `done: true/false` items.
   Both must stay aligned on phase number, name, and status of each item. If a claim turns out to be inaccurate (e.g. package not installed, function not wired), downgrade to 📋 immediately with a one-line reason — never leave aspirational ✅ entries.
+- **Update the docs after every completed task** so contributors and end-users see current reality, not aspirations. After each task that changes a user-facing flow, tech-stack choice, env var, or developer workflow, audit and refresh:
+  1. `README.md` — tech stack table, "What It Does" feature list, env-var examples, project structure, prerequisites, scripts. Anything stale = update or remove.
+  2. `app/(auth)/help/` content (help_articles table seeded via SQL migration) — if a new module or major flow shipped, add or revise an article so users have an instruction page.
+  3. `app/(auth)/academy/` lessons (courses + lessons + lesson_quizzes tables) — for substantial features, add an Academy lesson that teaches the flow end-to-end.
+  4. `app/(auth)/developers/` page (Phase 18 API docs) — when a public API endpoint changes shape or a new one ships.
+  5. `STYLE_GUIDE.md` / `CODE_RULES.md` / `CONTRIBUTING.md` — when conventions, tech choices, or contribution flows change.
+  Default to the smallest update that closes the drift. If a doc is now wholly wrong, fix the prose; if a one-line addition suffices, just add the line. Cite the new module/route/file path so the reader can find the implementation.
 - When the user says "discuss", present ideas with tradeoffs before building anything.
 
 ### Code & Architecture Patterns
