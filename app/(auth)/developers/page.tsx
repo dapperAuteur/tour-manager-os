@@ -153,7 +153,7 @@ export default function DevelopersPage() {
               <tr className="border-b border-border-default">
                 <td className="py-2 pr-4 font-mono">429</td>
                 <td className="py-2 pr-4">Rate limit exceeded</td>
-                <td className="py-2 text-text-muted">Wait and retry, or request a higher limit</td>
+                <td className="py-2 text-text-muted">Wait until <code>X-RateLimit-Reset</code> (Unix ts) or sleep <code>Retry-After</code> seconds</td>
               </tr>
               <tr>
                 <td className="py-2 pr-4 font-mono">500</td>
@@ -162,6 +162,21 @@ export default function DevelopersPage() {
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div className="mt-8 rounded-xl border border-border-default bg-surface-raised p-5">
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted">Rate limiting</h3>
+          <p className="text-sm">
+            Every key has a per-hour request budget (default 1000, configurable per key). Each response includes:
+          </p>
+          <ul className="mt-3 space-y-1 font-mono text-xs text-text-muted">
+            <li><code className="text-text-secondary">X-RateLimit-Limit</code> — the budget for your key</li>
+            <li><code className="text-text-secondary">X-RateLimit-Remaining</code> — requests left in the current window</li>
+            <li><code className="text-text-secondary">X-RateLimit-Reset</code> — Unix timestamp when the window resets</li>
+          </ul>
+          <p className="mt-3 text-sm">
+            When you hit your budget, you&apos;ll get a 429 with a <code className="font-mono text-xs">Retry-After</code> header and a JSON body containing <code className="font-mono text-xs">{`{limit, used, reset_at}`}</code>. Sleep <code className="font-mono text-xs">Retry-After</code> seconds and try again, or request a higher limit via feedback.
+          </p>
         </div>
       </section>
     </main>

@@ -244,7 +244,7 @@ Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins)
 - ✅ Free tier for testing, paid subscription for production use
 - ✅ Webhook table ready (org-scoped, event filtering, secret hash)
 - 📋 Additional endpoints (finances, merch, contacts)
-- 📋 Rate limiting enforcement middleware
+- ✅ Rate limiting enforcement — per-key per-hour count against `api_logs` via `requireApiKey`; 429 response includes `X-RateLimit-*` + `Retry-After` headers
 - 📋 OpenAPI/Swagger spec generation
 
 ## Phase 19: White Label ✅

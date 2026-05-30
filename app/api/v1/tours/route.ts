@@ -1,11 +1,11 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import { validateApiKey, logApiRequest, jsonError, hasScope } from '@/lib/api/auth'
+import { requireApiKey, logApiRequest, jsonError } from '@/lib/api/auth'
 
 export async function GET(request: Request) {
   const start = Date.now()
-  const apiKey = await validateApiKey(request)
-  if (!apiKey) return jsonError('Invalid or missing API key', 401)
-  if (!hasScope(apiKey.scopes, 'read')) return jsonError('Insufficient scope', 403)
+  const auth = await requireApiKey(request, 'read')
+  if (auth instanceof Response) return auth
+  const apiKey = auth
 
   const supabase = createAdminClient()
 

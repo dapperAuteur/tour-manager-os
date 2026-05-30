@@ -229,7 +229,7 @@ const phases: Phase[] = [
       { label: 'Endpoints: tours, shows, itineraries', done: true },
       { label: 'Developer docs page', done: true },
       { label: 'Request logging', done: true },
-      { label: 'Rate limiting enforcement', done: false },
+      { label: 'Rate limiting enforcement (per-key, per-hour)', done: true },
     ],
   },
   {
