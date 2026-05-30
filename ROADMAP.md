@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-29
+Last updated: 2026-05-29 (Phase 24.5 — fan photos)
 
 ## Legend
 - ✅ Complete
@@ -316,6 +316,26 @@ Last updated: 2026-05-29
 - 📋 Stripe Connect split payments to artist/venue/crew (Phase 24.1)
 - 📋 Apple/Google Wallet `.pkpass` ticket delivery
 - 📋 Offline scanner cache (IndexedDB + reconciliation)
+
+## Phase 24.5: Fan Photo Sharing ✅
+> Ticket-holders share show photos to a pre-moderated public wall. Each photo gets its own sharable link.
+
+- ✅ Schema: `fan_photos` + `fan_photo_reports` with RLS (public reads approved, poster reads own, tour staff reads all states)
+- ✅ `can_post_photos_for_show(uid, show_id)` SECURITY DEFINER function — ticket-holder gate at the database
+- ✅ Server-signed Cloudinary uploads via `lib/cloudinary/server.ts` (CLOUDINARY_API_SECRET stays server-only)
+- ✅ POST /api/fan-photos with eligibility + file-type + size guards (10MB max, jpeg/png/webp/heic)
+- ✅ Rollback of orphan Cloudinary asset when DB insert fails
+- ✅ GET /api/shows/[id]/fan-photos — public list of approved photos
+- ✅ GET /api/admin/fan-photos/queue — staff moderation queue
+- ✅ POST /api/admin/fan-photos/[id]/moderate — approve / reject / remove, with Cloudinary destroy on reject/remove and Mailgun rejection email
+- ✅ Per-show photo wall at `/shows/[id]/photos` with ticket-holder-gated uploader
+- ✅ `/photos/[id]` per-photo share page with OG + Twitter Card metadata
+- ✅ Fan dashboard at `/photos` showing all submissions + statuses + rejection reasons
+- ✅ Staff moderation at `/tours/[id]/shows/[showId]/fan-photos` (tabs, counts, reject-with-reason flow)
+- ✅ `fan-photos` module registered in featurePages
+- 📋 Post-publish abuse reports UI (table + reason field exist; staff resolution flow not yet built)
+- 📋 Realtime moderation queue via Supabase Realtime
+- 📋 AI-moderation pre-filter (image safety scan before queue)
 
 ## Roadmap Completions ✅
 > Quick wins and new features from user feedback.

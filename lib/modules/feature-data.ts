@@ -151,6 +151,20 @@ export const featurePages: Record<string, FeaturePageData> = {
     userTypes: ['Musicians', 'Crew'],
     status: 'coming-soon',
   },
+  'fan-photos': {
+    name: 'Fan Photos',
+    tagline: 'Ticket-holders share the show, fans relive it',
+    description: 'Ticket-holders upload show photos to a pre-moderated public wall. Each photo gets its own sharable link with rich Open Graph cards. Staff moderates with one tap.',
+    benefits: [
+      { title: 'Ticket-Holder Gated', description: 'Only fans who hold a ticket for that show can post — enforced by a Postgres function and Row-Level Security, not just the UI.' },
+      { title: 'Pre-Moderation', description: 'Photos go to the tour team for review before appearing on the public wall. Reject with a reason and the poster gets an email explaining why.' },
+      { title: 'Per-Show Wall + Fan Dashboard', description: 'Each show has its own public photo wall. Fans see all their submissions and statuses in one place.' },
+      { title: 'Built for Sharing', description: 'Every approved photo gets a permalink with Open Graph + Twitter Card metadata, so social shares render cleanly.' },
+      { title: 'Cloudinary-Backed', description: 'Server-signed uploads keep the API secret out of the browser. Removed photos are destroyed in storage too — no hot-linking after takedown.' },
+    ],
+    userTypes: ['Fans', 'Tour Managers', 'Crew'],
+    status: 'available',
+  },
   'ticketing': {
     name: 'Ticketing',
     tagline: 'Sell tickets, scan QR codes at the door, audit every entry',
