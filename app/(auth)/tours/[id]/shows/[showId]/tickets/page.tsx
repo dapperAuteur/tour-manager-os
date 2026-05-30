@@ -6,9 +6,12 @@ import {
   ScanLine,
   DollarSign,
   AlertTriangle,
+  Plus,
+  Pencil,
 } from 'lucide-react'
 import { getShow } from '@/lib/tours/queries'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { DeleteTicketTypeButton } from './delete-ticket-type-button'
 
 export const metadata: Metadata = {
   title: 'Ticket Dashboard',
@@ -151,12 +154,20 @@ export default async function TicketsDashboardPage({ params }: PageProps) {
             </time>
           </p>
         </div>
-        <Link
-          href={`/tours/${tourId}/shows/${showId}/scanner`}
-          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
-        >
-          <ScanLine className="size-4" aria-hidden /> Open Scanner
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={`/tours/${tourId}/shows/${showId}/tickets/new`}
+            className="inline-flex items-center gap-2 rounded-md border border-primary-500/40 bg-primary-500/10 px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-500/20 dark:text-primary-300"
+          >
+            <Plus className="size-4" aria-hidden /> New ticket type
+          </Link>
+          <Link
+            href={`/tours/${tourId}/shows/${showId}/scanner`}
+            className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+          >
+            <ScanLine className="size-4" aria-hidden /> Open Scanner
+          </Link>
+        </div>
       </div>
 
       <section
@@ -202,8 +213,16 @@ export default async function TicketsDashboardPage({ params }: PageProps) {
           </h2>
         </header>
         {(!ticketTypes || ticketTypes.length === 0) ? (
-          <div className="px-4 py-6 text-center text-sm text-text-muted">
-            No ticket types created yet.
+          <div className="px-4 py-8 text-center">
+            <p className="text-sm text-text-muted">
+              No ticket types yet — nothing for fans to buy.
+            </p>
+            <Link
+              href={`/tours/${tourId}/shows/${showId}/tickets/new`}
+              className="mt-3 inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700"
+            >
+              <Plus className="size-4" aria-hidden /> Create the first one
+            </Link>
           </div>
         ) : (
           <table className="w-full text-sm">
@@ -214,6 +233,10 @@ export default async function TicketsDashboardPage({ params }: PageProps) {
                 <th className="px-4 py-2 font-medium">Sold</th>
                 <th className="px-4 py-2 font-medium">Used</th>
                 <th className="px-4 py-2 font-medium">Inventory</th>
+                <th className="px-4 py-2 font-medium">Status</th>
+                <th className="px-4 py-2 font-medium">
+                  <span className="sr-only">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -239,6 +262,34 @@ export default async function TicketsDashboardPage({ params }: PageProps) {
                       {usedByType.get(t.id) || 0}
                     </td>
                     <td className="px-4 py-3 text-text-muted">{cap}</td>
+                    <td className="px-4 py-3">
+                      {t.active ? (
+                        <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-950/40 dark:text-green-300">
+                          Live
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                          Hidden
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/tours/${tourId}/shows/${showId}/tickets/${t.id}/edit`}
+                          className="inline-flex items-center gap-1 rounded-md border border-border-default px-2 py-1 text-xs font-medium hover:bg-surface-alt"
+                        >
+                          <Pencil className="size-3" aria-hidden /> Edit
+                        </Link>
+                        <DeleteTicketTypeButton
+                          tourId={tourId}
+                          showId={showId}
+                          ticketTypeId={t.id}
+                          name={t.name}
+                          hasSold={t.quantity_sold > 0}
+                        />
+                      </div>
+                    </td>
                   </tr>
                 )
               })}
