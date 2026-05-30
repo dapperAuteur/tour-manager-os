@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { signTicket } from '@/lib/tickets/sign'
 import { sendEmail, isMailgunConfigured } from '@/lib/email/mailgun'
+import { logError } from '@/lib/observability/logger'
 
 async function issueTickets(
   supabase: ReturnType<typeof createAdminClient>,
@@ -17,7 +18,10 @@ async function issueTickets(
   const purchaserName = session.metadata?.purchaser_name || null
 
   if (!showId || !ticketTypeId || !qtyRaw || !purchaserEmail) {
-    console.error('ticket webhook: missing metadata', session.id)
+    logError('stripe.webhook.ticket.missing_metadata', null, {
+      handler: 'issueTickets',
+      stripe_session_id: session.id,
+    })
     return
   }
   const qty = Number.parseInt(qtyRaw, 10)
@@ -55,7 +59,11 @@ async function issueTickets(
 
   const { error: insertErr } = await supabase.from('tickets').insert(rows)
   if (insertErr) {
-    console.error('ticket webhook: insert failed', insertErr)
+    logError('stripe.webhook.ticket.insert_failed', insertErr, {
+      handler: 'issueTickets',
+      stripe_session_id: session.id,
+      qty,
+    })
     return
   }
 
@@ -93,7 +101,11 @@ async function issueTickets(
         `,
       })
     } catch (err) {
-      console.error('ticket webhook: email send failed', err)
+      logError('stripe.webhook.ticket.email_failed', err, {
+        handler: 'issueTickets',
+        stripe_session_id: session.id,
+        purchaser_email: purchaserEmail,
+      })
     }
   }
 }
@@ -118,7 +130,7 @@ export async function POST(request: Request) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
   } catch (err) {
-    console.error('Stripe webhook signature verification failed:', err)
+    logError('stripe.webhook.signature_invalid', err, { handler: 'POST' })
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 

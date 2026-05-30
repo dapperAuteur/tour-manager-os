@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins + weather)
+Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging)
 
 ## Legend
 - ✅ Complete
@@ -370,6 +370,7 @@ Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins + weather)
 - ✅ Global help bubble on every authenticated page
 - ✅ Sidebar nav reorganized into grouped sections
 - ✅ Witus-outbox integration scaffolding (signed-webhook sender reference)
+- ✅ Structured server-side error logging (`lib/observability/logger.ts`) wired into Stripe webhook + demo-reset cron; mirrors to PostHog `$exception` events for queryable production observability
 - ✅ `engines.node >= 20` pinned in `package.json` (runtime parity local ↔ Vercel)
 - ✅ `toggleLockPost()` server action for community moderation (mirrors `togglePinPost`)
 - ✅ Phase 24 Ticketing System (Stripe Checkout + HMAC QR + door scanner + manager dashboard)

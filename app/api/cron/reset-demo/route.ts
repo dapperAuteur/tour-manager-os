@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { DEMO_ROLES } from '@/lib/demo/config'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { logError } from '@/lib/observability/logger'
 
 export async function GET(request: Request) {
   // Verify cron secret
@@ -91,7 +92,7 @@ export async function GET(request: Request) {
     const { error: seedError } = await supabase.rpc('exec_sql', { sql: seedSql })
     if (seedError) {
       // RPC may not exist — that's OK, seed will run on next demo login
-      console.error('Seed RPC error (non-fatal):', seedError.message)
+      logError('cron.reset_demo.seed_rpc_failed', seedError, { fatal: false })
     }
 
     return NextResponse.json({
@@ -100,7 +101,7 @@ export async function GET(request: Request) {
       timestamp: new Date().toISOString(),
     })
   } catch (err) {
-    console.error('Demo reset error:', err)
+    logError('cron.reset_demo.failed', err, { handler: 'GET' })
     return NextResponse.json({ error: 'Reset failed' }, { status: 500 })
   }
 }
