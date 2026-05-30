@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging)
+Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course)
 
 ## Legend
 - ✅ Complete
@@ -359,7 +359,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Stripe Checkout session creation with webhook handler
 - ✅ Stripe webhook: checkout.session.completed, subscription.deleted, invoice.payment_failed
 - ✅ 7 admin help articles seeded (Stripe, push notifications, Cloudinary, Supabase, Vercel, codebase, dev workflow)
-- 📋 Admin education academy course (5 lessons: Stripe, email, Supabase, Vercel, codebase for presentations) — course not seeded yet
+- ✅ Admin education academy course (5 lessons: Stripe, Mailgun, Supabase, Vercel, codebase tour) — seeded via migration `032_seed_admin_education_course.sql`
 
 ## Built since Phase 22 (not previously listed above)
 
