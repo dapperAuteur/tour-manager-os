@@ -298,6 +298,26 @@ const phases: Phase[] = [
       { label: 'Offline scanner cache + reconciliation', done: false },
     ],
   },
+  {
+    name: 'Phase 24.5: Fan Photo Sharing',
+    status: 'complete',
+    description: 'Ticket-holders share show photos to a pre-moderated public wall. Each photo gets its own sharable link.',
+    items: [
+      { label: 'Ticket-holder eligibility check (DB function + RLS)', done: true },
+      { label: 'Server-signed Cloudinary uploads (10MB max)', done: true },
+      { label: 'Per-show public photo wall', done: true },
+      { label: 'Ticket-holder-gated uploader with caption', done: true },
+      { label: 'Pre-moderation queue for tour staff', done: true },
+      { label: 'Approve / reject (with reason) / remove flows', done: true },
+      { label: 'Rejection email to poster via Mailgun', done: true },
+      { label: 'Fan dashboard with status badges + rejection reasons', done: true },
+      { label: 'Per-photo share page with OG + Twitter Card metadata', done: true },
+      { label: 'Cloudinary destroy on reject / remove (no hot-linking)', done: true },
+      { label: 'Realtime moderation queue (Supabase channel)', done: false },
+      { label: 'Post-publish abuse reports UI', done: false },
+      { label: 'AI-moderation pre-filter', done: false },
+    ],
+  },
 ]
 
 const statusConfig = {
