@@ -121,6 +121,7 @@ const phases: Phase[] = [
       { label: 'Campaign builder with scheduling', done: true },
       { label: 'Community categories and posts', done: true },
       { label: 'Threaded replies', done: true },
+      { label: 'Pin / lock post moderation', done: true },
       { label: 'Email sending (Mailgun)', done: true },
     ],
   },

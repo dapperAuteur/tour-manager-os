@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-29 (Phase 24.5 — fan photos)
+Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins)
 
 ## Legend
 - ✅ Complete
@@ -268,7 +268,7 @@ Last updated: 2026-05-29 (Phase 24.5 — fan photos)
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
-- 📋 Auto-create venue profiles from advance sheet data — `createVenueFromAdvanceSheet()` exists in `lib/venues/actions.ts` but not yet called from advance submission
+- ✅ Auto-create venue profiles from advance sheet data — wired into `submitAdvanceSheet` (best-effort, admin-client)
 - ✅ Times-played counter and last-played date
 - 📋 Smart advance pre-fill from past venue data — no DB function yet; advance form uses current sheet's `defaultValue` only
 - 📋 Venue photos
@@ -370,6 +370,10 @@ Last updated: 2026-05-29 (Phase 24.5 — fan photos)
 - ✅ Global help bubble on every authenticated page
 - ✅ Sidebar nav reorganized into grouped sections
 - ✅ Witus-outbox integration scaffolding (signed-webhook sender reference)
+- ✅ `engines.node >= 20` pinned in `package.json` (runtime parity local ↔ Vercel)
+- ✅ `toggleLockPost()` server action for community moderation (mirrors `togglePinPost`)
+- ✅ Phase 24 Ticketing System (Stripe Checkout + HMAC QR + door scanner + manager dashboard)
+- ✅ Phase 24.5 Fan Photo Sharing (ticket-holder gate + Cloudinary uploads + pre-moderation + share pages)
 
 ---
 
