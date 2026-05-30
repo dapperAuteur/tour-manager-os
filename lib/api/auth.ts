@@ -75,3 +75,76 @@ export function jsonError(message: string, status: number) {
 export function hasScope(scopes: string[], required: string): boolean {
   return scopes.includes(required) || scopes.includes('write')
 }
+
+export interface RateLimitResult {
+  allowed: boolean
+  used: number
+  limit: number
+  resetAt: Date
+}
+
+const RATE_WINDOW_MS = 60 * 60 * 1000
+
+// Counts requests this key has logged in the trailing 1h window. The
+// api_logs(api_key_id, created_at desc) index makes the count cheap.
+export async function checkRateLimit(
+  apiKeyId: string,
+  limit: number,
+): Promise<RateLimitResult> {
+  const supabase = createAdminClient()
+  const windowStart = new Date(Date.now() - RATE_WINDOW_MS).toISOString()
+
+  const { count } = await supabase
+    .from('api_logs')
+    .select('*', { count: 'exact', head: true })
+    .eq('api_key_id', apiKeyId)
+    .gte('created_at', windowStart)
+
+  const used = count ?? 0
+  return {
+    allowed: used < limit,
+    used,
+    limit,
+    resetAt: new Date(Date.now() + RATE_WINDOW_MS),
+  }
+}
+
+function rateLimitResponse(rate: RateLimitResult): Response {
+  return Response.json(
+    {
+      error: 'rate limit exceeded',
+      limit: rate.limit,
+      used: rate.used,
+      reset_at: rate.resetAt.toISOString(),
+    },
+    {
+      status: 429,
+      headers: {
+        'X-RateLimit-Limit': String(rate.limit),
+        'X-RateLimit-Remaining': '0',
+        'X-RateLimit-Reset': String(
+          Math.floor(rate.resetAt.getTime() / 1000),
+        ),
+        'Retry-After': String(Math.ceil(RATE_WINDOW_MS / 1000)),
+      },
+    },
+  )
+}
+
+// Single-call wrapper: validates the key, enforces scope, and applies
+// the per-key rate limit. Returns the ApiKeyData on success, or a
+// short-circuit Response (401 / 403 / 429) the route should return
+// directly.
+export async function requireApiKey(
+  request: Request,
+  requiredScope: string,
+): Promise<ApiKeyData | Response> {
+  const apiKey = await validateApiKey(request)
+  if (!apiKey) return jsonError('Invalid or missing API key', 401)
+  if (!hasScope(apiKey.scopes, requiredScope)) {
+    return jsonError('Insufficient scope', 403)
+  }
+  const rate = await checkRateLimit(apiKey.id, apiKey.rate_limit)
+  if (!rate.allowed) return rateLimitResponse(rate)
+  return apiKey
+}
