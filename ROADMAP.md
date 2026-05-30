@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins + weather)
+Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course)
 
 ## Legend
 - ✅ Complete
@@ -359,7 +359,7 @@ Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins + weather)
 - ✅ Stripe Checkout session creation with webhook handler
 - ✅ Stripe webhook: checkout.session.completed, subscription.deleted, invoice.payment_failed
 - ✅ 7 admin help articles seeded (Stripe, push notifications, Cloudinary, Supabase, Vercel, codebase, dev workflow)
-- 📋 Admin education academy course (5 lessons: Stripe, email, Supabase, Vercel, codebase for presentations) — course not seeded yet
+- ✅ Admin education academy course (5 lessons: Stripe, Mailgun, Supabase, Vercel, codebase tour) — seeded via migration `032_seed_admin_education_course.sql`
 
 ## Built since Phase 22 (not previously listed above)
 
@@ -370,6 +370,7 @@ Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins + weather)
 - ✅ Global help bubble on every authenticated page
 - ✅ Sidebar nav reorganized into grouped sections
 - ✅ Witus-outbox integration scaffolding (signed-webhook sender reference)
+- ✅ Structured server-side error logging (`lib/observability/logger.ts`) wired into Stripe webhook + demo-reset cron; mirrors to PostHog `$exception` events for queryable production observability
 - ✅ `engines.node >= 20` pinned in `package.json` (runtime parity local ↔ Vercel)
 - ✅ `toggleLockPost()` server action for community moderation (mirrors `togglePinPost`)
 - ✅ Phase 24 Ticketing System (Stripe Checkout + HMAC QR + door scanner + manager dashboard)
