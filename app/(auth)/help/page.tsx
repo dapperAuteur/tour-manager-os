@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { HelpCircle, Search, BookOpen, MessageSquare } from 'lucide-react'
 import { getHelpArticles } from '@/lib/help/queries'
 import { HelpSearch } from './help-search'
+import { AskBubble } from './ask-bubble'
 
 export const metadata: Metadata = { title: 'Help', robots: { index: false } }
 
@@ -42,6 +43,8 @@ export default async function HelpPage({ searchParams }: { searchParams: Promise
       </div>
 
       <HelpSearch initialQuery={q} />
+
+      <AskBubble defaultQuery={q} />
 
       {articles.length === 0 ? (
         <div className="mt-8 rounded-xl border border-border-default bg-surface-raised p-8 text-center">

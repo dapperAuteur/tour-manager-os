@@ -146,6 +146,7 @@ const phases: Phase[] = [
       { label: 'Feedback threads with admin replies', done: true },
       { label: 'Admin feedback management', done: true },
       { label: 'AI-powered help (pgvector + Vercel AI Gateway + LangSmith)', done: true },
+      { label: 'Conversational help agent (RAG, streaming, cited sources)', done: true },
     ],
   },
   {
