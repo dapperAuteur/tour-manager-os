@@ -121,7 +121,7 @@ const phases: Phase[] = [
       { label: 'Campaign builder with scheduling', done: true },
       { label: 'Community categories and posts', done: true },
       { label: 'Threaded replies', done: true },
-      { label: 'Email sending (Mailgun)', done: false },
+      { label: 'Email sending (Mailgun)', done: true },
     ],
   },
   {
@@ -203,7 +203,7 @@ const phases: Phase[] = [
       { label: 'Admin promo code management', done: true },
       { label: 'CSV templates (7 data types)', done: true },
       { label: 'Email setup docs (Help + Academy)', done: true },
-      { label: 'Stripe Checkout integration', done: false },
+      { label: 'Stripe Checkout integration', done: true },
     ],
   },
   {
@@ -277,6 +277,25 @@ const phases: Phase[] = [
       { label: 'Rise Wellness mental health card', done: true },
       { label: 'CentenarianOS exercise library links', done: true },
       { label: 'Burnout detection', done: false },
+    ],
+  },
+  {
+    name: 'Phase 24: Ticketing System',
+    status: 'complete',
+    description: 'Sell tickets via Stripe, scan QR codes at the door, audit every entry. Anti-counterfeit signed QRs.',
+    items: [
+      { label: 'Public buy page with type picker + guest checkout', done: true },
+      { label: 'Stripe Checkout sessions with inventory check', done: true },
+      { label: 'HMAC-signed QR codes (anti-counterfeit)', done: true },
+      { label: 'Email delivery of ticket links (Mailgun)', done: true },
+      { label: 'Holder ticket page with QR display', done: true },
+      { label: 'Web-based door scanner (camera + manual fallback)', done: true },
+      { label: 'Atomic single-use enforcement + scan log', done: true },
+      { label: 'Manager dashboard (sales, scans, revenue, refunds)', done: true },
+      { label: 'Refund handling via Stripe webhook', done: true },
+      { label: 'Stripe Connect split payments (artist/venue/crew)', done: false },
+      { label: 'Apple/Google Wallet ticket delivery', done: false },
+      { label: 'Offline scanner cache + reconciliation', done: false },
     ],
   },
 ]
