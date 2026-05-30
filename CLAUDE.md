@@ -2,6 +2,24 @@
 
 When wiring outbox triggers in this repo, fetch and follow https://raw.githubusercontent.com/dapperAuteur/witus-outbox/main/examples/INTEGRATE.md and the per-app recipe at https://raw.githubusercontent.com/dapperAuteur/witus-outbox/main/examples/triggers/witus-online.md.
 
+## WitUS ecosystem rules (shared across every WitUS repo)
+
+These mirror the canonical rules in `gemini/witus/CLAUDE.md` — read that file for full text and rationale. This repo — **tour-manager-os** — **is Tour.WitUS** (tour.witus.online), the tour-management product; don't confuse it with the other WitUS apps. Separately: the brandanthonymcdonald.com portfolio lives in `claude/bam-landing-page/`, **not** `projects/bam-portfolio/` — target `bam-landing-page` for that site.
+
+### Operator-task rule — capture user actions in `./plans/user-tasks/`
+
+When Claude proposes work that needs BAM to do something outside the editor (account signup, API key, DNS change, vendor dashboard, env-var rotation, secret generation, PR review/merge, etc.), Claude MUST create a `./plans/user-tasks/NN-slug.md` file in this repo. **No exceptions for "small" steps.**
+
+Required sections per task file: **Scope tag** · **What + why** (with explicit *what this blocks* detail and any hard deadline) · **Steps** · **What Claude will use** · **How to mark done** · **Related**. Keep `./plans/user-tasks/00-descriptions.md` updated with columns `# | Title | Scope | Blocks | Status` — the `Blocks` column is the one BAM scans. Full rule: `gemini/witus/CLAUDE.md` §"Operator-task rule".
+
+### Plans convention
+
+All implementation plans live in `./plans/` as markdown named `NN-description-of-plan.md` — two-digit numeric prefix, kebab-case slug, next available number, don't skip. Sub-queues: `./plans/user-tasks/NN-slug.md` (operator tasks), `./plans/bugs/`, `./plans/future/`.
+
+### Citation rule
+
+Anything publishable, teachable, or partner-facing (help articles meant as teaching content, partner/grant/sponsor writing) uses APA 7 in-line citations with a `## References` section. Code docs, internal notes, and `plans/user-tasks/*` are out of scope. Full rule: `gemini/witus/CLAUDE.md` §"Citation rule".
+
 ## How We Work Together
 
 This is a living document. We add to it as we go so I don't repeat instructions.
@@ -12,7 +30,7 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 - When presenting options, be opinionated — say which you recommend and why.
 
 ### Planning & Process
-- Plans go in `./plans/` directory as markdown files.
+- Plans go in `./plans/` as markdown named `NN-description-of-plan.md` (see WitUS ecosystem rules → Plans convention).
 - Review this document (CLAUDE.md) after every set of instructions before starting work.
 - **Check `ROADMAP.md` before coding** to understand current status and what phase we're in.
 - **Update BOTH roadmaps after every shipped feature** so the public-facing version never drifts from reality:
@@ -40,12 +58,17 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 - Mobile first design - touch targets, responsive layouts, swipe gestures
 - Offline mode for as many features as possible - PWA with service workers, IndexedDB caching, background sync. They tour places with unreliable internet.
 
-### Git Workflow
-- New feature branch for each implementation step
-- Small incremental commits - atomic changes so user can confirm no bugs introduced
-- Clear commit messages with each step
-- Pause for user review after each step before proceeding
-- **NEVER merge feature branches into main** - user handles all merges themselves
+### Git Workflow — Branch hygiene (BAM merges, between sessions by default)
+
+**Half 1.** End-of-branch contract: branch → commit → push → stop. Claude does not run `git checkout main && git merge`. Never `--force` to shared branches. After push, hand back the branch name + summary and stop.
+
+**Half 2.** BAM merges committed-and-pushed branches via the GitHub UI before the next session starts, unless explicitly told otherwise. At session start the local checkout is typically fresh-from-main. **Mid-session, after a push, BAM may merge in a separate window and the local checkout silently fast-forwards to `main`.** Re-check `git branch --show-current` before EVERY commit, not just at branch creation, or you risk landing follow-up commits directly on `main` and bypassing the merge gate.
+
+**Half 3.** Keep branches small (one concern per branch). When a session produces multiple branches, Claude consolidates them into one `bundle/<slug>-YYYY-MM-DD` branch before handoff: merge the small branches in lowest-conflict-risk order using `git merge --no-ff` (preserves per-concern history — non-negotiable, no squash), resolve any 3-way conflicts during bundling, run a final `tsc + lint + build` against the bundle, push, and file ONE user-task at `./plans/user-tasks/NN-merge-bundle-<slug>.md` for BAM to merge bundle → main. The small branches stay on the remote for drill-down history; **BAM does one merge, not N.**
+
+A checked-in `.githooks/pre-commit` guard refuses commits made directly on `main`/`master`. Activate it once per clone: `git config core.hooksPath .githooks`.
+
+Full rule with rationale: `gemini/witus/CLAUDE.md` §"Branch-hygiene rule".
 
 ### Module System
 - Every major feature is a toggleable module (admin enables for org, members opt-in)

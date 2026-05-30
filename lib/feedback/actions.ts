@@ -2,9 +2,18 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { after } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { isSuperAdmin } from '@/lib/auth/super-admin'
+import { mirrorFeedbackToInbox } from '@/lib/feedback/inbox-mirror'
+
+/** Best-effort human name from Supabase user metadata, for the Inbox mirror. */
+function displayNameOf(user: { user_metadata?: Record<string, unknown> }): string | null {
+  const m = user.user_metadata ?? {}
+  const n = m.display_name ?? m.full_name ?? m.name
+  return typeof n === 'string' && n.trim() ? n : null
+}
 
 export async function createFeedbackThread(formData: FormData) {
   const supabase = await createClient()
@@ -47,6 +56,20 @@ export async function createFeedbackThread(formData: FormData) {
     sender_role: 'user',
     content,
   })
+
+  // Mirror to the WitUS Inbox so BAM triages every product from one place.
+  // Non-blocking: registered before redirect(), runs after the response.
+  after(() =>
+    mirrorFeedbackToInbox({
+      category,
+      subject,
+      content,
+      threadId: thread.id,
+      kind: 'new',
+      submitterEmail: user.email,
+      submitterName: displayNameOf(user),
+    })
+  )
 
   revalidatePath('/feedback')
   redirect(`/feedback/${thread.id}`)
@@ -135,9 +158,103 @@ export async function sendFeedbackMessage(threadId: string, formData: FormData) 
     }
   }
 
+  // User follow-up replies also mirror to the Inbox so the whole conversation
+  // reaches BAM in one place. Admin replies don't — those are BAM's own.
+  if (senderRole === 'user') {
+    const { data: t } = await client
+      .from('feedback_threads')
+      .select('subject, category')
+      .eq('id', threadId)
+      .single()
+    if (t) {
+      after(() =>
+        mirrorFeedbackToInbox({
+          category: t.category,
+          subject: t.subject,
+          content,
+          threadId,
+          kind: 'reply',
+          submitterEmail: user.email,
+          submitterName: displayNameOf(user),
+        })
+      )
+    }
+  }
+
   revalidatePath(`/feedback/${threadId}`)
   revalidatePath(`/admin/feedback/${threadId}`)
   return { success: true }
+}
+
+/**
+ * HelpBubble FAB submission. The bubble used to insert into Supabase directly
+ * from the browser; it now calls this server action so the submission also
+ * mirrors to the WitUS Inbox (the HMAC secret must stay server-side). Returns
+ * the new thread id (or an error) without redirecting — the bubble keeps its
+ * own optimistic "Thank you" UI.
+ */
+export async function submitHelpBubbleFeedback(input: {
+  subject: string
+  category: string
+  content: string
+}): Promise<{ threadId: string } | { error: string }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  const subject = input.subject?.trim()
+  const content = input.content?.trim()
+  const category = input.category?.trim()
+  if (!subject || !content || !category) {
+    return { error: 'Subject, category, and message are required' }
+  }
+
+  // Get user's org
+  const { data: orgMember } = await supabase
+    .from('org_members')
+    .select('org_id')
+    .eq('user_id', user.id)
+    .limit(1)
+    .single()
+
+  const priority = category === 'bug' ? 'high' : 'normal'
+
+  const { data: thread, error } = await supabase
+    .from('feedback_threads')
+    .insert({
+      user_id: user.id,
+      org_id: orgMember?.org_id || null,
+      subject,
+      category,
+      priority,
+    })
+    .select('id')
+    .single()
+
+  if (error || !thread) return { error: error?.message || 'Could not create feedback' }
+
+  const { error: msgError } = await supabase.from('feedback_messages').insert({
+    thread_id: thread.id,
+    sender_id: user.id,
+    sender_role: 'user',
+    content,
+  })
+  if (msgError) return { error: msgError.message }
+
+  after(() =>
+    mirrorFeedbackToInbox({
+      category,
+      subject,
+      content,
+      threadId: thread.id,
+      kind: 'new',
+      submitterEmail: user.email,
+      submitterName: displayNameOf(user),
+    })
+  )
+
+  revalidatePath('/feedback')
+  return { threadId: thread.id }
 }
 
 export async function updateThreadStatus(threadId: string, status: string) {

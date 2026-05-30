@@ -148,6 +148,7 @@ const phases: Phase[] = [
       { label: 'AI-powered help (pgvector + Vercel AI Gateway + LangSmith)', done: true },
       { label: 'Conversational help agent (RAG, streaming, cited sources)', done: true },
       { label: 'Admin AI management page (hot-swap models, health checks, usage logs)', done: true },
+      { label: 'Feedback mirrored to the WitUS Inbox + Triage (central cross-product triage)', done: true },
     ],
   },
   {
