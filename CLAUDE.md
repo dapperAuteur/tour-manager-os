@@ -60,7 +60,7 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 
 ### What to Avoid
 - Never merge feature branches into main — user handles all merges
-- `plans/ideas-to-discuss-later.md` is a scratchpad — do NOT add items from it to the plan or implement them unless the user explicitly asks
+- `plans/future/ideas-to-discuss-later.md` is a scratchpad — do NOT add items from it to the plan or implement them unless the user explicitly asks
 
 ### What Works Well
 - (We'll add to this as we go)
