@@ -4,6 +4,8 @@ import {
   Music, ArrowRight, Cigarette,
 } from 'lucide-react'
 import type { ShowDayData } from '@/lib/showday/queries'
+import type { ShowWeather } from '@/lib/weather/actions'
+import { WeatherCard } from './weather-card'
 
 function TimeBlock({ time, label, tz }: { time: string | null; label: string; tz: string }) {
   if (!time) return null
@@ -39,7 +41,7 @@ function tzAbbr(tz: string): string {
   }
 }
 
-export function DayView({ data }: { data: ShowDayData }) {
+export function DayView({ data, weather }: { data: ShowDayData; weather?: ShowWeather | null }) {
   const { show, advance, contacts, itinerary, prevShow, nextShow } = data
   const tz = tzAbbr(show.timezone)
   const tourName = show.tours?.name || ''
@@ -63,6 +65,9 @@ export function DayView({ data }: { data: ShowDayData }) {
         </h2>
         <p className="mt-1 text-sm text-text-muted">Show Day &bull; {tz}</p>
       </div>
+
+      {/* Weather */}
+      {weather && <WeatherCard weather={weather} />}
 
       {/* Travel from */}
       {prevShow && itinerary?.distance_miles && (

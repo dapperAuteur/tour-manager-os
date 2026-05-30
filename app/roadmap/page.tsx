@@ -76,6 +76,7 @@ const phases: Phase[] = [
       { label: 'Tap-to-navigate and tap-to-call', done: true },
       { label: 'Day navigation', done: true },
       { label: 'Timezone-aware times', done: true },
+      { label: 'Weather forecast (Open-Meteo, cached)', done: true },
       { label: 'Push notifications', done: false },
     ],
   },

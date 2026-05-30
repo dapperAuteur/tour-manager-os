@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins)
+Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins + weather)
 
 ## Legend
 - ✅ Complete
@@ -74,7 +74,7 @@ Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins)
 - ✅ Next destination preview
 - ✅ Day off view when no show scheduled
 - 📋 Push notifications for schedule changes
-- 📋 Weather integration (Open-Meteo, cached per show) — `weather_cache` table exists, fetch/UI not yet wired
+- ✅ Weather integration (Open-Meteo, cached per show) — geocoding + 16-day forecast horizon, WMO-code-to-icon mapping, freshness rules (4h ≤ 14d out, 24h beyond), rendered as a `WeatherCard` near the show-day header
 
 ## Phase 6: Demo System ✅
 > Pre-configured demo accounts with realistic data for try-before-you-buy.
@@ -353,7 +353,7 @@ Last updated: 2026-05-29 (Phase 24.5 + audit quick-wins)
 - ✅ Contact sharing across teams via public venue directory
 - ✅ Full CRUD: edit, delete, duplicate across all modules (reusable RecordActions component)
 - 📋 Recharts analytics charts (bar, line, pie) for admin dashboard — package not installed; only stat cards rendered
-- 📋 Weather integration on Show Day (Open-Meteo, cached) — `weather_cache` table exists; fetch + UI not yet wired
+- ✅ Weather integration on Show Day (Open-Meteo, cached) — wired via `lib/weather/actions.ts` (geocode + 16-day forecast + DB cache); rendered in `app/(auth)/today/weather-card.tsx`
 - 📋 Smart advance pre-fill from past venue data (DB function) — function not written; form uses current sheet only
 - 📋 Venue stages/spaces — multiple stages per venue (indoor/outdoor) — no `venue_stages` table; single stage columns only
 - ✅ Stripe Checkout session creation with webhook handler
