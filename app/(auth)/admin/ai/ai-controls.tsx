@@ -59,16 +59,15 @@ interface AiControlsProps {
 
 const MODEL_PRESETS: Record<AiConfigKey, { value: string; label: string }[]> = {
   chat_model: [
-    { value: 'cerebras/llama3.3-70b', label: 'Cerebras Llama 3.3 70B (fastest)' },
-    { value: 'cerebras/llama3.1-8b', label: 'Cerebras Llama 3.1 8B (cheapest)' },
-    { value: 'cerebras/qwen-3-32b', label: 'Cerebras Qwen 3 32B' },
+    { value: 'cerebras/gpt-oss-120b', label: 'Cerebras GPT-OSS 120B (fast, with reasoning)' },
+    { value: 'cerebras/zai-glm-4.7', label: 'Cerebras ZAI GLM 4.7 (fast, with reasoning)' },
     {
       value: 'openrouter/anthropic/claude-3.5-sonnet',
       label: 'OpenRouter → Claude 3.5 Sonnet (highest quality)',
     },
     { value: 'openrouter/openai/gpt-4o-mini', label: 'OpenRouter → GPT-4o mini' },
     { value: 'mistral/mistral-large-latest', label: 'Mistral Large (balanced)' },
-    { value: 'mistral/mistral-small-latest', label: 'Mistral Small (cheap)' },
+    { value: 'mistral/mistral-small-latest', label: 'Mistral Small (cheap, reliable)' },
     {
       value: 'together/meta-llama/Llama-3.3-70B-Instruct-Turbo',
       label: 'Together → Llama 3.3 70B Turbo',
