@@ -2,6 +2,7 @@ import { embed } from 'ai'
 import { traceable } from 'langsmith/traceable'
 import { logError } from '@/lib/observability/logger'
 import { getEmbeddingModel } from './config'
+import { resolveEmbeddingModel } from './providers'
 
 // Re-export so existing imports of `getEmbeddingModel` from this
 // module keep working. The implementation lives in ./config now so
@@ -22,7 +23,8 @@ export function getEmbeddingDims(): number {
 // Internal — no tracing wrapper here; that's added below.
 async function _embedTextOnce(text: string): Promise<number[] | null> {
   if (!text || !text.trim()) return null
-  const model = await getEmbeddingModel()
+  const modelString = await getEmbeddingModel()
+  const model = resolveEmbeddingModel(modelString)
   try {
     const result = await embed({
       model,
@@ -31,7 +33,7 @@ async function _embedTextOnce(text: string): Promise<number[] | null> {
     return result.embedding
   } catch (err) {
     logError('ai.embed.failed', err, {
-      model,
+      model: modelString,
       input_length: text.length,
     })
     return null

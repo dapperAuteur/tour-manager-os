@@ -1,6 +1,7 @@
 import { streamText, type ModelMessage, type StreamTextResult, type ToolSet } from 'ai'
 import { traceable } from 'langsmith/traceable'
 import { getChatModel } from './config'
+import { resolveChatModel } from './providers'
 
 // Re-export so existing imports of `getChatModel` from this module
 // keep working.
@@ -18,7 +19,8 @@ interface ChatStreamArgs {
 
 // Internal — no tracing wrapper here.
 async function _streamChat(args: ChatStreamArgs): Promise<StreamTextResult<ToolSet, never>> {
-  const model = await getChatModel()
+  const modelString = await getChatModel()
+  const model = resolveChatModel(modelString)
   return streamText({
     model,
     system: args.system,
@@ -32,7 +34,7 @@ async function _streamChat(args: ChatStreamArgs): Promise<StreamTextResult<ToolS
               outputTokens: result.usage?.outputTokens,
               totalTokens: result.usage?.totalTokens,
             },
-            model,
+            model: modelString,
           })
         }
       : undefined,
