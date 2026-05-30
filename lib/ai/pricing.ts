@@ -25,23 +25,20 @@ export interface ModelPricing {
 
 const PRICING: Record<string, ModelPricing> = {
   // ---- Cerebras (Inference Cloud) ----
-  'cerebras/llama3.3-70b': {
+  // Catalog from this account's /v1/models response — 2026-05-30.
+  // If a model 404s, hit GET /api/admin/ai/cerebras-probe to see what
+  // the account actually has access to and edit this list.
+  'cerebras/gpt-oss-120b': {
     tier: 'free-tier',
-    inputPerM: 0.85,
-    outputPerM: 1.2,
-    note: 'Free daily allowance (~1M tokens), then pay-per-token',
+    inputPerM: 0.25,
+    outputPerM: 0.69,
+    note: 'Reasoning model. Free daily allowance, then pay-per-token',
   },
-  'cerebras/llama3.1-8b': {
+  'cerebras/zai-glm-4.7': {
     tier: 'free-tier',
-    inputPerM: 0.1,
-    outputPerM: 0.1,
-    note: 'Free daily allowance (~1M tokens), then pay-per-token',
-  },
-  'cerebras/qwen-3-32b': {
-    tier: 'free-tier',
-    inputPerM: 0.4,
-    outputPerM: 0.8,
-    note: 'Free daily allowance, then pay-per-token',
+    inputPerM: 0.6,
+    outputPerM: 2.2,
+    note: 'Reasoning model. Free daily allowance, then pay-per-token',
   },
 
   // ---- Mistral (direct) ----
