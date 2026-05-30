@@ -8,13 +8,20 @@ Tour Manager OS digitizes the entire touring workflow:
 
 - **Digital Advance Sheets** — Smart web forms that venues fill out online. No more emailing Excel files and chasing responses. Data flows directly into auto-generated daily itineraries.
 - **Auto-Generated Itineraries** — Show day schedules, venue info, hotel details, transportation, and contacts — all assembled automatically from advance sheet data.
-- **Tour Finances** — Real-time P&L per show and per tour. Per-member financial views, receipt capture, expense tracking, and tax-friendly exports.
+- **Tour Finances** — Real-time P&L per show and per tour. Per-member financial views, expense tracking, and tax-friendly CSV exports.
 - **Show Day Companion** — Mobile-first daily view for each member. Open your phone, see your whole day: soundcheck at 3, doors at 7, you're on at 9:15.
-- **Merch Management** — Inventory tracking, per-show sales, and an online merch store with Stripe payments.
-- **Fan Engagement** — Marketing emails, exclusive content, community forums, and public event pages.
-- **Family Collaboration** — Polls, practice scheduling, shared albums, group chat, and days-off planning.
-- **Document Hub** — Contracts, riders, W-9s, venue maps — all organized per tour and show.
-- **Academy/LMS** — Courses teaching users how to get the most from every feature.
+- **Ticketing System** — Public buy page with Stripe Checkout, HMAC-signed QR codes (anti-counterfeit), web-based door scanner with atomic single-use enforcement, refund handling, and a manager dashboard for sales/admission stats.
+- **Fan Photo Sharing** — Ticket-holders submit show photos to a pre-moderated public wall. Each approved photo gets its own sharable page with Open Graph + Twitter Card metadata.
+- **Merch Management** — Inventory tracking, per-show sales, and merch P&L. Online store with Stripe payments planned.
+- **Fan Engagement** — Marketing email campaigns via Mailgun (with open/click tracking, bounce/complaint webhooks), community forums with pin/lock moderation, and per-show event pages.
+- **Family Collaboration** — Polls, practice scheduling, shared albums, setlist collaboration.
+- **Document Hub** — Contracts, riders, W-9s, venue maps — organized per tour and show.
+- **Venue Network** — Crowd-sourced public venue directory with ratings, fuzzy search, and auto-creation from submitted advance sheets.
+- **Multi-Act Touring** — Tour packages with multiple acts, shared production timelines.
+- **Wellness Platform** — Daily wellness log, warmup routines, family check-ins, CentenarianOS integration.
+- **Academy/LMS** — Courses + lessons + quizzes teaching users how to use the platform.
+- **Public API** — RESTful endpoints (tours, shows, itineraries) with key management, request logging, and developer docs.
+- **White Label** — Custom branding, fonts, and domains for enterprise clients.
 - **Admin Dashboard** — Analytics, metrics, feedback management, and user impact tracking.
 
 ## Key Principles
@@ -30,19 +37,16 @@ Tour Manager OS digitizes the entire touring workflow:
 | Layer | Technology |
 |-------|-----------|
 | Framework | Next.js 15 (App Router, Turbopack) |
+| React | 19 |
+| Node | 20+ (pinned via `engines.node`) |
 | Database | Supabase (PostgreSQL + Auth + Realtime + Storage) |
 | Styling | Tailwind CSS 4 |
 | Icons | Lucide React |
-| Maps | Leaflet |
-| Media | Cloudinary |
-| Payments | Stripe |
-| Rich Text | Tiptap |
-| PDF Generation | @react-pdf/renderer |
-| CSV Parsing | Papa Parse |
-| Charts | Recharts |
-| Email | Resend |
-| AI/RAG Help | pgvector + Gemini embeddings |
-| Offline/PWA | next-pwa + IndexedDB |
+| Media | Cloudinary (server-signed uploads) |
+| Payments | Stripe (Checkout sessions + webhooks for tickets and subscriptions) |
+| QR Codes | qrcode.react (display) + @zxing/browser (scanner) |
+| Email | Mailgun (direct fetch, region-aware, HMAC webhook verification) |
+| Analytics | PostHog + Vercel Speed Insights + Vercel Analytics |
 | Deployment | Vercel |
 
 ## Getting Started
@@ -99,35 +103,42 @@ Demo data features "The Roadwell Family" — a 5-member family band with complet
 ```
 tour-manager-os/
 ├── app/                    # Next.js App Router pages
-│   ├── (public)/           # Public pages (landing, login, demo)
+│   ├── (public)/           # Public pages (landing, /shows/[id]/tickets, /shows/[id]/photos)
 │   ├── (auth)/             # Authenticated pages
-│   │   ├── dashboard/      # Main dashboard
+│   │   ├── today/          # Show Day mobile view
 │   │   ├── tours/          # Tour management
+│   │   │   └── [id]/shows/[showId]/   # Show detail, scanner, ticketing dashboard, fan-photos moderation
+│   │   ├── photos/         # Fan's own photo submissions dashboard
 │   │   ├── settings/       # User settings
-│   │   ├── academy/        # LMS courses
-│   │   ├── community/      # Fan community
-│   │   ├── marketing/      # Email marketing
+│   │   ├── academy/        # LMS courses + lessons + quizzes
+│   │   ├── community/      # Fan community (pin/lock moderation)
+│   │   ├── marketing/      # Email marketing campaigns
 │   │   ├── feedback/       # Feedback threads
-│   │   ├── help/           # RAG-powered help
+│   │   ├── help/           # Searchable help articles
+│   │   ├── developers/     # Public API docs
 │   │   └── admin/          # Admin dashboard
-│   ├── advance/            # Public advance sheet forms (no auth)
+│   ├── advance/            # Public advance sheet forms (no auth, token-based)
+│   ├── tickets/[id]/       # Holder QR display + success page
+│   ├── photos/[id]/        # Per-photo public share page (OG + Twitter Card)
+│   ├── features/[slug]/    # Auto-generated module landing pages
+│   ├── for/                # Per-user-type landing pages
 │   └── api/                # API routes
-│       └── v1/             # Public API
+│       ├── tickets/        # Checkout, fetch, scan
+│       ├── fan-photos/     # Upload
+│       ├── admin/fan-photos/ # Moderation queue + moderate
+│       ├── webhooks/       # Stripe, Mailgun
+│       └── v1/             # Public API (tours, shows, itineraries)
 ├── components/             # Shared React components
-│   ├── ui/                 # Base UI components
-│   ├── modules/            # Module-specific components
-│   └── layout/             # Layout components
 ├── lib/                    # Shared utilities
-│   ├── supabase/           # Supabase clients (client, server, admin)
-│   ├── modules/            # Module access helpers
-│   ├── offline/            # IndexedDB + sync utilities
-│   └── pdf/                # PDF generation templates
-├── supabase/               # Supabase config
-│   ├── migrations/         # SQL migrations
-│   └── seed.sql            # Demo data seed
-├── public/                 # Static assets
-├── plans/                  # Product plans and documentation
-└── docs/                   # Developer documentation
+│   ├── supabase/           # Supabase clients (client.ts, server.ts, admin.ts)
+│   ├── tickets/            # HMAC signing helpers
+│   ├── cloudinary/         # Server-signed upload helper
+│   ├── email/              # Mailgun client + send-campaign action
+│   └── modules/            # Module registry + feature page data
+├── supabase/
+│   └── migrations/         # SQL migrations (run via psql against remote)
+├── plans/                  # Internal product plans (gitignored)
+└── public/                 # Static assets
 ```
 
 ## Scripts
@@ -147,15 +158,14 @@ npm run db:types     # Generate TypeScript types from Supabase schema
 
 ## Documentation
 
-- [Roadmap](ROADMAP.md) — Public roadmap with current status of all features
-- [Product Plan](plans/tour-manager-os-plan.md) — Full product vision, MVPs, and phased roadmap
-- [SWOT: Supabase vs MongoDB](plans/swot-supabase-vs-mongodb.md) — Database decision analysis
+- [Roadmap](ROADMAP.md) — Phase-by-phase status of every feature with ✅ / 📋 / 🚧 / 💡 markers
 - [Contributing](CONTRIBUTING.md) — How to contribute
 - [Code of Conduct](CODE_OF_CONDUCT.md) — Community standards
 - [Style Guide](STYLE_GUIDE.md) — Code conventions and patterns
 - [Code Rules](CODE_RULES.md) — Architectural rules and constraints
+- [Collaboration Guide](CLAUDE.md) — How AI assistants and humans work together on this codebase (planning, git, accessibility, doc-update rules)
+- Public live roadmap at [tour.witus.online/roadmap](https://tour.witus.online/roadmap) — same data as ROADMAP.md, rendered for fans
 
 ## License
 
 Proprietary. All rights reserved.
-# tour-manager-os
