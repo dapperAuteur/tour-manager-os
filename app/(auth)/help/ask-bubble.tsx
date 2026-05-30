@@ -9,6 +9,20 @@ interface AskBubbleProps {
   defaultQuery?: string
 }
 
+// Suggested questions shown as chips when the chat is empty. Phrased
+// in the user's voice ("How do I…", "Can I…") so click-to-send reads
+// naturally in the transcript. Keep these covering the highest-traffic
+// onboarding questions — when a new feature ships, add a starter here
+// so users discover it.
+const STARTER_QUESTIONS = [
+  'How do I create a tour and add shows?',
+  'How do I send an advance sheet to a venue?',
+  'How do I track tour expenses?',
+  'How do I sell tickets for a show?',
+  'How does the door scanner work?',
+  'How do fans share photos from a show?',
+]
+
 export function AskBubble({ defaultQuery }: AskBubbleProps) {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState(defaultQuery || '')
@@ -70,11 +84,33 @@ export function AskBubble({ defaultQuery }: AskBubbleProps) {
         className="max-h-96 space-y-3 overflow-y-auto px-4 py-3 text-sm"
       >
         {messages.length === 0 ? (
-          <p className="text-text-muted">
-            Ask anything about Tour Manager OS — advance sheets, finances,
-            show day, ticketing, fan photos. The agent only answers using
-            published help articles and cites its sources.
-          </p>
+          <div>
+            <p className="text-text-muted">
+              Ask anything about Tour Manager OS. The agent answers from
+              published help articles, cites its sources, and suggests
+              follow-up questions.
+            </p>
+            <div className="mt-3">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-muted">
+                Starters
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {STARTER_QUESTIONS.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    disabled={isBusy}
+                    onClick={() => {
+                      sendMessage({ text: q })
+                    }}
+                    className="rounded-full border border-primary-500/30 bg-primary-500/5 px-3 py-1 text-left text-xs hover:bg-primary-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
         ) : (
           messages.map((m) => (
             <div
