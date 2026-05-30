@@ -46,6 +46,9 @@ Tour Manager OS digitizes the entire touring workflow:
 | Payments | Stripe (Checkout sessions + webhooks for tickets and subscriptions) |
 | QR Codes | qrcode.react (display) + @zxing/browser (scanner) |
 | Email | Mailgun (direct fetch, region-aware, HMAC webhook verification) |
+| AI | Vercel AI Gateway via AI SDK v6 (Mistral / Cerebras / Together / OpenRouter) |
+| Vector | pgvector on Supabase (HNSW cosine, 1024-dim Mistral embeddings) |
+| AI observability | LangSmith (traceable wrapper on embed / chat / vision calls) |
 | Analytics | PostHog + Vercel Speed Insights + Vercel Analytics |
 | Deployment | Vercel |
 

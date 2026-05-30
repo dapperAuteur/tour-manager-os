@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course)
+Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search)
 
 ## Legend
 - ✅ Complete
@@ -144,7 +144,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Admin sees user name on every thread with link context
 - ✅ User notifications on admin replies
 - ✅ Priority levels (low/normal/high/urgent)
-- 📋 AI-powered help (Gemini + pgvector semantic search)
+- ✅ AI-powered help — pgvector semantic search via Mistral embeddings through the Vercel AI Gateway, LangSmith traceable, with fuzzy/ilike fallback if the embedding service is unavailable. Admin-only POST `/api/admin/help/backfill-embeddings` re-indexes after model changes
 
 ## Phase 12: Admin Dashboard ✅
 > Analytics, metrics, logs, user management.

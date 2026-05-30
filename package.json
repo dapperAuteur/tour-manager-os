@@ -17,12 +17,15 @@
     "db:reset": "npx supabase db reset"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.67",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.4",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "@zxing/browser": "^0.2.0",
     "@zxing/library": "^0.22.0",
+    "ai": "^6.0.193",
+    "langsmith": "^0.7.3",
     "lucide-react": "^0.477.0",
     "next": "^15.3.1",
     "posthog-js": "^1.364.4",
