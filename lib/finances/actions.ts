@@ -14,6 +14,7 @@ export async function createExpense(tourId: string, formData: FormData) {
   const amount = formData.get('amount') as string
   const description = formData.get('description') as string
   const showId = formData.get('show_id') as string
+  const receiptUrl = formData.get('receipt_url') as string
   const isTaxDeductible = formData.get('is_tax_deductible') === 'on'
 
   if (!date || !category || !amount) {
@@ -30,6 +31,7 @@ export async function createExpense(tourId: string, formData: FormData) {
       category,
       amount: parseFloat(amount),
       description: description || null,
+      receipt_url: receiptUrl || null,
       is_tax_deductible: isTaxDeductible,
     })
 
