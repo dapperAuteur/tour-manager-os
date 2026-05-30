@@ -1,17 +1,14 @@
 import { embed } from 'ai'
 import { traceable } from 'langsmith/traceable'
 import { logError } from '@/lib/observability/logger'
+import { getEmbeddingModel } from './config'
 
-// Default embedding model. Override via AI_EMBEDDING_MODEL env var if
-// you switch providers — but remember the help_articles.embedding
-// column is sized for mistral-embed's 1024 dimensions. Changing
-// dimensions requires a new migration recreating the column + index.
-const DEFAULT_EMBEDDING_MODEL = 'mistral/mistral-embed'
+// Re-export so existing imports of `getEmbeddingModel` from this
+// module keep working. The implementation lives in ./config now so
+// admin DB overrides take precedence over env vars.
+export { getEmbeddingModel } from './config'
+
 const DEFAULT_EMBEDDING_DIMS = 1024
-
-export function getEmbeddingModel(): string {
-  return process.env.AI_EMBEDDING_MODEL || DEFAULT_EMBEDDING_MODEL
-}
 
 export function getEmbeddingDims(): number {
   const raw = process.env.AI_EMBEDDING_DIMS
@@ -25,15 +22,16 @@ export function getEmbeddingDims(): number {
 // Internal — no tracing wrapper here; that's added below.
 async function _embedTextOnce(text: string): Promise<number[] | null> {
   if (!text || !text.trim()) return null
+  const model = await getEmbeddingModel()
   try {
     const result = await embed({
-      model: getEmbeddingModel(),
+      model,
       value: text,
     })
     return result.embedding
   } catch (err) {
     logError('ai.embed.failed', err, {
-      model: getEmbeddingModel(),
+      model,
       input_length: text.length,
     })
     return null

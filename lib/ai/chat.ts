@@ -1,25 +1,41 @@
-import { streamText, type ModelMessage } from 'ai'
+import { streamText, type ModelMessage, type StreamTextResult, type ToolSet } from 'ai'
 import { traceable } from 'langsmith/traceable'
+import { getChatModel } from './config'
 
-const DEFAULT_CHAT_MODEL = 'cerebras/llama-3.3-70b'
-
-export function getChatModel(): string {
-  return process.env.AI_CHAT_MODEL || DEFAULT_CHAT_MODEL
-}
+// Re-export so existing imports of `getChatModel` from this module
+// keep working.
+export { getChatModel } from './config'
 
 interface ChatStreamArgs {
   system: string
   messages: ModelMessage[]
   temperature?: number
+  onFinish?: (result: {
+    usage?: { inputTokens?: number; outputTokens?: number; totalTokens?: number }
+    model: string
+  }) => void | Promise<void>
 }
 
 // Internal — no tracing wrapper here.
-function _streamChat(args: ChatStreamArgs) {
+async function _streamChat(args: ChatStreamArgs): Promise<StreamTextResult<ToolSet, never>> {
+  const model = await getChatModel()
   return streamText({
-    model: getChatModel(),
+    model,
     system: args.system,
     messages: args.messages,
     temperature: args.temperature ?? 0.3,
+    onFinish: args.onFinish
+      ? async (result) => {
+          await args.onFinish!({
+            usage: {
+              inputTokens: result.usage?.inputTokens,
+              outputTokens: result.usage?.outputTokens,
+              totalTokens: result.usage?.totalTokens,
+            },
+            model,
+          })
+        }
+      : undefined,
   })
 }
 

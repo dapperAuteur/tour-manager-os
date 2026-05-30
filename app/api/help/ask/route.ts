@@ -1,7 +1,8 @@
 import { convertToModelMessages, type UIMessage } from 'ai'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { streamChat } from '@/lib/ai/chat'
-import { retrieveHelpArticles } from '@/lib/help/retrieve'
+import { retrieveHelpArticles, type RetrievedArticle } from '@/lib/help/retrieve'
 import { logError } from '@/lib/observability/logger'
 
 interface AskBody {
@@ -83,6 +84,7 @@ export async function POST(request: Request) {
     return Response.json({ error: 'empty question' }, { status: 400 })
   }
 
+  const startedAt = Date.now()
   const articles = await retrieveHelpArticles(question, 5, 0.45)
 
   try {
@@ -91,13 +93,62 @@ export async function POST(request: Request) {
       system: buildSystemPrompt(articles),
       messages: modelMessages,
       temperature: 0.3,
+      onFinish: async ({ usage, model }) => {
+        await logChat({
+          userId: user.id,
+          question,
+          articles,
+          model,
+          promptTokens: usage?.inputTokens ?? null,
+          completionTokens: usage?.outputTokens ?? null,
+          responseTimeMs: Date.now() - startedAt,
+          error: null,
+        })
+      },
     })
     return result.toUIMessageStreamResponse()
   } catch (err) {
+    const errMsg = err instanceof Error ? err.message : 'unknown'
     logError('help.ask.stream_failed', err, {
       question_length: question.length,
       articles_count: articles.length,
     })
+    await logChat({
+      userId: user.id,
+      question,
+      articles,
+      model: '',
+      promptTokens: null,
+      completionTokens: null,
+      responseTimeMs: Date.now() - startedAt,
+      error: errMsg,
+    }).catch(() => {})
     return Response.json({ error: 'agent unavailable' }, { status: 502 })
   }
+}
+
+interface LogChatArgs {
+  userId: string
+  question: string
+  articles: RetrievedArticle[]
+  model: string
+  promptTokens: number | null
+  completionTokens: number | null
+  responseTimeMs: number
+  error: string | null
+}
+
+async function logChat(args: LogChatArgs): Promise<void> {
+  const admin = createAdminClient()
+  await admin.from('ai_chat_logs').insert({
+    user_id: args.userId,
+    question: args.question.slice(0, 4000),
+    retrieved_article_ids: args.articles.map((a) => a.id),
+    top_similarity: args.articles[0]?.similarity ?? null,
+    model: args.model,
+    prompt_tokens: args.promptTokens,
+    completion_tokens: args.completionTokens,
+    response_time_ms: args.responseTimeMs,
+    error: args.error,
+  })
 }
