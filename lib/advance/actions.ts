@@ -1,6 +1,7 @@
 'use server'
 
 import { createAdminClient } from '@/lib/supabase/admin'
+import { createVenueFromAdvanceSheet } from '@/lib/venues/actions'
 
 export async function submitAdvanceSheet(token: string, formData: FormData) {
   const supabase = createAdminClient()
@@ -112,6 +113,11 @@ export async function submitAdvanceSheet(token: string, formData: FormData) {
       .update({ status: 'confirmed' })
       .eq('id', sheetData.show_id)
   }
+
+  // Auto-create or refresh the public venue profile so the Venue
+  // Network reflects this submission. Best-effort — submission stays
+  // successful even if venue creation fails.
+  await createVenueFromAdvanceSheet(sheet.id).catch(() => {})
 
   return { success: true }
 }

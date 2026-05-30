@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function rateVenue(venueId: string, formData: FormData) {
   const supabase = await createClient()
@@ -35,8 +36,12 @@ export async function rateVenue(venueId: string, formData: FormData) {
   return { success: true }
 }
 
+// Auto-creates or updates a public venue_profile from a submitted
+// advance sheet. Uses the admin client because the calling path is
+// the anonymous venue-contact submit flow (no auth.uid()), and
+// venue_profiles is a public crowd-sourced directory anyway.
 export async function createVenueFromAdvanceSheet(advanceSheetId: string) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data: sheet } = await supabase
     .from('advance_sheets')
