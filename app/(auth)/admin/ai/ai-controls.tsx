@@ -62,8 +62,16 @@ const MODEL_PRESETS: Record<AiConfigKey, { value: string; label: string }[]> = {
     { value: 'cerebras/gpt-oss-120b', label: 'Cerebras GPT-OSS 120B (fast, with reasoning)' },
     { value: 'cerebras/zai-glm-4.7', label: 'Cerebras ZAI GLM 4.7 (fast, with reasoning)' },
     {
-      value: 'openrouter/anthropic/claude-3.5-sonnet',
-      label: 'OpenRouter → Claude 3.5 Sonnet (highest quality)',
+      value: 'openrouter/anthropic/claude-sonnet-4.6',
+      label: 'OpenRouter → Claude Sonnet 4.6 (highest quality)',
+    },
+    {
+      value: 'openrouter/anthropic/claude-sonnet-4.5',
+      label: 'OpenRouter → Claude Sonnet 4.5',
+    },
+    {
+      value: 'openrouter/anthropic/claude-3.5-haiku',
+      label: 'OpenRouter → Claude 3.5 Haiku (fast Anthropic)',
     },
     { value: 'openrouter/openai/gpt-4o-mini', label: 'OpenRouter → GPT-4o mini' },
     { value: 'mistral/mistral-large-latest', label: 'Mistral Large (balanced)' },
@@ -81,12 +89,20 @@ const MODEL_PRESETS: Record<AiConfigKey, { value: string; label: string }[]> = {
   ],
   vision_model: [
     {
-      value: 'openrouter/anthropic/claude-3.5-sonnet',
-      label: 'OpenRouter → Claude 3.5 Sonnet (vision)',
+      value: 'openrouter/anthropic/claude-sonnet-4.6',
+      label: 'OpenRouter → Claude Sonnet 4.6 (vision)',
     },
     {
-      value: 'together/meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo',
-      label: 'Together → Llama 3.2 90B Vision',
+      value: 'openrouter/anthropic/claude-sonnet-4.5',
+      label: 'OpenRouter → Claude Sonnet 4.5 (vision)',
+    },
+    {
+      value: 'together/nim/meta/llama-3.2-90b-vision-instruct',
+      label: 'Together → Llama 3.2 90B Vision (NIM)',
+    },
+    {
+      value: 'together/nim/meta/llama-3.2-11b-vision-instruct',
+      label: 'Together → Llama 3.2 11B Vision (NIM, cheaper)',
     },
   ],
 }

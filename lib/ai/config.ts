@@ -12,7 +12,7 @@ export type AiConfigKey = 'chat_model' | 'embedding_model' | 'vision_model'
 const DEFAULTS: Record<AiConfigKey, string> = {
   chat_model: 'cerebras/gpt-oss-120b',
   embedding_model: 'mistral/mistral-embed',
-  vision_model: 'openrouter/anthropic/claude-3.5-sonnet',
+  vision_model: 'openrouter/anthropic/claude-sonnet-4.6',
 }
 
 const ENV_KEYS: Record<AiConfigKey, string> = {

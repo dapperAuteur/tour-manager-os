@@ -62,11 +62,26 @@ const PRICING: Record<string, ModelPricing> = {
   },
 
   // ---- OpenRouter (multiprovider) ----
-  'openrouter/anthropic/claude-3.5-sonnet': {
+  // OpenRouter catalog verified against /v1/models 2026-05-30.
+  // Anthropic shipped Claude 4 family; older "claude-3.5-sonnet" id
+  // no longer exists. Use claude-sonnet-4.6 / -4.5 / -4 / -latest.
+  'openrouter/anthropic/claude-sonnet-4.6': {
     tier: 'paid',
     inputPerM: 3.0,
     outputPerM: 15.0,
-    note: 'Pay-per-token via OpenRouter (Anthropic upstream)',
+    note: 'Pay-per-token via OpenRouter (Anthropic Claude 4.6)',
+  },
+  'openrouter/anthropic/claude-sonnet-4.5': {
+    tier: 'paid',
+    inputPerM: 3.0,
+    outputPerM: 15.0,
+    note: 'Pay-per-token via OpenRouter (Anthropic Claude 4.5)',
+  },
+  'openrouter/anthropic/claude-3.5-haiku': {
+    tier: 'paid',
+    inputPerM: 0.8,
+    outputPerM: 4.0,
+    note: 'Fast Anthropic Haiku via OpenRouter',
   },
   'openrouter/openai/gpt-4o-mini': {
     tier: 'paid',
@@ -82,17 +97,24 @@ const PRICING: Record<string, ModelPricing> = {
   },
 
   // ---- Together AI ----
+  // Vision models live under nim/ prefix per Together's /v1/models.
   'together/meta-llama/Llama-3.3-70B-Instruct-Turbo': {
     tier: 'paid',
     inputPerM: 0.88,
     outputPerM: 0.88,
     note: 'Pay-per-token Llama 3.3 70B Turbo',
   },
-  'together/meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo': {
+  'together/nim/meta/llama-3.2-90b-vision-instruct': {
     tier: 'paid',
     inputPerM: 1.2,
     outputPerM: 1.2,
-    note: 'Pay-per-token vision-capable Llama 3.2 90B',
+    note: 'Pay-per-token vision-capable Llama 3.2 90B via NVIDIA NIM',
+  },
+  'together/nim/meta/llama-3.2-11b-vision-instruct': {
+    tier: 'paid',
+    inputPerM: 0.18,
+    outputPerM: 0.18,
+    note: 'Cheaper vision-capable Llama 3.2 11B via NVIDIA NIM',
   },
 }
 
