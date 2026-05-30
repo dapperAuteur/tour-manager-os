@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getShowDayForDate, getUserTourDates } from '@/lib/showday/queries'
+import { getWeatherForShow } from '@/lib/weather/actions'
 import { DayView } from './day-view'
 import { DayNav } from './day-nav'
 import { NoShowDay } from './no-show-day'
@@ -18,13 +19,14 @@ export default async function TodayPage({ searchParams }: TodayPageProps) {
   const dateStr = date || new Date().toISOString().split('T')[0]
   const data = await getShowDayForDate(dateStr)
   const allDates = await getUserTourDates()
+  const weather = data?.show?.id ? await getWeatherForShow(data.show.id) : null
 
   return (
     <main id="main-content" className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
       <DayNav currentDate={dateStr} allDates={allDates} />
 
       {data ? (
-        <DayView data={data} />
+        <DayView data={data} weather={weather} />
       ) : (
         <NoShowDay date={dateStr} />
       )}
