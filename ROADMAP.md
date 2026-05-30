@@ -146,7 +146,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Priority levels (low/normal/high/urgent)
 - ✅ AI-powered help — pgvector semantic search via Mistral embeddings through the Vercel AI Gateway, LangSmith traceable, with fuzzy/ilike fallback if the embedding service is unavailable. Admin-only POST `/api/admin/help/backfill-embeddings` re-indexes after model changes
 - ✅ Conversational help agent — RAG over published help articles, streaming responses via Cerebras Llama 3.3 70B by default (swap with `AI_CHAT_MODEL`), inline source citations, grounded refusal when context is missing
-- ✅ Admin AI management at `/admin/ai` — super-admin-only. Hot-swap model per use case (DB override → env → default), provider key presence checks, LangSmith status, embeddings stats + backfill, on-demand provider health probes, last-20 agent activity with tokens + retrieval metadata
+- ✅ Admin AI management at `/admin/ai` — super-admin-only. Hot-swap model per use case (DB override → env → default), provider key presence checks, LangSmith status, embeddings stats + backfill, on-demand provider health probes, last-20 agent activity with tokens + retrieval metadata. Dropdown-only model picker with pricing tier badges (Free / Free-tier / Pay / Gateway) + cost-per-1M tokens sourced from `lib/ai/pricing.ts`
 
 ## Phase 12: Admin Dashboard ✅
 > Analytics, metrics, logs, user management.

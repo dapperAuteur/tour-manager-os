@@ -172,7 +172,7 @@ export interface ProviderHealth {
 const HEALTH_TARGETS: { provider: string; model: string }[] = [
   { provider: 'Mistral', model: 'mistral/mistral-embed' },
   { provider: 'OpenRouter', model: 'openrouter/mistralai/mistral-7b-instruct' },
-  { provider: 'Cerebras', model: 'cerebras/llama-3.3-70b' },
+  { provider: 'Cerebras', model: 'cerebras/llama3.3-70b' },
   { provider: 'Together', model: 'together/meta-llama/Llama-3.3-70B-Instruct-Turbo' },
 ]
 
