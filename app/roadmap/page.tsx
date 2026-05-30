@@ -64,7 +64,7 @@ const phases: Phase[] = [
       { label: 'Tour P&L dashboard', done: true },
       { label: 'Per-member finance view', done: true },
       { label: 'CSV export', done: true },
-      { label: 'AI receipt scanning', done: false },
+      { label: 'AI receipt scanning (vision-model expense pre-fill)', done: true },
     ],
   },
   {

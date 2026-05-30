@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management)
+Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR)
 
 ## Legend
 - ✅ Complete
@@ -58,7 +58,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Per-member financial view (/me/finances — expenses, payouts, owed, tax deductible)
 - ✅ CSV export for expenses
 - ✅ Settlements and member payouts tables
-- 📋 Receipt capture with AI scanning (Gemini vision API)
+- ✅ Receipt capture with AI scanning — upload via `/api/expenses/extract-receipt`; Cloudinary stores the image; vision model (default `openrouter/anthropic/claude-3.5-sonnet`, swap via `vision_model` on `/admin/ai`) extracts amount/vendor/date/category/description/tax-deductible via Zod-validated `generateObject`; user reviews + edits before saving; `receipt_url` persists on the expense row
 - 📋 Receipt image viewing linked to transactions
 - 📋 Expense cost splitting between team members
 
