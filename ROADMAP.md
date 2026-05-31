@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-05-31 (Phase 3 per-module tutorials shipped + Phase 16 CSV import wizard shipped + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -46,7 +46,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Organization-level module toggle (admin enables/disables with switch controls)
 - ✅ Member-level opt-in / request access with approval workflow
 - ✅ Nav sidebar with Modules and Admin sections
-- 📋 Per-module tutorial (3-5 step walkthrough on first access)
+- ✅ Per-module tutorial (3-5 step walkthrough on first access) — `TutorialGate` server component on `/today`, `/me/finances`, `/merch`, `/tours/[id]`; seed steps for show-day, finances, merch, advance-sheets, ticketing in migration 042; replay button on every gated page; progress per user via `user_tutorial_progress`
 
 ## Phase 4: Tour Money Tracker ✅
 > Real-time P&L per show and per tour. Per-member financial views.
@@ -217,7 +217,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Email Marketing academy course (3 lessons: building lists, campaigns, admin setup)
 - ✅ Stripe Checkout session creation
 - ✅ Webhook handler for Stripe events (checkout, cancellation, payment failure)
-- 📋 CSV import wizard with column mapping and validation
+- ✅ CSV import wizard with column mapping and validation — `/data/import` with per-target flows for shows, expenses, and venue contacts; auto-matches columns by header label, previews 5 rows, runs row-by-row insert, surfaces row-level errors; `csv_imports` table logs every attempt for org-scoped history
 
 ## Phase 17: Email Integration ✅
 > Send marketing emails with open/click tracking via Mailgun.
@@ -268,6 +268,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 
 - ✅ Venue directory with fuzzy search (pg_trgm) and type filtering
 - ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
+- ✅ Multiple contacts per venue (booker, production, hospitality, sound, etc.) with primary-per-role flag — self-serve CRUD on `/venues/[id]`
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
