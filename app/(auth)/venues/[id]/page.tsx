@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { MapPin, Phone, Star, Globe, Users, Volume2, Ruler, Car } from 'lucide-react'
 import { getVenueProfile } from '@/lib/venues/queries'
 import { RatingForm } from './rating-form'
+import { VenueContacts } from './venue-contacts'
 
 export const metadata: Metadata = { title: 'Venue Profile', robots: { index: false } }
 
@@ -38,7 +39,7 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
   let data
   try { data = await getVenueProfile(id) } catch { notFound() }
 
-  const { venue, ratings, notes, avgRating, ratingCount } = data
+  const { venue, ratings, notes, contacts, avgRating, ratingCount } = data
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -76,6 +77,9 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
             <InfoItem icon={Users} label="Dressing Rooms" value={venue.dressing_room_count} />
           </div>
         </div>
+
+        {/* Contacts */}
+        <VenueContacts venueId={id} initial={contacts} />
 
         {/* Rate this venue */}
         <div className="rounded-xl border border-border-default bg-surface-raised p-6">
