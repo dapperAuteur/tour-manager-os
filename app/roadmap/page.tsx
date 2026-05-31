@@ -256,6 +256,7 @@ const phases: Phase[] = [
       { label: 'Star ratings (5 categories)', done: true },
       { label: 'Auto-create from advance sheets', done: true },
       { label: 'Venue notes integration', done: true },
+      { label: 'Multiple contacts per venue (booker, sound, hospitality, etc.)', done: true },
       { label: 'Smart advance pre-fill', done: false },
     ],
   },

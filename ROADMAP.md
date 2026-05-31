@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-05-31 (Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -268,6 +268,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 
 - ✅ Venue directory with fuzzy search (pg_trgm) and type filtering
 - ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
+- ✅ Multiple contacts per venue (booker, production, hospitality, sound, etc.) with primary-per-role flag — self-serve CRUD on `/venues/[id]`
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)

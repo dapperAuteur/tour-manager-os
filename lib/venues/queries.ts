@@ -48,6 +48,16 @@ export async function getVenueProfile(venueId: string) {
     .ilike('venue_name', venue.name)
     .order('updated_at', { ascending: false })
 
+  // Get venue contacts (booker, sound, hospitality, etc.). Primary
+  // contacts surface first per role.
+  const { data: contacts } = await supabase
+    .from('venue_contacts')
+    .select('*')
+    .eq('venue_id', venueId)
+    .order('is_primary', { ascending: false })
+    .order('role')
+    .order('name')
+
   // Calculate averages
   const allRatings = ratings || []
   const avgOverall = allRatings.length > 0
@@ -58,6 +68,7 @@ export async function getVenueProfile(venueId: string) {
     venue,
     ratings: allRatings,
     notes: notes || [],
+    contacts: contacts || [],
     avgRating: Math.round(avgOverall * 10) / 10,
     ratingCount: allRatings.length,
   }
