@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-05-31 (Phase 16 CSV import wizard shipped + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -217,7 +217,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Email Marketing academy course (3 lessons: building lists, campaigns, admin setup)
 - ✅ Stripe Checkout session creation
 - ✅ Webhook handler for Stripe events (checkout, cancellation, payment failure)
-- 📋 CSV import wizard with column mapping and validation
+- ✅ CSV import wizard with column mapping and validation — `/data/import` with per-target flows for shows, expenses, and venue contacts; auto-matches columns by header label, previews 5 rows, runs row-by-row insert, surfaces row-level errors; `csv_imports` table logs every attempt for org-scoped history
 
 ## Phase 17: Email Integration ✅
 > Send marketing emails with open/click tracking via Mailgun.

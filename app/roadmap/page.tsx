@@ -207,6 +207,7 @@ const phases: Phase[] = [
       { label: 'Pricing page with lifetime counter', done: true },
       { label: 'Admin promo code management', done: true },
       { label: 'CSV templates (7 data types)', done: true },
+      { label: 'CSV import wizard with column mapping + validation', done: true },
       { label: 'Email setup docs (Help + Academy)', done: true },
       { label: 'Stripe Checkout integration', done: true },
     ],
