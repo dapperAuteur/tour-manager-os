@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { DollarSign, TrendingUp, Receipt, FileText } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getMemberFinances } from '@/lib/finances/queries'
+import { TutorialGate } from '@/components/tutorials/tutorial-gate'
 
 export const metadata: Metadata = {
   title: 'My Finances',
@@ -19,7 +20,10 @@ export default async function MyFinancesPage() {
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="mb-8 text-2xl font-bold">My Finances</h1>
+      <div className="mb-8 flex items-center justify-between gap-3">
+        <h1 className="text-2xl font-bold">My Finances</h1>
+        <TutorialGate moduleId="finances" moduleName="Tour Finances" />
+      </div>
 
       {/* Summary */}
       <div className="mb-8 grid gap-4 sm:grid-cols-4">

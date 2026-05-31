@@ -52,7 +52,7 @@ const phases: Phase[] = [
       { label: 'Module registry (11 modules)', done: true },
       { label: 'Org-level module toggle', done: true },
       { label: 'Member opt-in / request access', done: true },
-      { label: 'Per-module tutorials', done: false },
+      { label: 'Per-module tutorials (3-5 step walkthrough on first access)', done: true },
     ],
   },
   {

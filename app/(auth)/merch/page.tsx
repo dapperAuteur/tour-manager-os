@@ -4,6 +4,7 @@ import { ShoppingBag, Plus, DollarSign, Package, TrendingUp } from 'lucide-react
 import { createClient } from '@/lib/supabase/server'
 import { getUserOrg } from '@/lib/modules/queries'
 import { getMerchDashboard } from '@/lib/merch/queries'
+import { TutorialGate } from '@/components/tutorials/tutorial-gate'
 
 export const metadata: Metadata = {
   title: 'Merch',
@@ -32,7 +33,8 @@ export default async function MerchPage() {
     <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Merch</h1>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <TutorialGate moduleId="merch" moduleName="Merch" />
           <Link
             href="/merch/sales/new"
             className="inline-flex items-center gap-2 rounded-lg border border-border-default px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"

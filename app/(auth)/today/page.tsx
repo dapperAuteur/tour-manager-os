@@ -4,6 +4,7 @@ import { getWeatherForShow } from '@/lib/weather/actions'
 import { DayView } from './day-view'
 import { DayNav } from './day-nav'
 import { NoShowDay } from './no-show-day'
+import { TutorialGate } from '@/components/tutorials/tutorial-gate'
 
 export const metadata: Metadata = {
   title: 'Today',
@@ -23,6 +24,9 @@ export default async function TodayPage({ searchParams }: TodayPageProps) {
 
   return (
     <main id="main-content" className="mx-auto max-w-2xl px-4 py-6 sm:px-6">
+      <div className="mb-2 flex justify-end">
+        <TutorialGate moduleId="show-day" moduleName="Show Day" />
+      </div>
       <DayNav currentDate={dateStr} allDates={allDates} />
 
       {data ? (

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Plus, Send, MapPin, Calendar, Clock, ExternalLink, FileText, DollarSign, Music, Plane } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getTour } from '@/lib/tours/queries'
+import { TutorialGate } from '@/components/tutorials/tutorial-gate'
 
 export const metadata: Metadata = {
   title: 'Tour Details',
@@ -40,7 +41,10 @@ export default async function TourDetailPage({ params }: { params: Promise<{ id:
           </Link>
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-2xl font-bold">{tour.name}</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-bold">{tour.name}</h1>
+                <TutorialGate moduleId="advance-sheets" moduleName="Advance Sheets" />
+              </div>
               <p className="text-text-secondary">{tour.artist_name}</p>
               {tour.description && (
                 <p className="mt-1 text-sm text-text-muted">{tour.description}</p>
