@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-05-31 (Phase 3 per-module tutorials shipped + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -46,7 +46,7 @@ Last updated: 2026-05-30 (Phase 24.5 + audit quick-wins + weather + structured l
 - ✅ Organization-level module toggle (admin enables/disables with switch controls)
 - ✅ Member-level opt-in / request access with approval workflow
 - ✅ Nav sidebar with Modules and Admin sections
-- 📋 Per-module tutorial (3-5 step walkthrough on first access)
+- ✅ Per-module tutorial (3-5 step walkthrough on first access) — `TutorialGate` server component on `/today`, `/me/finances`, `/merch`, `/tours/[id]`; seed steps for show-day, finances, merch, advance-sheets, ticketing in migration 042; replay button on every gated page; progress per user via `user_tutorial_progress`
 
 ## Phase 4: Tour Money Tracker ✅
 > Real-time P&L per show and per tour. Per-member financial views.
