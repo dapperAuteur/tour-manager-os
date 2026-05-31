@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Download, Upload, FileSpreadsheet } from 'lucide-react'
+import Link from 'next/link'
+import { Download, Upload, FileSpreadsheet, ArrowRight } from 'lucide-react'
 import { csvTemplates } from '@/lib/csv/templates'
 import { TemplateDownloadButton } from './template-download'
 
@@ -59,17 +60,23 @@ export default function DataPage() {
       {/* Import */}
       <section>
         <h2 className="mb-4 text-lg font-semibold">Import Data</h2>
-        <div className="rounded-xl border border-primary-500/20 bg-primary-500/5 p-6">
+        <Link
+          href="/data/import"
+          className="flex items-start justify-between gap-3 rounded-xl border border-primary-500/30 bg-primary-500/5 p-6 hover:bg-primary-500/10"
+        >
           <div className="flex items-start gap-3">
             <Upload className="mt-0.5 h-5 w-5 text-primary-600 dark:text-primary-400" aria-hidden="true" />
             <div>
-              <p className="text-sm font-medium">CSV Import Coming Soon</p>
+              <p className="text-sm font-medium">Open CSV Import Wizard</p>
               <p className="mt-1 text-xs text-text-secondary">
-                We&apos;re building a CSV import wizard with column mapping and validation preview. For now, download the templates to see the expected data format, and use the forms in each module to add data manually.
+                Pick a target (shows, expenses, or venue contacts), upload a
+                CSV, map columns, preview, and import. Row-level errors
+                are shown so you can fix and re-upload.
               </p>
             </div>
           </div>
-        </div>
+          <ArrowRight className="mt-1 h-4 w-4 text-text-muted" aria-hidden="true" />
+        </Link>
       </section>
     </main>
   )
