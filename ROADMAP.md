@@ -107,7 +107,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Per-show merch sales recording with auto inventory update
 - ✅ Merch P&L dashboard (revenue, cost, profit, units sold, top sellers)
 - ✅ Demo data: 5 products, inventory, 11 sales across 3 shows
-- 📋 Online merch store (Stripe payments)
+- ✅ Online merch store (Stripe Elements + Shippo live rates) at `/store/[org-slug]` — fan-facing public catalog grouped by category with per-product Buy buttons. Embedded Stripe Elements checkout at `/store/[org-slug]/checkout/[product-id]` walks the fan through Address → live Shippo rate quotes → Payment Element. Real shipping rates pulled from USPS/UPS/etc. based on product dimensions + destination. Webhook on `payment_intent.succeeded` records the order AND buys the Shippo label (PDF + tracking URL stored on the order). Falls back to legacy three-tier flat-rate hosted Stripe Checkout if Shippo isn&apos;t configured or the org hasn&apos;t set a ship-from address. New `merch_orders` + `merch_order_items` tables with order number, shipping address, Shippo references. Admin order list at `/merch/orders` shows paid → fulfilled flow with tracking-number capture. Idempotent on the Stripe session/intent id so redelivered webhooks don&apos;t double-insert. Product dimensions (weight/length/width/height) + ship-from address are self-serve via the editor + `/settings/ship-from`
 - 📋 Tour-exclusive merch drops
 
 ## Phase 9: Fan Marketing & Community ✅
