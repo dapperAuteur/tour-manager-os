@@ -272,6 +272,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
 - ✅ Multiple contacts per venue (booker, production, hospitality, sound, etc.) with primary-per-role flag — self-serve CRUD on `/venues/[id]`
 - ✅ Global contacts search at `/contacts` — search by name / phone / email / role across every venue you can see, deep-link back to the venue profile
+- ✅ Contact career-history on each venue contact card — &ldquo;Also at: Venue X, Venue Y&rdquo; line matches the same person (case-insensitive email or last-7-of-phone) across other venues, so you can spot when a booker moves jobs without maintaining a `people` registry
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
