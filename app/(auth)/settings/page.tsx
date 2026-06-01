@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ArrowRight, Package, Users } from 'lucide-react'
+import { ArrowRight, ClipboardCheck, Package, Users } from 'lucide-react'
 import { getUserProfile } from '@/lib/settings/queries'
 import { ProfileForm } from './profile-form'
 import { PreferencesForm } from './preferences-form'
@@ -72,6 +72,27 @@ export default async function SettingsPage() {
                   <p className="mt-1 text-xs text-text-secondary">
                     Used by Shippo to quote real-time shipping rates at fan checkout.
                     Required to enable live rates on the public store.
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="mt-1 h-4 w-4 text-text-muted" aria-hidden="true" />
+            </Link>
+          </section>
+
+          {/* Rider template */}
+          <section aria-labelledby="rider-template-heading">
+            <h2 id="rider-template-heading" className="mb-4 text-lg font-semibold">Rider Template</h2>
+            <Link
+              href="/settings/rider-template"
+              className="flex items-start justify-between gap-3 rounded-xl border border-border-default bg-surface-raised p-6 hover:border-primary-500/40"
+            >
+              <div className="flex items-start gap-3">
+                <ClipboardCheck className="mt-0.5 size-5 text-primary-600 dark:text-primary-400" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-medium">Your band&apos;s default rider</p>
+                  <p className="mt-1 text-xs text-text-secondary">
+                    Hospitality + technical line items that get stamped onto every show&apos;s
+                    compliance checklist at load-in.
                   </p>
                 </div>
               </div>
