@@ -230,6 +230,14 @@ export async function POST(request: Request) {
       }
       break
     }
+
+    case 'payment_intent.succeeded': {
+      const intent = event.data.object as Stripe.PaymentIntent
+      if (intent.metadata?.kind === 'merch_elements') {
+        await recordMerchOrderFromIntent(supabase, intent)
+      }
+      break
+    }
   }
 
   return NextResponse.json({ received: true })
@@ -315,5 +323,120 @@ async function recordMerchOrder(
       quantity,
       subtotal: itemsTotal,
     })
+  }
+}
+
+/**
+ * Embedded Elements flow: a PaymentIntent (not a Checkout Session)
+ * fires `payment_intent.succeeded`. Metadata carries the Shippo rate
+ * id; after recording the order we hit Shippo to buy the actual
+ * label and stash the label URL + tracking URL on the order.
+ *
+ * Idempotent on payment_intent.id via the unique stripe_session_id
+ * index — we reuse that column for the PI id since each order has
+ * exactly one or the other.
+ */
+async function recordMerchOrderFromIntent(
+  supabase: ReturnType<typeof createAdminClient>,
+  intent: Stripe.PaymentIntent,
+): Promise<void> {
+  const orgId = intent.metadata?.org_id
+  const productId = intent.metadata?.product_id
+  const quantity = Number(intent.metadata?.quantity || 1)
+  const productName = intent.metadata?.product_name || 'Merch'
+  const rateId = intent.metadata?.rate_id || null
+  const shippingAmountCents = Number(intent.metadata?.shipping_amount_cents || 0)
+  const itemsTotalCents = Number(intent.metadata?.items_total_cents || 0)
+  const fanEmail = intent.metadata?.fan_email || intent.receipt_email || ''
+  const fanName = intent.metadata?.fan_name || null
+  const shippingCarrier = intent.metadata?.shipping_carrier || null
+  const shippingService = intent.metadata?.shipping_service || null
+  if (!orgId || !productId || !fanEmail) return
+
+  const shippingObj =
+    (intent as unknown as { shipping?: Stripe.PaymentIntent['shipping'] })
+      .shipping || null
+  const shippingAddress = shippingObj
+    ? { name: shippingObj.name, address: shippingObj.address }
+    : null
+
+  const totalAmount = intent.amount / 100
+  const itemsTotal = itemsTotalCents / 100
+  const shippingCost = shippingAmountCents / 100
+  const unitPrice = quantity > 0 ? itemsTotal / quantity : itemsTotal
+  const orderNumber = `M-${new Date().getFullYear()}-${intent.id.slice(-6).toUpperCase()}`
+
+  const { data: inserted, error } = await supabase
+    .from('merch_orders')
+    .insert({
+      org_id: orgId,
+      order_number: orderNumber,
+      fan_email: fanEmail,
+      fan_name: fanName,
+      shipping_address: shippingAddress,
+      items_total: itemsTotal,
+      shipping_cost: shippingCost,
+      total_amount: totalAmount,
+      currency: intent.currency,
+      status: 'paid',
+      stripe_session_id: intent.id, // reused: PI id when Elements flow
+      stripe_payment_intent: intent.id,
+      shippo_rate_id: rateId,
+      shipping_carrier: shippingCarrier,
+      shipping_service: shippingService,
+    })
+    .select('id')
+    .maybeSingle()
+
+  if (error) {
+    if (error.code !== '23505') {
+      logError('stripe.webhook.merch_intent_insert_failed', error, {
+        payment_intent: intent.id,
+      })
+    }
+    return
+  }
+
+  if (inserted?.id) {
+    await supabase.from('merch_order_items').insert({
+      order_id: inserted.id,
+      product_id: productId,
+      product_name: productName,
+      unit_price: unitPrice,
+      quantity,
+      subtotal: itemsTotal,
+    })
+  }
+
+  // Buy the Shippo label. Non-blocking: if it fails the order is still
+  // paid; the band can re-buy from the admin order page later.
+  if (rateId && inserted?.id) {
+    try {
+      const { getShippo } = await import('@/lib/shipping/shippo')
+      const shippo = getShippo()
+      if (shippo) {
+        const tx = await shippo.transactions.create({
+          rate: rateId,
+          labelFileType: 'PDF_4x6',
+          async: false,
+        })
+        if (tx.status === 'SUCCESS' || tx.status === 'QUEUED') {
+          await supabase
+            .from('merch_orders')
+            .update({
+              shippo_transaction_id: tx.objectId,
+              shippo_label_url: tx.labelUrl || null,
+              shippo_tracking_url: tx.trackingUrlProvider || null,
+              tracking_number: tx.trackingNumber || null,
+            })
+            .eq('id', inserted.id)
+        }
+      }
+    } catch (err) {
+      logError('stripe.webhook.shippo_label_failed', err, {
+        order_id: inserted.id,
+        rate_id: rateId,
+      })
+    }
   }
 }
