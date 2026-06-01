@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { isSuperAdmin } from '@/lib/auth/super-admin'
-import { getAdminDashboardStats } from '@/lib/admin/queries'
+import { getAdminDashboardStats, getAdminGrowthSeries } from '@/lib/admin/queries'
+import { GrowthChart } from './growth-chart'
 import { Users, Building2, Music, MapPin, DollarSign, ShoppingBag, MessageSquare, TrendingUp } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Admin Dashboard', robots: { index: false } }
@@ -27,7 +28,10 @@ export default async function AdminDashboardPage() {
     return <main id="main-content" className="mx-auto max-w-4xl px-4 py-8"><p className="text-text-secondary">Admin access required.</p></main>
   }
 
-  const stats = await getAdminDashboardStats()
+  const [stats, growth] = await Promise.all([
+    getAdminDashboardStats(),
+    getAdminGrowthSeries(30),
+  ])
   const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
 
   return (
@@ -38,6 +42,11 @@ export default async function AdminDashboardPage() {
           <p className="text-sm text-text-secondary">Platform overview and metrics.</p>
         </div>
         <span className="rounded-full bg-primary-500/20 px-3 py-1 text-xs font-medium text-primary-600 dark:text-primary-400">Super Admin</span>
+      </div>
+
+      {/* Growth chart */}
+      <div className="mb-8">
+        <GrowthChart data={growth} />
       </div>
 
       {/* Platform stats */}

@@ -48,6 +48,62 @@ export async function getAdminDashboardStats() {
   }
 }
 
+/**
+ * Returns the last `days` of daily counts for charting on the admin
+ * dashboard. Buckets: new users / new tours / new feedback threads.
+ * Pads zero-rows for days with no activity so the line is continuous.
+ */
+export async function getAdminGrowthSeries(days = 30): Promise<
+  { date: string; users: number; tours: number; feedback: number }[]
+> {
+  const supabase = createAdminClient()
+  const since = new Date()
+  since.setDate(since.getDate() - days + 1)
+  since.setHours(0, 0, 0, 0)
+  const sinceIso = since.toISOString()
+
+  const [usersRes, toursRes, feedbackRes] = await Promise.all([
+    supabase.auth.admin.listUsers(),
+    supabase.from('tours').select('created_at').gte('created_at', sinceIso),
+    supabase
+      .from('feedback_threads')
+      .select('created_at')
+      .gte('created_at', sinceIso),
+  ])
+
+  const buckets = new Map<string, { users: number; tours: number; feedback: number }>()
+  for (let i = 0; i < days; i++) {
+    const d = new Date(since)
+    d.setDate(since.getDate() + i)
+    const key = d.toISOString().slice(0, 10)
+    buckets.set(key, { users: 0, tours: 0, feedback: 0 })
+  }
+
+  for (const u of usersRes.data?.users || []) {
+    if (!u.created_at) continue
+    const key = new Date(u.created_at).toISOString().slice(0, 10)
+    const b = buckets.get(key)
+    if (b) b.users++
+  }
+  for (const t of toursRes.data || []) {
+    const key = new Date(t.created_at as string).toISOString().slice(0, 10)
+    const b = buckets.get(key)
+    if (b) b.tours++
+  }
+  for (const f of feedbackRes.data || []) {
+    const key = new Date(f.created_at as string).toISOString().slice(0, 10)
+    const b = buckets.get(key)
+    if (b) b.feedback++
+  }
+
+  return Array.from(buckets.entries()).map(([date, v]) => ({
+    date,
+    users: v.users,
+    tours: v.tours,
+    feedback: v.feedback,
+  }))
+}
+
 export async function getAdminUsers() {
   const supabase = createAdminClient()
 

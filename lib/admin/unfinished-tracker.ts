@@ -30,11 +30,6 @@ export interface TrackerSection {
 
 export const DRIFT_ITEMS: TrackerItem[] = [
   {
-    key: 'drift-recharts',
-    label: 'Recharts analytics on /admin/dashboard',
-    detail: '`recharts` is not in package.json. Admin dashboard renders stat cards only. Picked as the next drift item to address.',
-  },
-  {
     key: 'drift-smart-advance-prefill',
     label: 'Smart advance pre-fill from past venue data',
     detail: 'No DB function exists. The advance form uses `defaultValue` from the current sheet only.',
@@ -91,7 +86,7 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     items: [
       { key: 'p12-engagement', label: 'User engagement metrics (DAU/WAU/MAU, session duration)' },
       { key: 'p12-adoption', label: 'Module adoption rates' },
-      { key: 'p12-charts', label: 'Charts and graphs (Recharts bar / line / pie)', detail: 'Same as the drift item — counts once.' },
+      { key: 'p12-charts-more', label: 'Charts and graphs (Recharts bar + pie — line shipped)', detail: 'Recharts installed and a 30-day growth line is live on /admin/dashboard. Bar + pie variants for category breakdowns still TBD.' },
     ],
   },
   {
