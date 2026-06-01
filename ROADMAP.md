@@ -121,7 +121,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Author display names on posts and replies
 - ✅ Email sending integration (Mailgun)
 - ✅ CSV subscriber import
-- 📋 Public event pages per show
+- ✅ Public event pages per show at `/shows/[id]` — fan-facing landing combining tour + venue header, doors/show/curfew times from the advance sheet, ticket-availability summary with a Buy Tickets CTA (deep-link to `/shows/[id]/tickets`), recent-fan-photo grid (deep-link to `/shows/[id]/photos`), setlist callout when one exists. Sharable URL. OG metadata for social posts. Auth show page exposes a &ldquo;Public event page&rdquo; deep link button
 - 📋 Pre/post-show exclusive content
 
 ## Phase 10: Family Tour Hub ✅
