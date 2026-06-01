@@ -50,7 +50,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 8,
     title: 'Phase 8 — Merch',
     items: [
-      { key: 'p8-store', label: 'Online merch store (Stripe payments)' },
       { key: 'p8-drops', label: 'Tour-exclusive merch drops' },
     ],
   },
