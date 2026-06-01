@@ -68,6 +68,32 @@ export function AddProductForm({ orgId }: { orgId: string }) {
         </div>
       </div>
 
+      <fieldset className="rounded-lg border border-border-default p-4">
+        <legend className="px-1 text-sm font-medium">Shipping dimensions</legend>
+        <p className="mb-3 text-xs text-text-muted">
+          Used by Shippo to quote live shipping rates. Leave blank to use category defaults
+          (apparel 8oz, vinyl 16oz, etc.) — but accurate values give accurate rates.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-4">
+          <div>
+            <label htmlFor="weight_oz" className="mb-1 block text-xs font-medium">Weight (oz)</label>
+            <input id="weight_oz" name="weight_oz" type="number" step="0.1" min="0" className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm" placeholder="8" />
+          </div>
+          <div>
+            <label htmlFor="length_in" className="mb-1 block text-xs font-medium">Length (in)</label>
+            <input id="length_in" name="length_in" type="number" step="0.1" min="0" className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm" placeholder="10" />
+          </div>
+          <div>
+            <label htmlFor="width_in" className="mb-1 block text-xs font-medium">Width (in)</label>
+            <input id="width_in" name="width_in" type="number" step="0.1" min="0" className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm" placeholder="8" />
+          </div>
+          <div>
+            <label htmlFor="height_in" className="mb-1 block text-xs font-medium">Height (in)</label>
+            <input id="height_in" name="height_in" type="number" step="0.1" min="0" className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm" placeholder="1" />
+          </div>
+        </div>
+      </fieldset>
+
       <button type="submit" disabled={loading} className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-surface">
         {loading ? 'Adding...' : 'Add Product'}
       </button>

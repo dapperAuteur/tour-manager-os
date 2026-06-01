@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ArrowRight, Users } from 'lucide-react'
+import { ArrowRight, Package, Users } from 'lucide-react'
 import { getUserProfile } from '@/lib/settings/queries'
 import { ProfileForm } from './profile-form'
 import { PreferencesForm } from './preferences-form'
@@ -51,6 +51,27 @@ export default async function SettingsPage() {
                   <p className="mt-1 text-xs text-text-secondary">
                     Group venue contacts and decide which band members can see them.
                     Contacts not in any group stay visible to everyone (current default).
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="mt-1 h-4 w-4 text-text-muted" aria-hidden="true" />
+            </Link>
+          </section>
+
+          {/* Merch ship-from */}
+          <section aria-labelledby="ship-from-heading">
+            <h2 id="ship-from-heading" className="mb-4 text-lg font-semibold">Merch Ship-From Address</h2>
+            <Link
+              href="/settings/ship-from"
+              className="flex items-start justify-between gap-3 rounded-xl border border-border-default bg-surface-raised p-6 hover:border-primary-500/40"
+            >
+              <div className="flex items-start gap-3">
+                <Package className="mt-0.5 size-5 text-primary-600 dark:text-primary-400" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-medium">Where your merch ships from</p>
+                  <p className="mt-1 text-xs text-text-secondary">
+                    Used by Shippo to quote real-time shipping rates at fan checkout.
+                    Required to enable live rates on the public store.
                   </p>
                 </div>
               </div>

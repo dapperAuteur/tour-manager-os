@@ -13,6 +13,12 @@ export async function createProduct(orgId: string, formData: FormData) {
   const category = formData.get('category') as string
   const price = formData.get('price') as string
   const costBasis = formData.get('cost_basis') as string
+  const optionalNum = (key: string): number | null => {
+    const v = (formData.get(key) as string | null) || ''
+    if (!v.trim()) return null
+    const n = Number(v)
+    return Number.isFinite(n) && n > 0 ? n : null
+  }
 
   if (!name || !price) return { error: 'Name and price are required' }
 
@@ -26,6 +32,10 @@ export async function createProduct(orgId: string, formData: FormData) {
       category: category || null,
       price: parseFloat(price),
       cost_basis: costBasis ? parseFloat(costBasis) : null,
+      weight_oz: optionalNum('weight_oz'),
+      length_in: optionalNum('length_in'),
+      width_in: optionalNum('width_in'),
+      height_in: optionalNum('height_in'),
     })
 
   if (error) return { error: error.message }
