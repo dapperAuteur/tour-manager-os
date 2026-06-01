@@ -6,6 +6,9 @@ import { submitAdvanceSheet } from '@/lib/advance/actions'
 interface AdvanceSheetFormProps {
   token: string
   sheet: Record<string, unknown>
+  /** Field-by-field defaults pulled from a prior advance at this venue.
+   *  Only used where the current sheet's value is blank. */
+  smartDefaults?: Partial<Record<string, unknown>>
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -55,7 +58,7 @@ function YesNo({ label, id, defaultValue }: { label: string; id: string; default
   )
 }
 
-export function AdvanceSheetForm({ token, sheet }: AdvanceSheetFormProps) {
+export function AdvanceSheetForm({ token, sheet, smartDefaults = {} }: AdvanceSheetFormProps) {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -85,7 +88,20 @@ export function AdvanceSheetForm({ token, sheet }: AdvanceSheetFormProps) {
     )
   }
 
-  const s = sheet as Record<string, string | number | boolean | null>
+  // Compose effective sheet values: current sheet wins; smart defaults
+  // fill in blanks. This mirrors how the server-side smart-prefill picks
+  // its candidates, so the form renders what the user will see saved.
+  const rawSheet = sheet as Record<string, string | number | boolean | null>
+  const s = new Proxy(rawSheet, {
+    get(target, key) {
+      const v = target[key as string]
+      if (v === null || v === undefined || v === '') {
+        const fallback = (smartDefaults as Record<string, unknown>)[key as string]
+        if (fallback !== undefined) return fallback as string | number | boolean | null
+      }
+      return v
+    },
+  }) as Record<string, string | number | boolean | null>
 
   return (
     <form action={handleSubmit} className="flex flex-col gap-6">

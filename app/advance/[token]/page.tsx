@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Music } from 'lucide-react'
 import { getAdvanceSheetByToken } from '@/lib/tours/queries'
+import { getSmartAdvanceDefaults } from '@/lib/advance/smart-prefill'
 import { AdvanceSheetForm } from './advance-sheet-form'
 
 export const metadata: Metadata = {
@@ -22,6 +23,14 @@ export default async function AdvanceSheetPage({ params }: { params: Promise<{ t
 
   const show = sheet.shows as { date: string; city: string; state: string | null; venue_name: string | null; tours: { name: string; artist_name: string } }
   const isSubmitted = sheet.status === 'complete'
+
+  // Smart pre-fill from a prior advance at the same venue. Only fills
+  // fields the current sheet has left blank — never overwrites.
+  const smart = await getSmartAdvanceDefaults(
+    sheet as unknown as Record<string, unknown>,
+    show.venue_name,
+    sheet.id,
+  )
 
   return (
     <main id="main-content" className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
@@ -58,7 +67,19 @@ export default async function AdvanceSheetPage({ params }: { params: Promise<{ t
               The tour manager will follow up on anything missing.
             </p>
           </div>
-          <AdvanceSheetForm token={token} sheet={sheet} />
+          {smart.filledCount > 0 && smart.sourceLabel && (
+            <div className="mb-6 rounded-xl border border-success-500/30 bg-success-500/5 p-4">
+              <p className="text-sm text-text-secondary">
+                <strong className="text-success-700 dark:text-success-400">
+                  Pre-filled from a prior advance
+                </strong>{' '}
+                — {smart.filledCount} field{smart.filledCount === 1 ? '' : 's'}
+                {' '}copied forward from {smart.sourceLabel}.
+                Anything that&apos;s changed since? Edit those fields directly.
+              </p>
+            </div>
+          )}
+          <AdvanceSheetForm token={token} sheet={sheet} smartDefaults={smart.defaults} />
         </>
       )}
     </main>

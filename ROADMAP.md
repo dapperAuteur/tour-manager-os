@@ -282,7 +282,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Venue notes integration (from Production Bible)
 - ✅ Auto-create venue profiles from advance sheet data — wired into `submitAdvanceSheet` (best-effort, admin-client)
 - ✅ Times-played counter and last-played date
-- 📋 Smart advance pre-fill from past venue data — no DB function yet; advance form uses current sheet's `defaultValue` only
+- ✅ Smart advance pre-fill from past venue data — `getSmartAdvanceDefaults()` looks up the most-recent SUBMITTED advance for shows whose `venue_name` matches (case-insensitive ILIKE) and copies forward stable fields (venue info, dressing rooms, security, hospitality, stage dimensions, PA, merch area) into any current-sheet blanks. Time-sensitive fields (load-in/soundcheck/doors/curfew/ticket price) are intentionally excluded. A green &ldquo;Pre-filled from {venue} on {date}&rdquo; banner tells the submitter what was carried over
 - 📋 Venue photos
 - 📋 Map view with Leaflet
 
@@ -366,7 +366,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Full CRUD: edit, delete, duplicate across all modules (reusable RecordActions component)
 - 📋 Recharts analytics charts (bar, line, pie) for admin dashboard — package not installed; only stat cards rendered
 - ✅ Weather integration on Show Day (Open-Meteo, cached) — wired via `lib/weather/actions.ts` (geocode + 16-day forecast + DB cache); rendered in `app/(auth)/today/weather-card.tsx`
-- 📋 Smart advance pre-fill from past venue data (DB function) — function not written; form uses current sheet only
+- ✅ Smart advance pre-fill from past venue data — shipped via app-layer helper `lib/advance/smart-prefill.ts`; see Phase 20 for details
 - ✅ Multiple stages/spaces per venue — new `venue_stages` table (name, location indoor/outdoor/tent/other, capacity, w×d×h, PA, notes). Stages render on the venue profile with color-coded location badges; full CRUD UI alongside the existing Contacts section. Legacy `venue_profiles.stage_*` columns retained as "default stage" for advance-sheet back-compat.
 - ✅ Stripe Checkout session creation with webhook handler
 - ✅ Stripe webhook: checkout.session.completed, subscription.deleted, invoice.payment_failed
