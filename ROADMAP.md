@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-31 (Phase 3 per-module tutorials shipped + Phase 16 CSV import wizard shipped + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-05-31 (Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -159,6 +159,7 @@ Last updated: 2026-05-31 (Phase 3 per-module tutorials shipped + Phase 16 CSV im
 - ✅ Activity logs (/admin/logs) — action, user, resource, timestamp
 - ✅ Fuzzy search on help articles and feedback threads (pg_trgm)
 - ✅ Reusable search bar component
+- ✅ Unfinished phase tracker (/admin/unfinished) — single-page admin view of every 📋 item grouped by phase, audit-drift items at top (Recharts dashboard, smart advance pre-fill, multi-stage venues), and recently-shipped log; structured data in `lib/admin/unfinished-tracker.ts` mirrors `plans/02-unfinished-tracker.md`
 - 📋 User engagement metrics (DAU/WAU/MAU, session duration)
 - 📋 Module adoption rates
 - 📋 Charts and graphs (Recharts — bar, line, pie) — package not yet installed; only stat cards rendered

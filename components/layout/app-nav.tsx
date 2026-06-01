@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database, Code2, Key, Palette, MapPin, Heart, PenSquare, Bot } from 'lucide-react'
+import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database, Code2, Key, Palette, MapPin, Heart, PenSquare, Bot, ClipboardList } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
@@ -50,6 +50,7 @@ const adminItems = [
   { href: '/admin/feedback', label: 'Feedback', icon: MessageSquare },
   { href: '/admin/logs', label: 'Logs', icon: ScrollText },
   { href: '/admin/ai', label: 'AI', icon: Bot },
+  { href: '/admin/unfinished', label: 'Unfinished', icon: ClipboardList },
 ]
 
 interface AppNavProps {
