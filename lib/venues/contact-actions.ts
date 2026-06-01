@@ -135,6 +135,36 @@ export async function updateVenueContact(
   return { ok: true }
 }
 
+/**
+ * Toggle the verified flag on a contact. When set, `verified_at` is now
+ * and `verified_by` is the current user. When cleared, both are null.
+ */
+export async function setContactVerified(
+  venueId: string,
+  contactId: string,
+  verified: boolean,
+): Promise<{ ok: true } | { error: string }> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not signed in.' }
+
+  const patch = verified
+    ? { verified_at: new Date().toISOString(), verified_by: user.id }
+    : { verified_at: null, verified_by: null }
+
+  const { error } = await supabase
+    .from('venue_contacts')
+    .update(patch)
+    .eq('id', contactId)
+    .eq('venue_id', venueId)
+
+  if (error) return { error: error.message }
+  revalidatePath(`/venues/${venueId}`)
+  return { ok: true }
+}
+
 export async function deleteVenueContact(
   venueId: string,
   contactId: string,

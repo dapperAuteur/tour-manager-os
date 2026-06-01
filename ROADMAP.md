@@ -271,6 +271,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Venue directory with fuzzy search (pg_trgm) and type filtering
 - ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
 - ✅ Multiple contacts per venue (booker, production, hospitality, sound, etc.) with primary-per-role flag — self-serve CRUD on `/venues/[id]`
+- ✅ Contact verified flag — band members tap the ShieldCheck button on a contact to mark &ldquo;I called this number, it works.&rdquo; Records `verified_at` + `verified_by`. Green Verified badge surfaces on the card; tap again to clear. Builds trust for contacts auto-imported from advance sheets that nobody&apos;s actually used yet.
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
