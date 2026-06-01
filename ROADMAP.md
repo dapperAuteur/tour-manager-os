@@ -297,7 +297,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Timeline blocks: load-in, soundcheck, changeover, performance, doors, meet & greet, break, curfew
 - ✅ Act-specific blocks (assign to individual act or all)
 - ✅ Date selector for multi-day events
-- 📋 Cross-act messaging/communication channels
+- ✅ Cross-act messaging at `/packages/[id]/messages` — single channel per tour package where any act on the bill can post. Senders can pick which act they speak as (drawn from the package&apos;s `package_acts` they have org access to) or post under their plain name. Snapshots sender name + act label at send time so historical posts stay correct after renames. New `package_messages` table; broad-auth RLS (any signed-in user can read/post; only the author can edit or delete their own)
 - 📋 Festival mode (multiple stages)
 
 ## Phase 22: Wellness Platform ✅

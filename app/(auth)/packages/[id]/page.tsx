@@ -40,9 +40,14 @@ export default async function PackageDetailPage({ params }: { params: Promise<{ 
             )}
           </div>
         </div>
-        <Link href={`/packages/${id}/timeline`} className="rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt">
-          Timeline
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href={`/packages/${id}/messages`} className="rounded-lg border border-primary-500/40 bg-primary-500/5 px-4 py-2 text-sm font-medium text-primary-700 hover:bg-primary-500/10 dark:text-primary-300">
+            Cross-act messages
+          </Link>
+          <Link href={`/packages/${id}/timeline`} className="rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt">
+            Timeline
+          </Link>
+        </div>
       </div>
 
       {/* Acts */}
