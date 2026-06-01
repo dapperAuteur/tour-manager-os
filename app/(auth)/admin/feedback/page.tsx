@@ -70,9 +70,21 @@ export default async function AdminFeedbackPage({ searchParams }: { searchParams
                     <span>{new Date(thread.updated_at).toLocaleDateString()}</span>
                   </div>
                 </div>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[thread.status]}`}>
-                  {thread.status.replace('_', ' ')}
-                </span>
+                <div className="flex flex-col items-end gap-1">
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[thread.status]}`}>
+                    {thread.status.replace('_', ' ')}
+                  </span>
+                  {thread.user_resolved_action === 'confirmed_fixed' && (
+                    <span className="rounded-full bg-success-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-success-700 dark:text-success-400">
+                      User-confirmed
+                    </span>
+                  )}
+                  {thread.user_resolved_action === 'still_happening' && (
+                    <span className="rounded-full bg-warning-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-warning-700 dark:text-warning-400">
+                      User: still happening
+                    </span>
+                  )}
+                </div>
               </Link>
             )
           })}

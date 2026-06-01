@@ -143,6 +143,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Conversational feedback threads (bug/feature/question/praise)
 - ✅ Threaded messages with sender names and admin badges
 - ✅ Admin feedback management with status control (open → in_progress → resolved → closed)
+- ✅ User-side &ldquo;Did this fix your issue?&rdquo; on every open feedback thread — reporter can confirm fixed (closes the thread + flips status to resolved) or signal still happening (re-opens for admin attention). System message posted into the thread. Admin queue surfaces a green &ldquo;User-confirmed&rdquo; or amber &ldquo;User: still happening&rdquo; badge.
 - ✅ Admin sees user name on every thread with link context
 - ✅ User notifications on admin replies
 - ✅ Priority levels (low/normal/high/urgent)

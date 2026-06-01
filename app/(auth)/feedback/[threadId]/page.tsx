@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getThreadWithMessages } from '@/lib/feedback/queries'
 import { ReplyForm } from './reply-form'
+import { ResolveButtons } from './resolve-buttons'
 
 export const metadata: Metadata = { title: 'Feedback Thread', robots: { index: false } }
 
@@ -62,9 +63,28 @@ export default async function FeedbackThreadPage({ params }: { params: Promise<{
 
       {/* Reply */}
       {thread.status !== 'closed' && (
-        <div className="rounded-xl border border-border-default bg-surface-raised p-6">
-          <h2 className="mb-4 font-semibold">Reply</h2>
-          <ReplyForm threadId={threadId} />
+        <div className="space-y-4">
+          {thread.status !== 'resolved' && !thread.user_resolved_at && (
+            <ResolveButtons threadId={threadId} />
+          )}
+          {thread.user_resolved_at && (
+            <div className="rounded-xl border border-success-500/30 bg-success-500/10 p-4 text-sm">
+              <p>
+                <strong className="text-success-700 dark:text-success-400">
+                  {thread.user_resolved_action === 'confirmed_fixed'
+                    ? 'You confirmed this is fixed.'
+                    : 'You said this is still happening.'}
+                </strong>{' '}
+                <span className="text-text-secondary">
+                  ({new Date(thread.user_resolved_at).toLocaleDateString()})
+                </span>
+              </p>
+            </div>
+          )}
+          <div className="rounded-xl border border-border-default bg-surface-raised p-6">
+            <h2 className="mb-4 font-semibold">Reply</h2>
+            <ReplyForm threadId={threadId} />
+          </div>
         </div>
       )}
     </main>
