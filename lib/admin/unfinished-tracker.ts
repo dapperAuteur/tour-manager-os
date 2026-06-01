@@ -35,7 +35,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 4,
     title: 'Phase 4 — Tour Money Tracker',
     items: [
-      { key: 'p4-receipt-viewing', label: 'Receipt image viewing linked to transactions' },
       { key: 'p4-expense-splitting', label: 'Expense cost splitting between team members' },
     ],
   },
@@ -57,7 +56,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 9,
     title: 'Phase 9 — Fan Marketing & Community',
     items: [
-      { key: 'p9-event-pages', label: 'Public event pages per show' },
       { key: 'p9-exclusive', label: 'Pre/post-show exclusive content' },
     ],
   },
@@ -109,14 +107,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 18,
-    title: 'Phase 18 — Public API',
-    items: [
-      { key: 'p18-endpoints', label: 'Additional endpoints (finances, merch, contacts)' },
-      { key: 'p18-openapi', label: 'OpenAPI / Swagger spec generation' },
-    ],
-  },
-  {
     phase: 19,
     title: 'Phase 19 — White Label',
     items: [
@@ -130,13 +120,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     items: [
       { key: 'p20-photos', label: 'Venue photos' },
       { key: 'p20-map', label: 'Map view with Leaflet' },
-    ],
-  },
-  {
-    phase: 21,
-    title: 'Phase 21 — Multi-Act Touring',
-    items: [
-      { key: 'p21-festival', label: 'Festival mode (multiple stages)' },
     ],
   },
   {
@@ -168,13 +151,15 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
 ]
 
 export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
-  { label: 'Phase 3 — Per-module tutorials', branch: 'feature/module-tutorials' },
-  { label: 'Phase 7 — Ecosystem footer on every public page', branch: 'feature/public-nav-coverage' },
-  { label: 'Phase 16 — CSV import wizard', branch: 'feature/csv-import-wizard' },
-  { label: 'Phase 20 — Multiple contacts per venue', branch: 'feature/venue-contacts-ui' },
+  { label: 'Phase 4 — Member-to-member loan ledger + receipt image viewer', branch: 'feature/expense-reconciliation / receipt-image-viewer' },
+  { label: 'Phase 8 — Online merch store with Stripe Elements + Shippo', branch: 'feature/merch-store-stripe → shippo-elements' },
+  { label: 'Phase 9 — Public event pages per show', branch: 'feature/public-event-pages' },
+  { label: 'Phase 15 — Crew call sheets + Rider compliance checklists', branch: 'feature/hotel-bookings (call sheet) + feature/rider-compliance' },
+  { label: 'Phase 18 — Public API: finances/merch/contacts + OpenAPI spec', branch: 'feature/public-api-v1-expansion' },
+  { label: 'Phase 21 — Cross-act messaging + festival lineup', branch: 'feature/cross-act-messaging + feature/festival-mode' },
 ]
 
-export const LAST_SYNCED_DATE = '2026-05-31'
+export const LAST_SYNCED_DATE = '2026-06-01'
 
 export const TOTAL_PLANNED = PLANNED_SECTIONS.reduce(
   (n, s) => n + s.items.length,

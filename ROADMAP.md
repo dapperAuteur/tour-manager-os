@@ -251,9 +251,9 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Developer docs page (/developers) — getting started, auth, endpoints, errors
 - ✅ Free tier for testing, paid subscription for production use
 - ✅ Webhook table ready (org-scoped, event filtering, secret hash)
-- 📋 Additional endpoints (finances, merch, contacts)
+- ✅ Additional endpoints — `GET /api/v1/finances/expenses` (tour_id + status filter + pagination), `GET /api/v1/merch/products` (active + category filter), `GET /api/v1/venues/contacts` (venue_id + role filter). All gated by the `read` scope and counted against the org&apos;s rate limit
 - ✅ Rate limiting enforcement — per-key per-hour count against `api_logs` via `requireApiKey`; 429 response includes `X-RateLimit-*` + `Retry-After` headers
-- 📋 OpenAPI/Swagger spec generation
+- ✅ OpenAPI/Swagger spec at `GET /api/v1/openapi` — hand-curated 3.1 spec with bearerAuth + Tour/Show/Expense/MerchProduct/VenueContact schemas. Public route so Swagger UI / ReDoc / Postman can import it directly. 5-minute browser cache + 10-minute CDN cache
 
 ## Phase 19: White Label ✅
 > Branded versions for other bands/organizations.
