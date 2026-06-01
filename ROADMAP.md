@@ -271,6 +271,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Venue directory with fuzzy search (pg_trgm) and type filtering
 - ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
 - ✅ Multiple contacts per venue (booker, production, hospitality, sound, etc.) with primary-per-role flag — self-serve CRUD on `/venues/[id]`
+- ✅ Per-show contact overrides — on a show page, pin specific `venue_contacts` (optionally with a role override + free-form note like &ldquo;filling in for Jane&rdquo;) that take precedence over the venue&apos;s default contact list for that show only. Schema: `show_contacts(show_id, contact_id, role_override, note)`. UI: pin/unpin picker; defaults shown when no overrides exist.
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
