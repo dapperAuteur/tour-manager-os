@@ -160,7 +160,8 @@ const phases: Phase[] = [
       { label: 'User management table', done: true },
       { label: 'Activity logs', done: true },
       { label: 'Unfinished phase tracker (audit drift + planned items)', done: true },
-      { label: 'Charts and graphs', done: false },
+      { label: 'Growth chart on admin dashboard (Recharts line)', done: true },
+      { label: 'Bar + pie chart variants for category breakdowns', done: false },
     ],
   },
   {

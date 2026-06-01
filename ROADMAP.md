@@ -163,7 +163,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Unfinished phase tracker (/admin/unfinished) — single-page admin view of every 📋 item grouped by phase, audit-drift items at top (Recharts dashboard, smart advance pre-fill, multi-stage venues), and recently-shipped log; structured data in `lib/admin/unfinished-tracker.ts` mirrors `plans/02-unfinished-tracker.md`
 - 📋 User engagement metrics (DAU/WAU/MAU, session duration)
 - 📋 Module adoption rates
-- 📋 Charts and graphs (Recharts — bar, line, pie) — package not yet installed; only stat cards rendered
+- 🚧 Charts and graphs (Recharts) — `recharts` installed; 30-day daily-growth line chart (signups / new tours / new feedback) live on `/admin/dashboard`. Bar + pie variants for category breakdowns still TBD
 
 ## Phase 13: Academy / LMS ✅
 > Courses teaching users how to use the platform.
