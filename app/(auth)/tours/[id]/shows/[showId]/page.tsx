@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MapPin, Phone, Mail, Clock, Users, Music, Utensils, Volume2, ExternalLink } from 'lucide-react'
 import { getShow } from '@/lib/tours/queries'
+import { listShowContacts } from '@/lib/shows/contacts'
+import { ShowContacts } from './show-contacts'
+import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Show Details',
@@ -32,6 +35,24 @@ function Card({ title, icon: Icon, children }: { title: string; icon: React.Comp
   )
 }
 
+async function loadVenueContactCandidates(): Promise<{ id: string; name: string; role: string; venue_name: string }[]> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('venue_contacts')
+    .select('id, name, role, venue_profiles(name)')
+    .order('is_primary', { ascending: false })
+    .order('name')
+    .limit(100)
+  return (data || []).map((row) => ({
+    id: row.id,
+    name: row.name,
+    role: row.role,
+    venue_name:
+      (row.venue_profiles as unknown as { name?: string } | null)?.name ||
+      'Unknown venue',
+  }))
+}
+
 export default async function ShowDetailPage({ params }: { params: Promise<{ id: string; showId: string }> }) {
   const { id: tourId, showId } = await params
   const show = await getShow(showId)
@@ -39,6 +60,21 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
   const contacts = advance?.advance_contacts || []
   const otherArtists = advance?.advance_other_artists || []
   const advanceLink = advance?.token ? `/advance/${advance.token}` : null
+
+  const overridesRaw = await listShowContacts(showId)
+  const overrides = overridesRaw
+    .filter((o) => o.contact !== null)
+    .map((o) => ({
+      contact_id: o.contact_id,
+      role_override: o.role_override,
+      note: o.note,
+      name: o.contact!.name,
+      role: o.role_override || o.contact!.role,
+      phone: o.contact!.phone,
+      email: o.contact!.email,
+      venue_name: '',
+    }))
+  const candidates = await loadVenueContactCandidates()
 
   return (
     <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -151,10 +187,20 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
               <InfoRow label="Email" value={advance.sound_company_email} icon={Mail} />
             </Card>
 
-            {/* Contacts */}
+            {/* Per-show contact overrides */}
+            <div className="md:col-span-2">
+              <ShowContacts
+                tourId={tourId}
+                showId={showId}
+                overrides={overrides}
+                candidates={candidates}
+              />
+            </div>
+
+            {/* Advance-sheet contacts (raw venue submission) */}
             {contacts.length > 0 && (
               <div className="md:col-span-2">
-                <Card title="Contacts" icon={Users}>
+                <Card title="Advance-Sheet Contacts" icon={Users}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {contacts.map((contact) => (
                       <div key={contact.id} className="rounded-lg border border-border-default p-3">
