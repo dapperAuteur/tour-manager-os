@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database, Code2, Key, Palette, MapPin, Heart, PenSquare, Bot, ClipboardList } from 'lucide-react'
+import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database, Code2, Key, Palette, MapPin, Heart, PenSquare, Bot, ClipboardList, UserRound } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
@@ -15,6 +15,7 @@ const navItems = [
   { href: '/merch', label: 'Merch', icon: ShoppingBag },
   { href: '/production', label: 'Production', icon: Wrench },
   { href: '/venues', label: 'Venues', icon: MapPin },
+  { href: '/contacts', label: 'Contacts', icon: UserRound },
   { href: '/packages', label: 'Multi-Act', icon: Music },
   { href: '/marketing', label: 'Marketing', icon: Mail },
   { href: '/blog', label: 'Blog', icon: PenSquare },
