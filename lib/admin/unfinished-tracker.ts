@@ -34,11 +34,6 @@ export const DRIFT_ITEMS: TrackerItem[] = [
     label: 'Smart advance pre-fill from past venue data',
     detail: 'No DB function exists. The advance form uses `defaultValue` from the current sheet only.',
   },
-  {
-    key: 'drift-venue-stages',
-    label: 'Multiple stages/spaces per venue (indoor/outdoor)',
-    detail: 'Only single `stage_width/depth/height` columns exist on `venue_profiles`. No `venue_stages` table.',
-  },
 ]
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
