@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Music } from 'lucide-react'
 import { Header } from '@/components/layout/header'
+import { SiteFooter } from '@/components/layout/site-footer'
 
 export default function NotFound() {
   return (
@@ -27,6 +28,7 @@ export default function NotFound() {
           </Link>
         </div>
       </main>
+      <SiteFooter />
     </>
   )
 }

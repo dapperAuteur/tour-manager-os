@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Music } from 'lucide-react'
 import { getAdvanceSheetByToken } from '@/lib/tours/queries'
 import { AdvanceSheetForm } from './advance-sheet-form'
+import { SiteFooter } from '@/components/layout/site-footer'
 
 export const metadata: Metadata = {
   title: 'Advance Sheet',
@@ -24,6 +25,7 @@ export default async function AdvanceSheetPage({ params }: { params: Promise<{ t
   const isSubmitted = sheet.status === 'complete'
 
   return (
+    <>
     <main id="main-content" className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       {/* Header */}
       <div className="mb-8 text-center">
@@ -62,5 +64,7 @@ export default async function AdvanceSheetPage({ params }: { params: Promise<{ t
         </>
       )}
     </main>
+    <SiteFooter />
+    </>
   )
 }
