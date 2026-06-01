@@ -4,11 +4,13 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
+  BadgeCheck,
   History,
   Mail,
   Pencil,
   Phone,
   Plus,
+  ShieldCheck,
   Star,
   Trash2,
   UserRound,
@@ -17,6 +19,7 @@ import {
 import {
   createVenueContact,
   deleteVenueContact,
+  setContactVerified,
   updateVenueContact,
 } from '@/lib/venues/contact-actions'
 
@@ -28,6 +31,7 @@ interface Contact {
   email: string | null
   notes: string | null
   is_primary: boolean
+  verified_at?: string | null
 }
 
 interface HistoryEntry {
@@ -156,6 +160,14 @@ export function VenueContacts({ venueId, initial, history }: VenueContactsProps)
                               <Star className="size-2.5 fill-current" aria-hidden /> Primary
                             </span>
                           )}
+                          {c.verified_at && (
+                            <span
+                              className="inline-flex items-center gap-1 rounded-full bg-success-500/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-success-700 dark:text-success-400"
+                              title={`Verified by a band member on ${new Date(c.verified_at).toLocaleDateString()} — they confirmed this number works.`}
+                            >
+                              <BadgeCheck className="size-2.5" aria-hidden /> Verified
+                            </span>
+                          )}
                         </p>
                         <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs text-text-muted">
                           {c.phone && (
@@ -203,6 +215,13 @@ export function VenueContacts({ venueId, initial, history }: VenueContactsProps)
                         )}
                       </div>
                       <div className="flex gap-1">
+                        <VerifyContactButton
+                          venueId={venueId}
+                          contactId={c.id}
+                          name={c.name}
+                          verified={!!c.verified_at}
+                          onDone={refresh}
+                        />
                         <button
                           type="button"
                           onClick={() => {
@@ -362,6 +381,56 @@ function ContactForm({
         </button>
       </div>
     </form>
+  )
+}
+
+function VerifyContactButton({
+  venueId,
+  contactId,
+  name,
+  verified,
+  onDone,
+}: {
+  venueId: string
+  contactId: string
+  name: string
+  verified: boolean
+  onDone: () => void
+}) {
+  const [busy, setBusy] = useState(false)
+  async function onClick() {
+    setBusy(true)
+    const result = await setContactVerified(venueId, contactId, !verified)
+    setBusy(false)
+    if ('error' in result) {
+      window.alert(result.error)
+      return
+    }
+    onDone()
+  }
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={busy}
+      className={`inline-flex items-center rounded p-1 disabled:opacity-50 ${
+        verified
+          ? 'text-success-600 hover:bg-success-500/10 dark:text-success-400'
+          : 'text-text-muted hover:bg-surface-alt'
+      }`}
+      aria-label={
+        verified
+          ? `Remove verified mark from ${name}`
+          : `Mark ${name} verified (I called this number, it works)`
+      }
+      title={
+        verified
+          ? 'Verified — click to remove'
+          : 'I called this number, it works'
+      }
+    >
+      <ShieldCheck className="size-3.5" aria-hidden />
+    </button>
   )
 }
 
