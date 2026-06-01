@@ -62,13 +62,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 10,
-    title: 'Phase 10 — Family Tour Hub',
-    items: [
-      { key: 'p10-days-off', label: 'Days-off planner with local suggestions' },
-    ],
-  },
-  {
     phase: 12,
     title: 'Phase 12 — Admin Dashboard',
     items: [
@@ -144,7 +137,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     title: 'Phase 22 — Wellness',
     items: [
       { key: 'p22-burnout', label: 'Burnout detection (schedule density + energy alerts)' },
-      { key: 'p22-days-off', label: 'Days-off wellness suggestions (gyms, spas, parks)' },
       { key: 'p22-wearable', label: 'Wearable integration via CentenarianOS' },
     ],
   },
@@ -170,11 +162,14 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
 export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 3 — Per-module tutorials', branch: 'feature/module-tutorials' },
   { label: 'Phase 7 — Ecosystem footer on every public page', branch: 'feature/public-nav-coverage' },
+  { label: 'Phase 10 — Days-off planner + local suggestions', branch: 'feature/days-off-planner' },
   { label: 'Phase 16 — CSV import wizard', branch: 'feature/csv-import-wizard' },
+  { label: 'Phase 18 — Public API endpoints + OpenAPI spec', branch: 'feature/public-api-v1-expansion' },
   { label: 'Phase 20 — Multiple contacts per venue', branch: 'feature/venue-contacts-ui' },
+  { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
 ]
 
-export const LAST_SYNCED_DATE = '2026-05-31'
+export const LAST_SYNCED_DATE = '2026-06-01'
 
 export const TOTAL_PLANNED = PLANNED_SECTIONS.reduce(
   (n, s) => n + s.items.length,

@@ -134,7 +134,7 @@ const phases: Phase[] = [
       { label: 'Polls with multi-option voting', done: true },
       { label: 'Practice scheduling with RSVP', done: true },
       { label: 'Shared albums', done: true },
-      { label: 'Days-off planner', done: false },
+      { label: 'Days-off planner (derived off-days, group/personal plans, Google Maps suggestion links)', done: true },
     ],
   },
   {
