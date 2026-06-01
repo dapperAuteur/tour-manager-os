@@ -35,7 +35,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 4,
     title: 'Phase 4 — Tour Money Tracker',
     items: [
-      { key: 'p4-receipt-viewing', label: 'Receipt image viewing linked to transactions' },
       { key: 'p4-expense-splitting', label: 'Expense cost splitting between team members' },
     ],
   },
@@ -57,15 +56,7 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 9,
     title: 'Phase 9 — Fan Marketing & Community',
     items: [
-      { key: 'p9-event-pages', label: 'Public event pages per show' },
       { key: 'p9-exclusive', label: 'Pre/post-show exclusive content' },
-    ],
-  },
-  {
-    phase: 10,
-    title: 'Phase 10 — Family Tour Hub',
-    items: [
-      { key: 'p10-days-off', label: 'Days-off planner with local suggestions' },
     ],
   },
   {
@@ -109,14 +100,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 18,
-    title: 'Phase 18 — Public API',
-    items: [
-      { key: 'p18-endpoints', label: 'Additional endpoints (finances, merch, contacts)' },
-      { key: 'p18-openapi', label: 'OpenAPI / Swagger spec generation' },
-    ],
-  },
-  {
     phase: 19,
     title: 'Phase 19 — White Label',
     items: [
@@ -133,18 +116,9 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 21,
-    title: 'Phase 21 — Multi-Act Touring',
-    items: [
-      { key: 'p21-festival', label: 'Festival mode (multiple stages)' },
-    ],
-  },
-  {
     phase: 22,
     title: 'Phase 22 — Wellness',
     items: [
-      { key: 'p22-burnout', label: 'Burnout detection (schedule density + energy alerts)' },
-      { key: 'p22-days-off', label: 'Days-off wellness suggestions (gyms, spas, parks)' },
       { key: 'p22-wearable', label: 'Wearable integration via CentenarianOS' },
     ],
   },
@@ -169,12 +143,21 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
 
 export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 3 — Per-module tutorials', branch: 'feature/module-tutorials' },
+  { label: 'Phase 4 — Member-to-member loan ledger + receipt image viewer', branch: 'feature/expense-reconciliation / receipt-image-viewer' },
   { label: 'Phase 7 — Ecosystem footer on every public page', branch: 'feature/public-nav-coverage' },
+  { label: 'Phase 8 — Online merch store with Stripe Elements + Shippo', branch: 'feature/merch-store-stripe → shippo-elements' },
+  { label: 'Phase 9 — Public event pages per show', branch: 'feature/public-event-pages' },
+  { label: 'Phase 10 — Days-off planner + local suggestions', branch: 'feature/days-off-planner' },
+  { label: 'Phase 15 — Crew call sheets + Rider compliance checklists', branch: 'feature/hotel-bookings (call sheet) + feature/rider-compliance' },
   { label: 'Phase 16 — CSV import wizard', branch: 'feature/csv-import-wizard' },
+  { label: 'Phase 18 — Public API: finances/merch/contacts + OpenAPI spec', branch: 'feature/public-api-v1-expansion' },
   { label: 'Phase 20 — Multiple contacts per venue', branch: 'feature/venue-contacts-ui' },
+  { label: 'Phase 21 — Cross-act messaging + festival lineup', branch: 'feature/cross-act-messaging + feature/festival-mode' },
+  { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
+  { label: 'Phase 22 — Burnout detection (/wellness/burnout)', branch: 'feature/burnout-detection' },
 ]
 
-export const LAST_SYNCED_DATE = '2026-05-31'
+export const LAST_SYNCED_DATE = '2026-06-01'
 
 export const TOTAL_PLANNED = PLANNED_SECTIONS.reduce(
   (n, s) => n + s.items.length,
