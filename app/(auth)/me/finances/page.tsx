@@ -8,6 +8,7 @@ import {
   listAccessibleTours,
 } from '@/lib/finances/loans'
 import { TutorialGate } from '@/components/tutorials/tutorial-gate'
+import { ReceiptViewer } from '@/components/finances/receipt-viewer'
 import { MemberLoans } from './member-loans'
 
 export const metadata: Metadata = {
@@ -97,6 +98,7 @@ export default async function MyFinancesPage() {
                 <th className="pb-2 pr-4" scope="col">Tour</th>
                 <th className="pb-2 pr-4" scope="col">Category</th>
                 <th className="pb-2 pr-4" scope="col">Description</th>
+                <th className="pb-2 pr-4" scope="col">Receipt</th>
                 <th className="pb-2 pr-4 text-right" scope="col">Amount</th>
                 <th className="pb-2" scope="col">Status</th>
               </tr>
@@ -110,6 +112,16 @@ export default async function MyFinancesPage() {
                   </td>
                   <td className="py-3 pr-4 capitalize">{expense.category.replace('_', ' ')}</td>
                   <td className="py-3 pr-4 text-text-secondary">{expense.description || '—'}</td>
+                  <td className="py-3 pr-4">
+                    {expense.receipt_url ? (
+                      <ReceiptViewer
+                        url={expense.receipt_url}
+                        alt={`${expense.category} ${fmt(Number(expense.amount))}`}
+                      />
+                    ) : (
+                      <span className="text-text-muted">—</span>
+                    )}
+                  </td>
                   <td className="py-3 pr-4 text-right font-medium">{fmt(Number(expense.amount))}</td>
                   <td className="py-3">
                     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${

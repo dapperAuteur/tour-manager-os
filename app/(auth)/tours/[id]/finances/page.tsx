@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { DollarSign, TrendingUp, TrendingDown, Plus } from 'lucide-react'
 import { getTourFinances } from '@/lib/finances/queries'
 import { ExportCsvButton } from './export-csv-button'
+import { ReceiptViewer } from '@/components/finances/receipt-viewer'
 
 export const metadata: Metadata = {
   title: 'Tour Finances',
@@ -107,6 +108,7 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
                   <th className="pb-2 pr-4" scope="col">Date</th>
                   <th className="pb-2 pr-4" scope="col">Category</th>
                   <th className="pb-2 pr-4" scope="col">Description</th>
+                  <th className="pb-2 pr-4" scope="col">Receipt</th>
                   <th className="pb-2 pr-4 text-right" scope="col">Amount</th>
                   <th className="pb-2 pr-4" scope="col">Status</th>
                   <th className="pb-2" scope="col">Tax</th>
@@ -118,6 +120,16 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
                     <td className="py-3 pr-4">{new Date(expense.date).toLocaleDateString()}</td>
                     <td className="py-3 pr-4">{categoryLabels[expense.category] || expense.category}</td>
                     <td className="py-3 pr-4 text-text-secondary">{expense.description || '—'}</td>
+                    <td className="py-3 pr-4">
+                      {expense.receipt_url ? (
+                        <ReceiptViewer
+                          url={expense.receipt_url}
+                          alt={`${expense.category} ${fmt(Number(expense.amount))}`}
+                        />
+                      ) : (
+                        <span className="text-text-muted">—</span>
+                      )}
+                    </td>
                     <td className="py-3 pr-4 text-right font-medium">{fmt(Number(expense.amount))}</td>
                     <td className="py-3 pr-4">
                       <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${

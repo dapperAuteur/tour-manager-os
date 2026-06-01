@@ -35,7 +35,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 4,
     title: 'Phase 4 — Tour Money Tracker',
     items: [
-      { key: 'p4-receipt-viewing', label: 'Receipt image viewing linked to transactions' },
       { key: 'p4-expense-splitting', label: 'Expense cost splitting between team members' },
     ],
   },
