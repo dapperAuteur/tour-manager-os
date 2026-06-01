@@ -109,6 +109,12 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
               Crew call sheet
               <ExternalLink className="h-3 w-3" aria-hidden="true" />
             </Link>
+            <Link
+              href={`/tours/${tourId}/shows/${showId}/festival`}
+              className="inline-flex items-center gap-1 rounded-lg border border-border-default px-3 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
+            >
+              Festival lineup
+            </Link>
             {advanceLink && (
               <Link
                 href={advanceLink}
