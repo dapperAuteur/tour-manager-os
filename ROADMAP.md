@@ -274,6 +274,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Global contacts search at `/contacts` — search by name / phone / email / role across every venue you can see, deep-link back to the venue profile
 - ✅ Contact career-history on each venue contact card — &ldquo;Also at: Venue X, Venue Y&rdquo; line matches the same person (case-insensitive email or last-7-of-phone) across other venues, so you can spot when a booker moves jobs without maintaining a `people` registry
 - ✅ Contact verified flag — band members tap the ShieldCheck button on a contact to mark &ldquo;I called this number, it works.&rdquo; Records `verified_at` + `verified_by`. Green Verified badge surfaces on the card; tap again to clear. Builds trust for contacts auto-imported from advance sheets that nobody&apos;s actually used yet.
+- ✅ Contact tags + visibility groups — every contact takes free-form tags (&ldquo;handles VIP comps&rdquo;, &ldquo;load-in lead&rdquo;) rendered as inline chips. Team account managers create `contact_groups` at `/settings/contact-groups`, add contacts to them, and grant per-user visibility. Contacts NOT in any group remain visible to everyone (default). Contacts in a group are visible only to org owners/admins, the group creator, and explicit visibility members. Enforced via `user_can_see_contact()` SECURITY DEFINER + a `filter_visible_contacts()` batch RPC.
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)

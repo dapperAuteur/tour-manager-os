@@ -49,8 +49,10 @@ export async function getVenueProfile(venueId: string) {
     .order('updated_at', { ascending: false })
 
   // Get venue contacts (booker, sound, hospitality, etc.). Primary
-  // contacts surface first per role.
-  const { data: contacts } = await supabase
+  // contacts surface first per role. Filter through the
+  // user_can_see_contact() helper so contacts gated to specific groups
+  // disappear for members who shouldn't see them.
+  const { data: contactsRaw } = await supabase
     .from('venue_contacts')
     .select('*')
     .eq('venue_id', venueId)
@@ -58,11 +60,27 @@ export async function getVenueProfile(venueId: string) {
     .order('role')
     .order('name')
 
-  // For each contact, look up the same person at OTHER venues (matched
-  // on email or phone). Lets the band track "this booker is now at X".
+  // Step 1 — apply visibility filter: contacts gated to groups the
+  // viewer can't see disappear. Empty groups = visible to everyone.
+  const contactIds = (contactsRaw || []).map((c) => c.id)
+  let visibleIds = new Set<string>(contactIds)
+  if (contactIds.length > 0) {
+    const { data: visibleRows } = await supabase
+      .rpc('filter_visible_contacts', { contact_ids: contactIds })
+    if (Array.isArray(visibleRows)) {
+      visibleIds = new Set(
+        (visibleRows as { id: string }[]).map((r) => r.id),
+      )
+    }
+  }
+  const contacts = (contactsRaw || []).filter((c) => visibleIds.has(c.id))
+
+  // Step 2 — career history: for each visible contact, look up the
+  // same person (email/phone match) at OTHER venues. Surfaces "this
+  // booker is now at X" without a `people` registry.
   const { getContactHistory } = await import('./contact-history')
   const contactHistory = await getContactHistory(
-    (contacts || []).map((c) => ({ id: c.id, email: c.email, phone: c.phone })),
+    contacts.map((c) => ({ id: c.id, email: c.email, phone: c.phone })),
     venueId,
   )
   const history: Record<string, Awaited<ReturnType<typeof getContactHistory>> extends Map<string, infer V> ? V : never> = {}
