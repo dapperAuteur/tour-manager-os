@@ -159,6 +159,7 @@ const phases: Phase[] = [
       { label: 'Dashboard with platform stats', done: true },
       { label: 'User management table', done: true },
       { label: 'Activity logs', done: true },
+      { label: 'Unfinished phase tracker (audit drift + planned items)', done: true },
       { label: 'Charts and graphs', done: false },
     ],
   },
