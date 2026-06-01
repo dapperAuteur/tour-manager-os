@@ -165,7 +165,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 24.5 as unknown as number,
     title: 'Phase 24.5 — Fan Photo Sharing',
     items: [
-      { key: 'p245-reports', label: 'Post-publish abuse reports UI' },
       { key: 'p245-realtime-mod', label: 'Realtime moderation queue via Supabase Realtime' },
       { key: 'p245-ai-mod', label: 'AI moderation pre-filter (image safety scan before queue)' },
     ],
