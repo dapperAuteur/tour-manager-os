@@ -57,6 +57,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Show revenue tracking (guarantee, ticket sales, merch, other)
 - ✅ Tour P&L dashboard (total revenue, total expenses, net profit, expenses by category)
 - ✅ Per-member financial view (/me/finances — expenses, payouts, owed, tax deductible)
+- ✅ Member-to-member loan ledger — &ldquo;drummer borrowed $5 from guitarist&rdquo; tracked separately from tour P&amp;L. Both parties see the loan; either can mark it paid (with optional method — Venmo / cash / etc.). Open balance &ldquo;net&rdquo; surfaces at the top of `/me/finances` so you know who owes whom across the tour. New `member_loans` table; RLS restricted to lender / borrower / creator
 - ✅ CSV export for expenses
 - ✅ Settlements and member payouts tables
 - ✅ Receipt capture with AI scanning — upload via `/api/expenses/extract-receipt`; Cloudinary stores the image; vision model (default `openrouter/anthropic/claude-3.5-sonnet`, swap via `vision_model` on `/admin/ai`) extracts amount/vendor/date/category/description/tax-deductible via Zod-validated `generateObject`; user reviews + edits before saving; `receipt_url` persists on the expense row
