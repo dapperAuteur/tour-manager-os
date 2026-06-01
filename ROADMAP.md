@@ -61,7 +61,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ CSV export for expenses
 - ✅ Settlements and member payouts tables
 - ✅ Receipt capture with AI scanning — upload via `/api/expenses/extract-receipt`; Cloudinary stores the image; vision model (default `openrouter/anthropic/claude-3.5-sonnet`, swap via `vision_model` on `/admin/ai`) extracts amount/vendor/date/category/description/tax-deductible via Zod-validated `generateObject`; user reviews + edits before saving; `receipt_url` persists on the expense row
-- 📋 Receipt image viewing linked to transactions
+- ✅ Receipt image viewing linked to transactions — every expense row with a `receipt_url` now shows a thumbnail button; clicking opens a lightbox with the full image, &ldquo;Open original&rdquo; deep-link, and escape/click-outside-to-close. Non-image URLs (PDFs etc.) render as a "File" link. Shipped on both `/me/finances` and `/tours/[id]/finances`
 - 📋 Expense cost splitting between team members
 
 ## Phase 5: Show Day App ✅
