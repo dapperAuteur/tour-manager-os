@@ -49,14 +49,30 @@ export async function getVenueProfile(venueId: string) {
     .order('updated_at', { ascending: false })
 
   // Get venue contacts (booker, sound, hospitality, etc.). Primary
-  // contacts surface first per role.
-  const { data: contacts } = await supabase
+  // contacts surface first per role. Filter through the
+  // user_can_see_contact() helper so contacts gated to specific groups
+  // disappear for members who shouldn't see them.
+  const { data: contactsRaw } = await supabase
     .from('venue_contacts')
     .select('*')
     .eq('venue_id', venueId)
     .order('is_primary', { ascending: false })
     .order('role')
     .order('name')
+
+  const contactIds = (contactsRaw || []).map((c) => c.id)
+  let visibleIds = new Set<string>(contactIds)
+  if (contactIds.length > 0) {
+    // Batch-check visibility. RPC returns rows the user is allowed to see.
+    const { data: visibleRows } = await supabase
+      .rpc('filter_visible_contacts', { contact_ids: contactIds })
+    if (Array.isArray(visibleRows)) {
+      visibleIds = new Set(
+        (visibleRows as { id: string }[]).map((r) => r.id),
+      )
+    }
+  }
+  const contacts = (contactsRaw || []).filter((c) => visibleIds.has(c.id))
 
   // Calculate averages
   const allRatings = ratings || []

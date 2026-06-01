@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { ArrowRight, Users } from 'lucide-react'
 import { getUserProfile } from '@/lib/settings/queries'
 import { ProfileForm } from './profile-form'
 import { PreferencesForm } from './preferences-form'
@@ -33,6 +35,27 @@ export default async function SettingsPage() {
             <div className="rounded-xl border border-border-default bg-surface-raised p-6">
               <PreferencesForm profile={profile} />
             </div>
+          </section>
+
+          {/* Contact groups */}
+          <section aria-labelledby="contact-groups-heading">
+            <h2 id="contact-groups-heading" className="mb-4 text-lg font-semibold">Contact Groups</h2>
+            <Link
+              href="/settings/contact-groups"
+              className="flex items-start justify-between gap-3 rounded-xl border border-border-default bg-surface-raised p-6 hover:border-primary-500/40"
+            >
+              <div className="flex items-start gap-3">
+                <Users className="mt-0.5 size-5 text-primary-600 dark:text-primary-400" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-medium">Manage venue contact visibility</p>
+                  <p className="mt-1 text-xs text-text-secondary">
+                    Group venue contacts and decide which band members can see them.
+                    Contacts not in any group stay visible to everyone (current default).
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="mt-1 h-4 w-4 text-text-muted" aria-hidden="true" />
+            </Link>
           </section>
 
           {/* Account info */}

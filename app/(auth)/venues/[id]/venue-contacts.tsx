@@ -8,6 +8,7 @@ import {
   Phone,
   Plus,
   Star,
+  Tag,
   Trash2,
   UserRound,
   X,
@@ -17,6 +18,7 @@ import {
   deleteVenueContact,
   updateVenueContact,
 } from '@/lib/venues/contact-actions'
+import { updateContactTags } from '@/lib/venues/contact-group-actions'
 
 interface Contact {
   id: string
@@ -26,6 +28,7 @@ interface Contact {
   email: string | null
   notes: string | null
   is_primary: boolean
+  tags?: string[] | null
 }
 
 interface VenueContactsProps {
@@ -170,6 +173,11 @@ export function VenueContacts({ venueId, initial }: VenueContactsProps) {
                             {c.notes}
                           </p>
                         )}
+                        <ContactTags
+                          venueId={venueId}
+                          contactId={c.id}
+                          tags={c.tags || []}
+                        />
                       </div>
                       <div className="flex gap-1">
                         <button
@@ -367,5 +375,85 @@ function DeleteContactButton({
     >
       <Trash2 className="size-3.5" aria-hidden />
     </button>
+  )
+}
+
+function ContactTags({
+  venueId,
+  contactId,
+  tags,
+}: {
+  venueId: string
+  contactId: string
+  tags: string[]
+}) {
+  const [editing, setEditing] = useState(false)
+  const [value, setValue] = useState(tags.join(', '))
+  const [saving, setSaving] = useState(false)
+
+  async function save() {
+    setSaving(true)
+    const result = await updateContactTags(venueId, contactId, value)
+    setSaving(false)
+    if ('error' in result) {
+      window.alert(result.error)
+      return
+    }
+    setEditing(false)
+  }
+
+  if (editing) {
+    return (
+      <div className="mt-2 flex items-center gap-2">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="comma, separated, tags"
+          aria-label="Edit contact tags"
+          className="flex-1 rounded-md border border-border-default bg-surface px-2 py-1 text-xs"
+        />
+        <button
+          type="button"
+          onClick={save}
+          disabled={saving}
+          className="rounded-md bg-primary-600 px-2 py-1 text-xs font-semibold text-white hover:bg-primary-700 disabled:opacity-50"
+        >
+          {saving ? '…' : 'Save'}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setValue(tags.join(', '))
+            setEditing(false)
+          }}
+          className="text-xs text-text-muted hover:text-text-secondary"
+        >
+          Cancel
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-1.5 flex flex-wrap items-center gap-1">
+      {tags.length > 0 ? (
+        tags.map((t) => (
+          <span
+            key={t}
+            className="inline-flex items-center gap-1 rounded-full bg-primary-500/10 px-1.5 py-0.5 text-[10px] font-medium text-primary-700 dark:text-primary-300"
+          >
+            <Tag className="size-2.5" aria-hidden /> {t}
+          </span>
+        ))
+      ) : null}
+      <button
+        type="button"
+        onClick={() => setEditing(true)}
+        className="text-[10px] text-text-muted underline-offset-2 hover:underline"
+      >
+        {tags.length > 0 ? 'Edit tags' : '+ Add tags'}
+      </button>
+    </div>
   )
 }

@@ -271,6 +271,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Venue directory with fuzzy search (pg_trgm) and type filtering
 - ✅ Venue profiles: address, phone, capacity, stage dimensions, PA, parking, dressing rooms
 - ✅ Multiple contacts per venue (booker, production, hospitality, sound, etc.) with primary-per-role flag — self-serve CRUD on `/venues/[id]`
+- ✅ Contact tags + visibility groups — every contact takes free-form tags (&ldquo;handles VIP comps&rdquo;, &ldquo;load-in lead&rdquo;) rendered as inline chips. Team account managers create `contact_groups` at `/settings/contact-groups`, add contacts to them, and grant per-user visibility. Contacts NOT in any group remain visible to everyone (default). Contacts in a group are visible only to org owners/admins, the group creator, and explicit visibility members. Enforced via `user_can_see_contact()` SECURITY DEFINER + a `filter_visible_contacts()` batch RPC.
 - ✅ Star rating system (overall + sound, hospitality, load-in, dressing rooms)
 - ✅ Review text with show date
 - ✅ Venue notes integration (from Production Bible)
