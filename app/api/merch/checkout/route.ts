@@ -77,12 +77,43 @@ export async function POST(request: Request) {
       shipping_address_collection: {
         allowed_countries: ['US', 'CA', 'GB', 'AU', 'NZ', 'IE', 'DE', 'FR', 'NL', 'ES', 'IT', 'SE', 'JP'],
       },
+      // Multiple shipping tiers — the buyer picks one at Checkout based
+      // on the shipping address they enter. Stripe shows whichever tiers
+      // match the destination country. Rates here are placeholder
+      // averages for music merch (tee/vinyl mix); the band can refine
+      // them per-org later if real fulfillment costs diverge.
       shipping_options: [
         {
           shipping_rate_data: {
-            display_name: 'Standard shipping (5-10 business days)',
+            display_name: 'US Standard — USPS Ground Advantage',
             type: 'fixed_amount',
             fixed_amount: { amount: 599, currency: 'usd' },
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 5 },
+              maximum: { unit: 'business_day', value: 10 },
+            },
+          },
+        },
+        {
+          shipping_rate_data: {
+            display_name: 'US Expedited — USPS Priority Mail',
+            type: 'fixed_amount',
+            fixed_amount: { amount: 1099, currency: 'usd' },
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 2 },
+              maximum: { unit: 'business_day', value: 3 },
+            },
+          },
+        },
+        {
+          shipping_rate_data: {
+            display_name: 'International — USPS First-Class',
+            type: 'fixed_amount',
+            fixed_amount: { amount: 1999, currency: 'usd' },
+            delivery_estimate: {
+              minimum: { unit: 'week', value: 1 },
+              maximum: { unit: 'week', value: 3 },
+            },
           },
         },
       ],
