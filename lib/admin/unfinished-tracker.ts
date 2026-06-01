@@ -99,7 +99,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     title: 'Phase 15 — Production Bible',
     items: [
       { key: 'p15-stage-plot', label: 'Drag-and-drop stage plot builder' },
-      { key: 'p15-call-sheets', label: 'Auto-generated crew call sheets' },
       { key: 'p15-rider', label: 'Rider compliance checklists' },
     ],
   },
