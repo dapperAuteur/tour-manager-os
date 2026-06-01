@@ -28,13 +28,7 @@ export interface TrackerSection {
   items: TrackerItem[]
 }
 
-export const DRIFT_ITEMS: TrackerItem[] = [
-  {
-    key: 'drift-smart-advance-prefill',
-    label: 'Smart advance pre-fill from past venue data',
-    detail: 'No DB function exists. The advance form uses `defaultValue` from the current sheet only.',
-  },
-]
+export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
@@ -137,7 +131,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 20,
     title: 'Phase 20 — Venue Network',
     items: [
-      { key: 'p20-prefill', label: 'Smart advance pre-fill from past venue data', detail: 'Same as the drift item — counts once.' },
       { key: 'p20-photos', label: 'Venue photos' },
       { key: 'p20-map', label: 'Map view with Leaflet' },
     ],
