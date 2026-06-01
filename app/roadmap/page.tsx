@@ -285,7 +285,7 @@ const phases: Phase[] = [
       { label: 'Family check-ins with mood tracking', done: true },
       { label: 'Rise Wellness mental health card', done: true },
       { label: 'CentenarianOS exercise library links', done: true },
-      { label: 'Burnout detection', done: false },
+      { label: 'Burnout detection (14-day weighted score across sleep/energy/mood/stress/voice + schedule density)', done: true },
     ],
   },
   {

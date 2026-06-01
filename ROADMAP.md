@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-06-01 (Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -311,7 +311,7 @@ Last updated: 2026-06-01 (Phase 18 public API endpoints + OpenAPI spec + Phase 1
 - ✅ CentenarianOS promotion page (/wellness-resources) with exercise library links, workout links, platform CTA
 - ✅ Medical disclaimer component
 - ✅ Links to CentenarianOS public exercise library (110+ free exercises)
-- 📋 Burnout detection (schedule density + self-reported energy alerts)
+- ✅ Burnout detection at `/wellness/burnout` — 14-day weighted score across sleep, energy, mood, stress, voice, and schedule density, with contributing-signal breakdown + days-off-planner recommendations
 - ✅ Days-off wellness suggestions (gyms, spas, parks, food, laundromats, family-friendly) — `suggestionLinks()` deep-links to Google Maps, scoped to last-known city
 - 📋 Wearable integration (via CentenarianOS)
 
