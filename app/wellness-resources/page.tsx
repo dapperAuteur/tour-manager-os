@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Heart, Dumbbell, Activity, Brain, ExternalLink } from 'lucide-react'
 import { Header } from '@/components/layout/header'
 import { SiteFooter } from '@/components/layout/site-footer'
-import { RiseWellnessCard } from '@/components/ui/rise-wellness-card'
+import { RiseWellnessCallout } from '@/components/wellness/rise-wellness-callout'
 
 export const metadata: Metadata = {
   title: 'Wellness Resources',
@@ -94,7 +94,7 @@ export default function WellnessResourcesPage() {
 
         {/* Rise Wellness */}
         <div className="mt-8">
-          <RiseWellnessCard />
+          <RiseWellnessCallout />
         </div>
 
         {/* Medical disclaimer */}
