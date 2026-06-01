@@ -206,7 +206,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Production hub index with 4 section cards
 - 📋 Drag-and-drop stage plot builder (visual editor)
 - ✅ Auto-generated crew call sheets at `/tours/[id]/shows/[showId]/call-sheet` — assembles the day's brief from the advance sheet (times, venue, hospitality, dressing rooms, production notes), the tour&apos;s hotel booking for that show, and pinned + advance-sheet contacts. Print-friendly layout with `break-inside-avoid` per section; Print/PDF button on screen, hidden when printing. Deep-linked from the auth show page
-- 📋 Rider compliance checklists
+- ✅ Rider compliance checklists — `org_rider_items` template per band at `/settings/rider-template` (categories: technical / hospitality / dressing room / crew / transportation / security / other). Per-show checklist at `/tours/[id]/shows/[showId]/rider`: import the template in one click, then production crew flips each line item to delivered / partial / missing / N/A at load-in with actual qty + notes. Snapshots the description at import time so historical compliance stays correct after the template evolves
 
 ## Phase 16: Subscriptions, CSV, & Email Docs ✅
 > Billing, data import/export, and email setup documentation.
@@ -297,7 +297,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Timeline blocks: load-in, soundcheck, changeover, performance, doors, meet & greet, break, curfew
 - ✅ Act-specific blocks (assign to individual act or all)
 - ✅ Date selector for multi-day events
-- 📋 Cross-act messaging/communication channels
+- ✅ Cross-act messaging at `/packages/[id]/messages` — single channel per tour package where any act on the bill can post. Senders can pick which act they speak as (drawn from the package&apos;s `package_acts` they have org access to) or post under their plain name. Snapshots sender name + act label at send time so historical posts stay correct after renames. New `package_messages` table; broad-auth RLS (any signed-in user can read/post; only the author can edit or delete their own)
 - 📋 Festival mode (multiple stages)
 
 ## Phase 22: Wellness Platform ✅

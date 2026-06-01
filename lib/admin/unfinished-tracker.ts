@@ -98,7 +98,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     title: 'Phase 15 — Production Bible',
     items: [
       { key: 'p15-stage-plot', label: 'Drag-and-drop stage plot builder' },
-      { key: 'p15-rider', label: 'Rider compliance checklists' },
     ],
   },
   {
@@ -137,7 +136,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 21,
     title: 'Phase 21 — Multi-Act Touring',
     items: [
-      { key: 'p21-msg', label: 'Cross-act messaging / communication channels' },
       { key: 'p21-festival', label: 'Festival mode (multiple stages)' },
     ],
   },

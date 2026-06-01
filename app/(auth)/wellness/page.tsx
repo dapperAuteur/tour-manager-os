@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Heart, Moon, Zap, Smile, Mic, Dumbbell, Users } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getWellnessLog, getWellnessHistory } from '@/lib/wellness/queries'
-import { RiseWellnessCard } from '@/components/ui/rise-wellness-card'
+import { RiseWellnessCallout } from '@/components/wellness/rise-wellness-callout'
 import { DailyLogForm } from './daily-log-form'
 
 export const metadata: Metadata = { title: 'Wellness', robots: { index: false } }
@@ -76,7 +76,7 @@ export default async function WellnessPage() {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          <RiseWellnessCard />
+          <RiseWellnessCallout />
 
           <div className="rounded-xl border border-border-default bg-surface-raised p-5">
             <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
