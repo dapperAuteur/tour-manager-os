@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-31 (Phase 3 per-module tutorials shipped + Phase 16 CSV import wizard shipped + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -95,6 +95,7 @@ Last updated: 2026-05-31 (Phase 3 per-module tutorials shipped + Phase 16 CSV im
 - ✅ Public roadmap page (/roadmap) with phase status and item checklists
 - ✅ Sitemap updated with all public pages
 - ✅ OG metadata on all landing pages
+- ✅ Shared ecosystem-spec `SiteFooter` on every public page (homepage, `/pricing`, `/roadmap`, `/for/*`, `/features/*`, tickets, photos) — three-column nav (Ecosystem / Tour Manager OS / Partners & Legal), full Rise Wellness mental-health callout with verbatim non-affiliation disclaimer, sibling-product list, B4C LLC / AwesomeWebStore.com attribution
 
 ## Phase 8: Merch Empire ✅
 > Inventory tracking, per-show sales, merch P&L.

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { CheckCircle2, Construction, ClipboardList, Lightbulb } from 'lucide-react'
 import { Header } from '@/components/layout/header'
+import { SiteFooter } from '@/components/layout/site-footer'
 
 export const metadata: Metadata = {
   title: 'Roadmap',
@@ -379,15 +379,8 @@ export default function RoadmapPage() {
           })}
         </div>
 
-        <footer className="mt-12 border-t border-border-default py-8 text-center text-sm text-text-muted">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/" className="hover:text-text-secondary">Home</Link>
-            <Link href="/login?demo=true" className="hover:text-text-secondary">Try Demo</Link>
-            <Link href="/signup" className="hover:text-text-secondary">Sign Up</Link>
-          </div>
-          <p className="mt-4">Tour Manager OS</p>
-        </footer>
       </main>
+      <SiteFooter />
     </>
   )
 }
