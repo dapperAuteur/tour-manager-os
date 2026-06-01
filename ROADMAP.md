@@ -107,7 +107,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Per-show merch sales recording with auto inventory update
 - ✅ Merch P&L dashboard (revenue, cost, profit, units sold, top sellers)
 - ✅ Demo data: 5 products, inventory, 11 sales across 3 shows
-- ✅ Online merch store (Stripe Checkout) at `/store/[org-slug]` — fan-facing public catalog grouped by category with per-product Buy buttons. Stripe Checkout flow (card, international shipping to 13+ countries, $5.99 flat shipping). Webhook records each paid checkout into new `merch_orders` + `merch_order_items` tables with order number + shipping address. Admin order list at `/merch/orders` shows paid → fulfilled flow with tracking-number capture. Idempotent on the Stripe session id so redelivered webhooks don&apos;t double-insert
+- ✅ Online merch store (Stripe Checkout) at `/store/[org-slug]` — fan-facing public catalog grouped by category with per-product Buy buttons. Stripe Checkout flow (card, international shipping to 13+ countries, three shipping tiers shown at checkout — US Standard $5.99 / US Expedited $10.99 / International $19.99 — Stripe matches the tier to the buyer&apos;s destination). Webhook records each paid checkout into new `merch_orders` + `merch_order_items` tables with order number + shipping address. Admin order list at `/merch/orders` shows paid → fulfilled flow with tracking-number capture. Idempotent on the Stripe session id so redelivered webhooks don&apos;t double-insert
 - 📋 Tour-exclusive merch drops
 
 ## Phase 9: Fan Marketing & Community ✅
