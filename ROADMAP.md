@@ -29,6 +29,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Password policy (16 chars, mixed case, numbers, symbols, no repeats)
 - ✅ User profile (display name, bio, phone)
 - ✅ Preferences (timezone, theme, home page, notifications)
+- ✅ Global timezone picker — 80+ IANA zones grouped by region (US & Canada / Latin America / Europe & UK / Africa & Middle East / Asia / Australia, NZ & Pacific / UTC). Shared `<TimezoneSelect>` component wired into settings, the show-creation form, and any other timezone `<select>`. Replaces the old 8-option US-centric list so international tours don&apos;t have to settle for &ldquo;closest US zone&rdquo;.
 - ✅ Light/dark/system theme with flash prevention
 - ✅ Responsive nav sidebar with mobile drawer
 - ✅ Logout functionality
