@@ -86,6 +86,14 @@ export async function getVenueProfile(venueId: string) {
   const history: Record<string, Awaited<ReturnType<typeof getContactHistory>> extends Map<string, infer V> ? V : never> = {}
   for (const [id, entries] of contactHistory.entries()) history[id] = entries
 
+  // Multi-stage venues — list of named stages with explicit
+  // indoor/outdoor/tent location.
+  const { data: stages } = await supabase
+    .from('venue_stages')
+    .select('id, name, location, capacity, stage_width, stage_depth, stage_height, pa_system, notes')
+    .eq('venue_id', venueId)
+    .order('name')
+
   // Calculate averages
   const allRatings = ratings || []
   const avgOverall = allRatings.length > 0
@@ -98,6 +106,7 @@ export async function getVenueProfile(venueId: string) {
     notes: notes || [],
     contacts: contacts || [],
     contactHistory: history,
+    stages: stages || [],
     avgRating: Math.round(avgOverall * 10) / 10,
     ratingCount: allRatings.length,
   }

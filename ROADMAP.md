@@ -366,7 +366,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - 📋 Recharts analytics charts (bar, line, pie) for admin dashboard — package not installed; only stat cards rendered
 - ✅ Weather integration on Show Day (Open-Meteo, cached) — wired via `lib/weather/actions.ts` (geocode + 16-day forecast + DB cache); rendered in `app/(auth)/today/weather-card.tsx`
 - 📋 Smart advance pre-fill from past venue data (DB function) — function not written; form uses current sheet only
-- 📋 Venue stages/spaces — multiple stages per venue (indoor/outdoor) — no `venue_stages` table; single stage columns only
+- ✅ Multiple stages/spaces per venue — new `venue_stages` table (name, location indoor/outdoor/tent/other, capacity, w×d×h, PA, notes). Stages render on the venue profile with color-coded location badges; full CRUD UI alongside the existing Contacts section. Legacy `venue_profiles.stage_*` columns retained as "default stage" for advance-sheet back-compat.
 - ✅ Stripe Checkout session creation with webhook handler
 - ✅ Stripe webhook: checkout.session.completed, subscription.deleted, invoice.payment_failed
 - ✅ 7 admin help articles seeded (Stripe, push notifications, Cloudinary, Supabase, Vercel, codebase, dev workflow)

@@ -5,6 +5,7 @@ import { MapPin, Phone, Star, Globe, Users, Volume2, Ruler, Car } from 'lucide-r
 import { getVenueProfile } from '@/lib/venues/queries'
 import { RatingForm } from './rating-form'
 import { VenueContacts } from './venue-contacts'
+import { VenueStages } from './venue-stages'
 
 export const metadata: Metadata = { title: 'Venue Profile', robots: { index: false } }
 
@@ -39,7 +40,7 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
   let data
   try { data = await getVenueProfile(id) } catch { notFound() }
 
-  const { venue, ratings, notes, contacts, contactHistory, avgRating, ratingCount } = data
+  const { venue, ratings, notes, contacts, contactHistory, stages, avgRating, ratingCount } = data
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -80,6 +81,9 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
 
         {/* Contacts */}
         <VenueContacts venueId={id} initial={contacts} history={contactHistory} />
+
+        {/* Multi-stage / spaces */}
+        <VenueStages venueId={id} initial={stages} />
 
         {/* Rate this venue */}
         <div className="rounded-xl border border-border-default bg-surface-raised p-6">
