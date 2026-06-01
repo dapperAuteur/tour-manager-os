@@ -2,7 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import {
+  History,
   Mail,
   Pencil,
   Phone,
@@ -28,9 +30,17 @@ interface Contact {
   is_primary: boolean
 }
 
+interface HistoryEntry {
+  venue_id: string
+  venue_name: string
+  role: string
+}
+
 interface VenueContactsProps {
   venueId: string
   initial: Contact[]
+  /** Map keyed by contact.id → other venues where this person appears. */
+  history?: Record<string, HistoryEntry[]>
 }
 
 const ROLE_OPTIONS: { value: string; label: string }[] = [
@@ -46,7 +56,7 @@ const ROLE_OPTIONS: { value: string; label: string }[] = [
 ]
 const ROLE_LABELS = Object.fromEntries(ROLE_OPTIONS.map((r) => [r.value, r.label])) as Record<string, string>
 
-export function VenueContacts({ venueId, initial }: VenueContactsProps) {
+export function VenueContacts({ venueId, initial, history }: VenueContactsProps) {
   const router = useRouter()
   const [, startTransition] = useTransition()
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -168,6 +178,27 @@ export function VenueContacts({ venueId, initial }: VenueContactsProps) {
                         {c.notes && (
                           <p className="mt-1 whitespace-pre-wrap text-xs text-text-secondary">
                             {c.notes}
+                          </p>
+                        )}
+                        {history?.[c.id] && history[c.id].length > 0 && (
+                          <p className="mt-1.5 flex flex-wrap items-center gap-1 text-[11px] text-text-muted">
+                            <History className="size-3" aria-hidden />
+                            <span className="font-medium">Also at:</span>
+                            {history[c.id].slice(0, 4).map((h, i) => (
+                              <span key={h.venue_id}>
+                                <Link
+                                  href={`/venues/${h.venue_id}`}
+                                  className="text-primary-700 hover:underline dark:text-primary-400"
+                                  title={`${h.venue_name} (${ROLE_LABELS[h.role] || h.role})`}
+                                >
+                                  {h.venue_name}
+                                </Link>
+                                {i < Math.min(history[c.id].length, 4) - 1 ? ',' : ''}
+                              </span>
+                            ))}
+                            {history[c.id].length > 4 && (
+                              <span>and {history[c.id].length - 4} more</span>
+                            )}
                           </p>
                         )}
                       </div>

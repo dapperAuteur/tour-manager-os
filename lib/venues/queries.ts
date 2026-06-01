@@ -58,6 +58,16 @@ export async function getVenueProfile(venueId: string) {
     .order('role')
     .order('name')
 
+  // For each contact, look up the same person at OTHER venues (matched
+  // on email or phone). Lets the band track "this booker is now at X".
+  const { getContactHistory } = await import('./contact-history')
+  const contactHistory = await getContactHistory(
+    (contacts || []).map((c) => ({ id: c.id, email: c.email, phone: c.phone })),
+    venueId,
+  )
+  const history: Record<string, Awaited<ReturnType<typeof getContactHistory>> extends Map<string, infer V> ? V : never> = {}
+  for (const [id, entries] of contactHistory.entries()) history[id] = entries
+
   // Calculate averages
   const allRatings = ratings || []
   const avgOverall = allRatings.length > 0
@@ -69,6 +79,7 @@ export async function getVenueProfile(venueId: string) {
     ratings: allRatings,
     notes: notes || [],
     contacts: contacts || [],
+    contactHistory: history,
     avgRating: Math.round(avgOverall * 10) / 10,
     ratingCount: allRatings.length,
   }

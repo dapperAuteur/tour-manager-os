@@ -39,7 +39,7 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
   let data
   try { data = await getVenueProfile(id) } catch { notFound() }
 
-  const { venue, ratings, notes, contacts, avgRating, ratingCount } = data
+  const { venue, ratings, notes, contacts, contactHistory, avgRating, ratingCount } = data
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -79,7 +79,7 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
         </div>
 
         {/* Contacts */}
-        <VenueContacts venueId={id} initial={contacts} />
+        <VenueContacts venueId={id} initial={contacts} history={contactHistory} />
 
         {/* Rate this venue */}
         <div className="rounded-xl border border-border-default bg-surface-raised p-6">
