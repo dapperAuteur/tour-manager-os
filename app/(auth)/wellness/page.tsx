@@ -50,6 +50,7 @@ export default async function WellnessPage() {
         <Link href="/wellness/warmups" className="rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt">Warmup Routines</Link>
         <Link href="/wellness/checkins" className="rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt">Family Check-ins</Link>
         <Link href="/wellness-resources" className="rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt">Exercise Library</Link>
+        <Link href="/wellness/burnout" className="rounded-lg border border-border-default px-4 py-2 text-sm font-medium hover:bg-surface-alt">Burnout Risk</Link>
       </div>
 
       {/* 7-day averages */}

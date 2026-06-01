@@ -119,7 +119,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 22,
     title: 'Phase 22 — Wellness',
     items: [
-      { key: 'p22-burnout', label: 'Burnout detection (schedule density + energy alerts)' },
       { key: 'p22-wearable', label: 'Wearable integration via CentenarianOS' },
     ],
   },
@@ -155,6 +154,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 20 — Multiple contacts per venue', branch: 'feature/venue-contacts-ui' },
   { label: 'Phase 21 — Cross-act messaging + festival lineup', branch: 'feature/cross-act-messaging + feature/festival-mode' },
   { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
+  { label: 'Phase 22 — Burnout detection (/wellness/burnout)', branch: 'feature/burnout-detection' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
