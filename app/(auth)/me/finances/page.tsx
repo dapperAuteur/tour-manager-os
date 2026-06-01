@@ -2,7 +2,13 @@ import type { Metadata } from 'next'
 import { DollarSign, TrendingUp, Receipt, FileText } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getMemberFinances } from '@/lib/finances/queries'
+import {
+  getMemberLoans,
+  listTourCounterparties,
+  listAccessibleTours,
+} from '@/lib/finances/loans'
 import { TutorialGate } from '@/components/tutorials/tutorial-gate'
+import { MemberLoans } from './member-loans'
 
 export const metadata: Metadata = {
   title: 'My Finances',
@@ -14,7 +20,12 @@ export default async function MyFinancesPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const data = await getMemberFinances(user.id)
+  const [data, loans, counterparties, tours] = await Promise.all([
+    getMemberFinances(user.id),
+    getMemberLoans(),
+    listTourCounterparties(),
+    listAccessibleTours(),
+  ])
 
   const fmt = (n: number) => `$${Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
 
@@ -56,6 +67,19 @@ export default async function MyFinancesPage() {
           <p className="mt-2 text-2xl font-bold">{fmt(data.taxDeductible)}</p>
         </div>
       </div>
+
+      {/* Member-to-member loans */}
+      {loans && (
+        <div className="mb-8">
+          <MemberLoans
+            iOwe={loans.iOwe}
+            owedToMe={loans.owedToMe}
+            netOpen={loans.netOpen}
+            counterparties={counterparties}
+            tours={tours}
+          />
+        </div>
+      )}
 
       {/* Expenses list */}
       <h2 className="mb-4 text-lg font-semibold">My Expenses ({data.expenses.length})</h2>
