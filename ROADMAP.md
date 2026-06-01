@@ -345,7 +345,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Fan dashboard at `/photos` showing all submissions + statuses + rejection reasons
 - ✅ Staff moderation at `/tours/[id]/shows/[showId]/fan-photos` (tabs, counts, reject-with-reason flow)
 - ✅ `fan-photos` module registered in featurePages
-- 📋 Post-publish abuse reports UI (table + reason field exist; staff resolution flow not yet built)
+- ✅ Post-publish abuse reports UI at `/admin/photo-reports` — open-first queue, photo thumbnail + reason + reporter inline, &ldquo;N open reports&rdquo; warning chip clusters repeat offenders, two resolution paths: Dismiss (kept up) or Take down (flips photo status to `rejected` and auto-resolves any sibling reports on the same image). Resolution notes required for takedown. Filter toggle between open-only and all
 - 📋 Realtime moderation queue via Supabase Realtime
 - 📋 AI-moderation pre-filter (image safety scan before queue)
 
