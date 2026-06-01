@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-06-01 (Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -134,7 +134,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Hub index page with Polls, Practice, Albums sections
 - ✅ 404 pages (public and authenticated)
 - ✅ Setlist collaboration (songs, comments, team discussion)
-- 📋 Days-off planner with local suggestions
+- ✅ Days-off planner (`/tours/[id]/days-off`) — derives off-days from tour range vs scheduled shows, per-day plans (rest/sightseeing/gym/spa/food/family/errands), group or personal, status toggle, Google Maps suggestion links
 
 ## Phase 11: Help & Feedback ✅
 > Help center and conversational feedback system.
@@ -312,7 +312,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Medical disclaimer component
 - ✅ Links to CentenarianOS public exercise library (110+ free exercises)
 - 📋 Burnout detection (schedule density + self-reported energy alerts)
-- 📋 Days-off wellness suggestions (gyms, spas, parks near venues)
+- ✅ Days-off wellness suggestions (gyms, spas, parks, food, laundromats, family-friendly) — `suggestionLinks()` deep-links to Google Maps, scoped to last-known city
 - 📋 Wearable integration (via CentenarianOS)
 
 ## Phase 24: Ticketing System ✅
