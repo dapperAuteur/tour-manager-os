@@ -36,6 +36,13 @@ export default async function MerchPage() {
         <div className="flex items-center gap-2">
           <TutorialGate moduleId="merch" moduleName="Merch" />
           <Link
+            href="/merch/orders"
+            className="inline-flex items-center gap-2 rounded-lg border border-border-default px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            <Package className="h-4 w-4" aria-hidden="true" />
+            Orders
+          </Link>
+          <Link
             href="/merch/sales/new"
             className="inline-flex items-center gap-2 rounded-lg border border-border-default px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
           >

@@ -145,6 +145,11 @@ export async function POST(request: Request) {
         break
       }
 
+      if (session.metadata?.kind === 'merch') {
+        await recordMerchOrder(supabase, session)
+        break
+      }
+
       const userId = session.metadata?.user_id
       const subscriptionType = session.metadata?.subscription_type as 'lifetime' | 'annual'
 
@@ -228,4 +233,87 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ received: true })
+}
+
+/**
+ * Records a paid merch order from a Stripe Checkout session. Idempotent
+ * via the unique `stripe_session_id` index — a redelivered webhook
+ * hits 23505 and we skip without erroring.
+ */
+async function recordMerchOrder(
+  supabase: ReturnType<typeof createAdminClient>,
+  session: Stripe.Checkout.Session,
+): Promise<void> {
+  const orgId = session.metadata?.org_id
+  const productId = session.metadata?.product_id
+  const quantity = Number(session.metadata?.quantity || 1)
+  const productName = session.metadata?.product_name || 'Merch'
+  if (!orgId || !productId) return
+
+  const fanEmail =
+    session.customer_details?.email || session.customer_email || ''
+  const fanName = session.customer_details?.name || null
+  const shippingDetailsAny = (
+    session as unknown as {
+      shipping_details?: {
+        address?: Stripe.Address
+        name?: string | null
+      }
+    }
+  ).shipping_details
+  const shippingAddress = shippingDetailsAny
+    ? {
+        name: shippingDetailsAny.name,
+        address: shippingDetailsAny.address,
+      }
+    : null
+
+  const totalAmount = (session.amount_total ?? 0) / 100
+  const shippingCost = (session.shipping_cost?.amount_total ?? 0) / 100
+  const itemsTotal = Math.max(0, totalAmount - shippingCost)
+  const unitPrice = quantity > 0 ? itemsTotal / quantity : itemsTotal
+
+  // Order number is a friendly short id for emails / labels.
+  // 4 random alnum chars after the year prefix is enough at our volume.
+  const orderNumber = `M-${new Date().getFullYear()}-${session.id.slice(-6).toUpperCase()}`
+
+  const { data: inserted, error } = await supabase
+    .from('merch_orders')
+    .insert({
+      org_id: orgId,
+      order_number: orderNumber,
+      fan_email: fanEmail,
+      fan_name: fanName,
+      shipping_address: shippingAddress,
+      items_total: itemsTotal,
+      shipping_cost: shippingCost,
+      total_amount: totalAmount,
+      currency: session.currency || 'usd',
+      status: 'paid',
+      stripe_session_id: session.id,
+      stripe_payment_intent: (session.payment_intent as string) || null,
+    })
+    .select('id')
+    .maybeSingle()
+
+  if (error) {
+    // Duplicate session id = redelivered webhook; safe to ignore.
+    if (error.code !== '23505') {
+      logError('stripe.webhook.merch_insert_failed', error, {
+        session_id: session.id,
+      })
+    }
+    return
+  }
+
+  if (inserted?.id) {
+    await supabase.from('merch_order_items').insert({
+      order_id: inserted.id,
+      product_id: productId,
+      product_name: productName,
+      unit_price: unitPrice,
+      quantity,
+      subtotal: itemsTotal,
+    })
+  }
 }
