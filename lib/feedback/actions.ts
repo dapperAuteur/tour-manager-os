@@ -257,6 +257,63 @@ export async function submitHelpBubbleFeedback(input: {
   return { threadId: thread.id }
 }
 
+/**
+ * User-side mark-resolved. Either confirms the issue is fixed (closes
+ * the thread + flips status to resolved) or signals it's still
+ * happening (re-opens for admin attention). Only the original reporter
+ * can call this.
+ */
+export async function markFeedbackResolved(
+  threadId: string,
+  action: 'confirmed_fixed' | 'still_happening',
+): Promise<{ ok: true } | { error: string }> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not signed in.' }
+
+  const { data: thread, error: threadErr } = await supabase
+    .from('feedback_threads')
+    .select('id, user_id, status, subject')
+    .eq('id', threadId)
+    .maybeSingle()
+  if (threadErr || !thread) return { error: 'Thread not found.' }
+  if (thread.user_id !== user.id) {
+    return { error: 'Only the reporter can mark this resolved.' }
+  }
+
+  const admin = createAdminClient()
+  const newStatus =
+    action === 'confirmed_fixed' ? 'resolved' : 'open'
+
+  await admin
+    .from('feedback_threads')
+    .update({
+      status: newStatus,
+      user_resolved_at: new Date().toISOString(),
+      user_resolved_action: action,
+    })
+    .eq('id', threadId)
+
+  // Post a system message so admins see the user's signal inline.
+  const body =
+    action === 'confirmed_fixed'
+      ? '✅ Reporter confirmed this is fixed.'
+      : '⚠️ Reporter says this is still happening.'
+  await admin.from('feedback_messages').insert({
+    thread_id: threadId,
+    sender_id: user.id,
+    body,
+    is_admin: false,
+  })
+
+  revalidatePath(`/feedback/${threadId}`)
+  revalidatePath('/feedback')
+  revalidatePath('/admin/feedback')
+  return { ok: true }
+}
+
 export async function updateThreadStatus(threadId: string, status: string) {
   const adminClient = createAdminClient()
   const { error } = await adminClient
