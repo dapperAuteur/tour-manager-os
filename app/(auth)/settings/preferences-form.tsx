@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { updatePreferences } from '@/lib/settings/actions'
+import { TimezoneSelect } from '@/components/forms/timezone-select'
 
 interface PreferencesFormProps {
   profile: {
@@ -12,20 +13,6 @@ interface PreferencesFormProps {
     push_notifications: boolean | null
   } | null
 }
-
-const timezones = [
-  { value: 'America/New_York', label: 'Eastern (ET)' },
-  { value: 'America/Chicago', label: 'Central (CT)' },
-  { value: 'America/Denver', label: 'Mountain (MT)' },
-  { value: 'America/Los_Angeles', label: 'Pacific (PT)' },
-  { value: 'America/Anchorage', label: 'Alaska (AKT)' },
-  { value: 'Pacific/Honolulu', label: 'Hawaii (HST)' },
-  { value: 'Europe/London', label: 'GMT / London' },
-  { value: 'Europe/Paris', label: 'CET / Paris' },
-  { value: 'Europe/Berlin', label: 'CET / Berlin' },
-  { value: 'Asia/Tokyo', label: 'JST / Tokyo' },
-  { value: 'Australia/Sydney', label: 'AEST / Sydney' },
-]
 
 export function PreferencesForm({ profile }: PreferencesFormProps) {
   const [error, setError] = useState('')
@@ -61,17 +48,12 @@ export function PreferencesForm({ profile }: PreferencesFormProps) {
 
       <div>
         <label htmlFor="timezone" className="mb-1 block text-sm font-medium">Timezone</label>
-        <select
+        <TimezoneSelect
           id="timezone"
           name="timezone"
-          defaultValue={profile?.timezone || 'America/New_York'}
-          className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm transition-colors focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:bg-surface-alt"
-        >
-          {timezones.map((tz) => (
-            <option key={tz.value} value={tz.value}>{tz.label}</option>
-          ))}
-        </select>
-        <p className="mt-1 text-xs text-text-muted">All dates and times will display in this timezone.</p>
+          defaultValue={profile?.timezone}
+        />
+        <p className="mt-1 text-xs text-text-muted">All dates and times will display in this timezone. Pick any region — useful for international tours.</p>
       </div>
 
       <div>

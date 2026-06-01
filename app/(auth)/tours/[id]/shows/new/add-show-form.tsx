@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { createShow } from '@/lib/tours/actions'
+import { TimezoneSelect } from '@/components/forms/timezone-select'
 
 interface AddShowFormProps {
   tourId: string
@@ -102,21 +103,7 @@ export function AddShowForm({ tourId }: AddShowFormProps) {
           <label htmlFor="timezone" className="mb-1 block text-sm font-medium">
             Timezone
           </label>
-          <select
-            id="timezone"
-            name="timezone"
-            defaultValue="America/New_York"
-            className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm transition-colors focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:bg-surface-alt"
-          >
-            <option value="America/New_York">Eastern</option>
-            <option value="America/Chicago">Central</option>
-            <option value="America/Denver">Mountain</option>
-            <option value="America/Los_Angeles">Pacific</option>
-            <option value="America/Anchorage">Alaska</option>
-            <option value="Pacific/Honolulu">Hawaii</option>
-            <option value="Europe/London">GMT / London</option>
-            <option value="Europe/Paris">CET / Paris</option>
-          </select>
+          <TimezoneSelect id="timezone" name="timezone" />
         </div>
       </div>
 
