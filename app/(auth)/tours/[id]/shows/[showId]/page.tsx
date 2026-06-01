@@ -92,7 +92,15 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
               {new Date(show.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href={`/shows/${showId}`}
+              target="_blank"
+              className="inline-flex items-center gap-1 rounded-lg border border-primary-500/40 bg-primary-500/5 px-3 py-2 text-sm font-medium text-primary-700 transition-colors hover:bg-primary-500/10 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:text-primary-300"
+            >
+              Public event page
+              <ExternalLink className="h-3 w-3" aria-hidden="true" />
+            </Link>
             {advanceLink && (
               <Link
                 href={advanceLink}
