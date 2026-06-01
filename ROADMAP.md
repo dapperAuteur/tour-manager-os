@@ -298,7 +298,7 @@ Last updated: 2026-05-31 (Phase 7 ecosystem footer with Rise Wellness on all pub
 - ✅ Act-specific blocks (assign to individual act or all)
 - ✅ Date selector for multi-day events
 - 📋 Cross-act messaging/communication channels
-- 📋 Festival mode (multiple stages)
+- ✅ Festival mode — `festival_slots` table assigns acts to stages with start times + set lengths per show. UI at `/tours/[id]/shows/[showId]/festival` lets you build the lineup grid (grouped by stage). Pulls available stages from the matched `venue_stages` and available acts from the tour&apos;s `package_acts`. Free-form act-name override for guest acts not in the lineup. Defaults to a single-stage view if no stages are mapped
 
 ## Phase 22: Wellness Platform ✅
 > Health and wellbeing tools for life on the road, powered by CentenarianOS and Rise Wellness.
