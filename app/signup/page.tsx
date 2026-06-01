@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { SignupForm } from './signup-form'
 import { Header } from '@/components/layout/header'
+import { SiteFooter } from '@/components/layout/site-footer'
 
 export const metadata: Metadata = {
   title: 'Sign Up',
@@ -20,6 +21,7 @@ export default function SignupPage() {
           <SignupForm />
         </div>
       </main>
+      <SiteFooter />
     </>
   )
 }

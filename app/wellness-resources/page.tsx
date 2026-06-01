@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { Heart, Dumbbell, Activity, Brain, ExternalLink } from 'lucide-react'
 import { Header } from '@/components/layout/header'
+import { SiteFooter } from '@/components/layout/site-footer'
 import { RiseWellnessCard } from '@/components/ui/rise-wellness-card'
 
 export const metadata: Metadata = {
@@ -107,14 +107,8 @@ export default function WellnessResourcesPage() {
           </p>
         </div>
 
-        <footer className="mt-12 border-t border-border-default py-8 text-center text-sm text-text-muted">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/" className="hover:text-text-secondary">Home</Link>
-            <Link href="/roadmap" className="hover:text-text-secondary">Roadmap</Link>
-            <Link href="/login" className="hover:text-text-secondary">Log In</Link>
-          </div>
-        </footer>
       </main>
+      <SiteFooter />
     </>
   )
 }

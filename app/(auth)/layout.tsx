@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppNav } from '@/components/layout/app-nav'
 import { DemoBanner } from '@/components/layout/demo-banner'
+import { SiteFooter } from '@/components/layout/site-footer'
 import { isDemoUser } from '@/lib/demo/config'
 import { isSuperAdmin } from '@/lib/auth/super-admin'
 
@@ -43,9 +44,10 @@ export default async function AuthLayout({
   return (
     <div className="flex min-h-screen">
       <AppNav userName={displayName} isAdmin={isAdmin} unreadFeedback={unreadFeedback || 0} />
-      <div className="flex-1">
+      <div className="flex min-w-0 flex-1 flex-col">
         {isDemo && <DemoBanner />}
-        {children}
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { LoginForm } from './login-form'
 import { DemoLogin } from './demo-login'
 import { Header } from '@/components/layout/header'
+import { SiteFooter } from '@/components/layout/site-footer'
 
 export const metadata: Metadata = {
   title: 'Log In',
@@ -33,6 +34,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           </div>
         )}
       </main>
+      <SiteFooter />
     </>
   )
 }
