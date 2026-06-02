@@ -6,6 +6,20 @@ import { getVenueProfile } from '@/lib/venues/queries'
 import { RatingForm } from './rating-form'
 import { VenueContacts } from './venue-contacts'
 import { VenueStages } from './venue-stages'
+import { VenuePhotos, type VenuePhoto } from './venue-photos'
+
+function normalizePhotos(raw: unknown): VenuePhoto[] {
+  if (!Array.isArray(raw)) return []
+  return raw
+    .map((r) => {
+      if (typeof r === 'string') return { url: r, public_id: '' }
+      if (r && typeof r === 'object' && typeof (r as VenuePhoto).url === 'string') {
+        return r as VenuePhoto
+      }
+      return null
+    })
+    .filter((r): r is VenuePhoto => r !== null)
+}
 
 export const metadata: Metadata = { title: 'Venue Profile', robots: { index: false } }
 
@@ -84,6 +98,9 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
 
         {/* Multi-stage / spaces */}
         <VenueStages venueId={id} initial={stages} />
+
+        {/* Photos */}
+        <VenuePhotos venueId={id} initial={normalizePhotos(venue.photo_urls)} />
 
         {/* Rate this venue */}
         <div className="rounded-xl border border-border-default bg-surface-raised p-6">
