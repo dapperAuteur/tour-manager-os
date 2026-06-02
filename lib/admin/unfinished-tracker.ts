@@ -108,13 +108,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 20,
-    title: 'Phase 20 — Venue Network',
-    items: [
-      { key: 'p20-map', label: 'Map view with Leaflet' },
-    ],
-  },
-  {
     phase: 22,
     title: 'Phase 22 — Wellness',
     items: [

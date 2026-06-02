@@ -262,7 +262,7 @@ const phases: Phase[] = [
       { label: 'Multiple contacts per venue (booker, sound, hospitality, etc.)', done: true },
       { label: 'Smart advance pre-fill', done: true },
       { label: 'Venue photos (Cloudinary upload + lightbox)', done: true },
-      { label: 'Map view with Leaflet', done: false },
+      { label: 'Map view with Leaflet (OpenStreetMap tiles, click-to-open profile)', done: true },
     ],
   },
   {
