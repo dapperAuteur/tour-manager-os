@@ -286,7 +286,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Times-played counter and last-played date
 - ✅ Smart advance pre-fill from past venue data — `getSmartAdvanceDefaults()` looks up the most-recent SUBMITTED advance for shows whose `venue_name` matches (case-insensitive ILIKE) and copies forward stable fields (venue info, dressing rooms, security, hospitality, stage dimensions, PA, merch area) into any current-sheet blanks. Time-sensitive fields (load-in/soundcheck/doors/curfew/ticket price) are intentionally excluded. A green &ldquo;Pre-filled from {venue} on {date}&rdquo; banner tells the submitter what was carried over
 - 📋 Venue photos
-- 📋 Map view with Leaflet
+- ✅ Map view at `/venues/map` — Leaflet + OpenStreetMap tiles, every venue with lat/lng rendered as a marker, popup shows name/city/capacity/times-played + deep link to the venue profile, auto-fit bounds on load
 
 ## Phase 21: Multi-Act Touring ✅
 > Tour packages, festival mode, cross-act coordination.
