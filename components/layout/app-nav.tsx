@@ -53,6 +53,7 @@ const adminItems = [
   { href: '/admin/logs', label: 'Logs', icon: ScrollText },
   { href: '/admin/ai', label: 'AI', icon: Bot },
   { href: '/admin/academy', label: 'Academy', icon: GraduationCap },
+  { href: '/admin/stripe-connect', label: 'Stripe Connect', icon: CreditCard },
   { href: '/admin/unfinished', label: 'Unfinished', icon: ClipboardList },
 ]
 
