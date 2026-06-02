@@ -161,7 +161,9 @@ const phases: Phase[] = [
       { label: 'Activity logs', done: true },
       { label: 'Unfinished phase tracker (audit drift + planned items)', done: true },
       { label: 'Growth chart on admin dashboard (Recharts line)', done: true },
-      { label: 'Bar + pie chart variants for category breakdowns', done: false },
+      { label: 'Bar + pie chart variants for category breakdowns', done: true },
+      { label: 'User engagement metrics (DAU/WAU/MAU + stickiness + 30-day DAU trend)', done: true },
+      { label: 'Module adoption rates (per-module bar: org % + active members)', done: true },
     ],
   },
   {

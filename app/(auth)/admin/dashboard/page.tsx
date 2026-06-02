@@ -1,9 +1,15 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { isSuperAdmin } from '@/lib/auth/super-admin'
-import { getAdminDashboardStats, getAdminGrowthSeries } from '@/lib/admin/queries'
+import {
+  getAdminDashboardStats,
+  getAdminGrowthSeries,
+  getEngagementMetrics,
+  getModuleAdoption,
+} from '@/lib/admin/queries'
 import { GrowthChart } from './growth-chart'
-import { Users, Building2, Music, MapPin, DollarSign, ShoppingBag, MessageSquare, TrendingUp } from 'lucide-react'
+import { DauTrend, ModuleAdoptionBar, UserTypePie } from './engagement-charts'
+import { Users, Building2, Music, MapPin, DollarSign, ShoppingBag, MessageSquare, TrendingUp, Activity } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Admin Dashboard', robots: { index: false } }
 
@@ -28,10 +34,19 @@ export default async function AdminDashboardPage() {
     return <main id="main-content" className="mx-auto max-w-4xl px-4 py-8"><p className="text-text-secondary">Admin access required.</p></main>
   }
 
-  const [stats, growth] = await Promise.all([
+  const [stats, growth, engagement, adoption] = await Promise.all([
     getAdminDashboardStats(),
     getAdminGrowthSeries(30),
+    getEngagementMetrics(),
+    getModuleAdoption(),
   ])
+  const userTypePieData = Object.entries(stats.userTypeBreakdown)
+    .filter(([, count]) => count > 0)
+    .sort(([, a], [, b]) => b - a)
+    .map(([type, value]) => ({
+      name: type.replace(/_/g, ' '),
+      value,
+    }))
   const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
 
   return (
@@ -47,6 +62,31 @@ export default async function AdminDashboardPage() {
       {/* Growth chart */}
       <div className="mb-8">
         <GrowthChart data={growth} />
+      </div>
+
+      {/* Engagement */}
+      <h2 className="mb-4 text-lg font-semibold">Engagement</h2>
+      <div className="mb-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="DAU (24h)" value={engagement.dau} icon={Activity} color="text-warning-600 dark:text-warning-500" />
+        <StatCard label="WAU (7d)" value={engagement.wau} icon={Activity} color="text-primary-600 dark:text-primary-400" />
+        <StatCard label="MAU (30d)" value={engagement.mau} icon={Activity} color="text-success-600 dark:text-success-500" />
+        <StatCard label="Stickiness (DAU/MAU)" value={`${engagement.stickiness}%`} icon={TrendingUp} color={engagement.stickiness >= 20 ? 'text-success-600 dark:text-success-500' : 'text-text-muted'} />
+      </div>
+      <div className="mb-8 grid gap-4 lg:grid-cols-2">
+        <DauTrend data={engagement.dailySeries} />
+        <UserTypePie data={userTypePieData} />
+      </div>
+
+      {/* Module adoption */}
+      <h2 className="mb-4 text-lg font-semibold">Module adoption</h2>
+      <div className="mb-8">
+        <ModuleAdoptionBar
+          data={adoption.map((m) => ({
+            moduleName: m.moduleName,
+            adoptionPercent: m.adoptionPercent,
+            activeMembers: m.activeMembers,
+          }))}
+        />
       </div>
 
       {/* Platform stats */}
