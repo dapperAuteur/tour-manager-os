@@ -119,5 +119,49 @@ export async function submitAdvanceSheet(token: string, formData: FormData) {
   // successful even if venue creation fails.
   await createVenueFromAdvanceSheet(sheet.id).catch(() => {})
 
+  // Best-effort: fan out web-push to every member of the tour with
+  // 'advance_submitted' in their topics. Submission stays successful
+  // even if the push queue is empty or VAPID isn't configured.
+  await notifyAdvanceSubmitted(sheet.id).catch(() => {})
+
   return { success: true }
+}
+
+async function notifyAdvanceSubmitted(advanceSheetId: string): Promise<void> {
+  const { pushToUser } = await import('@/lib/push/server')
+  const { createAdminClient } = await import('@/lib/supabase/admin')
+  const admin = createAdminClient()
+
+  const { data: sheet } = await admin
+    .from('advance_sheets')
+    .select(
+      `id, show_id, shows:show_id(date, city, venue_name, tour_id,
+        tours:tour_id(org_id, name))`,
+    )
+    .eq('id', advanceSheetId)
+    .maybeSingle()
+  const show = sheet?.shows as unknown as
+    | {
+        date: string
+        city: string | null
+        venue_name: string | null
+        tour_id: string
+        tours: { org_id: string; name: string } | null
+      }
+    | null
+  const orgId = show?.tours?.org_id
+  if (!orgId || !show?.tour_id) return
+
+  const { data: members } = await admin
+    .from('org_members')
+    .select('user_id')
+    .eq('org_id', orgId)
+  for (const m of members || []) {
+    await pushToUser(m.user_id, {
+      title: `Advance sheet submitted — ${show.tours?.name ?? 'Tour'}`,
+      body: `${show.venue_name || show.city || 'Show'} on ${new Date(show.date).toLocaleDateString()}`,
+      url: `/tours/${show.tour_id}/shows/${sheet?.show_id}`,
+      topic: 'advance_submitted',
+    })
+  }
 }

@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout detection + Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -75,7 +75,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Travel info from previous show (distance, driver)
 - ✅ Next destination preview
 - ✅ Day off view when no show scheduled
-- 📋 Push notifications for schedule changes
+- ✅ Push notifications for schedule changes — VAPID-signed web push via `web-push`; per-device subscriptions in `push_subscriptions`; opt-in toggle + "Send test" on `/settings`; `public/sw.js` shows the notification and routes the click to the URL the server embedded. Advance-sheet submission now fans out a `advance_submitted` push to every org member who opted in
 - ✅ Weather integration (Open-Meteo, cached per show) — geocoding + 16-day forecast horizon, WMO-code-to-icon mapping, freshness rules (4h ≤ 14d out, 24h beyond), rendered as a `WeatherCard` near the show-day header
 
 ## Phase 6: Demo System ✅
