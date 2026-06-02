@@ -143,15 +143,23 @@ export default async function TicketHolderPage({ params, searchParams }: PagePro
               <div className="flex flex-col items-center">
                 <TicketQr payload={qrPayload} />
                 <p className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-                  Scan this code at the door — works without a network.
+                  Show this code at the door. It works without a network.
                 </p>
                 {token && (
-                  <a
-                    href={`/api/tickets/${ticket.id}/pkpass?token=${encodeURIComponent(token)}`}
-                    className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-gray-900 bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-gray-800 dark:border-gray-100 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
-                  >
-                    Add to Apple Wallet
-                  </a>
+                  <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                    <a
+                      href={`/api/tickets/${ticket.id}/pkpass?token=${encodeURIComponent(token)}`}
+                      className="inline-flex items-center gap-1.5 rounded-md border border-gray-900 bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-gray-800 dark:border-gray-100 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
+                    >
+                      Add to Apple Wallet
+                    </a>
+                    <a
+                      href={`/api/tickets/${ticket.id}/google-wallet?token=${encodeURIComponent(token)}`}
+                      className="inline-flex items-center gap-1.5 rounded-md border border-blue-700 bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-800"
+                    >
+                      Add to Google Wallet
+                    </a>
+                  </div>
                 )}
               </div>
             )}
