@@ -60,15 +60,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 12,
-    title: 'Phase 12 — Admin Dashboard',
-    items: [
-      { key: 'p12-engagement', label: 'User engagement metrics (DAU/WAU/MAU, session duration)' },
-      { key: 'p12-adoption', label: 'Module adoption rates' },
-      { key: 'p12-charts-more', label: 'Charts and graphs (Recharts bar + pie — line shipped)', detail: 'Recharts installed and a 30-day growth line is live on /admin/dashboard. Bar + pie variants for category breakdowns still TBD.' },
-    ],
-  },
-  {
     phase: 13,
     title: 'Phase 13 — Academy / LMS',
     items: [
