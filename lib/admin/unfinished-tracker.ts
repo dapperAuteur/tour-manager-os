@@ -39,17 +39,9 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 9,
-    title: 'Phase 9 — Fan Marketing & Community',
-    items: [
-      { key: 'p9-exclusive', label: 'Pre/post-show exclusive content' },
-    ],
-  },
-  {
     phase: 13,
     title: 'Phase 13 — Academy / LMS',
     items: [
-      { key: 'p13-cert', label: 'Certificates of completion (PDF)' },
       { key: 'p13-editor', label: 'Admin course/lesson editor' },
       { key: 'p13-video', label: 'Video lesson support' },
     ],
@@ -100,13 +92,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
       { key: 'p24-offline', label: 'Offline scanner cache (IndexedDB + reconciliation)' },
     ],
   },
-  {
-    phase: 24.5 as unknown as number,
-    title: 'Phase 24.5 — Fan Photo Sharing',
-    items: [
-      { key: 'p245-ai-mod', label: 'AI moderation pre-filter (image safety scan before queue)' },
-    ],
-  },
 ]
 
 export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
@@ -126,6 +111,9 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 4 — Expense cost splitting + settle tracking', branch: 'feature/expense-splits' },
   { label: 'Phase 8 — Tour-exclusive merch drops', branch: 'feature/merch-drops' },
   { label: 'Phase 24.5 — Realtime moderation queue (Supabase Realtime)', branch: 'feature/realtime-moderation' },
+  { label: 'Phase 9 — Pre/post-show exclusive content for subscribers', branch: 'feature/exclusive-content' },
+  { label: 'Phase 13 — Academy completion certificates (PDF)', branch: 'feature/academy-certificates' },
+  { label: 'Phase 24.5 — AI moderation pre-filter (vision-model NSFW/violence/off-topic)', branch: 'feature/ai-photo-moderation' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'

@@ -6,6 +6,11 @@ import {
   isCloudinaryConfigured,
   uploadImage,
 } from '@/lib/cloudinary/server'
+import {
+  moderatePhoto,
+  shortRejectionReason,
+  shouldAutoReject,
+} from '@/lib/ai/photo-moderation'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 const ALLOWED_TYPES = new Set([
@@ -133,13 +138,36 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: insertErr.message }, { status: 500 })
   }
 
+  // Fire the AI moderation pre-filter. Best-effort — the photo lands
+  // in the queue either way, but a high-confidence NSFW / violence
+  // verdict short-circuits straight to rejected so a human moderator
+  // doesn't have to look at it.
+  const verdict = await moderatePhoto(upload.secure_url)
+  let finalStatus = row.status
+  if (verdict) {
+    const autoReject = shouldAutoReject(verdict)
+    const patch: Record<string, unknown> = {
+      ai_moderation_verdict: verdict,
+      ai_moderated_at: new Date().toISOString(),
+    }
+    if (autoReject) {
+      patch.status = 'rejected'
+      patch.rejection_reason = shortRejectionReason(verdict)
+      patch.moderated_at = new Date().toISOString()
+      patch.ai_auto_rejected = true
+      finalStatus = 'rejected'
+    }
+    await admin.from('fan_photos').update(patch).eq('id', row.id)
+  }
+
   return NextResponse.json({
     id: row.id,
-    status: row.status,
+    status: finalStatus,
     submitted_at: row.submitted_at,
     public_id: upload.public_id,
     url: upload.secure_url,
     width: upload.width,
     height: upload.height,
+    ai_verdict: verdict ?? null,
   })
 }

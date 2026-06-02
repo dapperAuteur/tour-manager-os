@@ -22,7 +22,8 @@ export default async function FanPhotosModerationPage({ params }: PageProps) {
     .from('fan_photos')
     .select(
       `id, cloudinary_url, width, height, caption, status, submitted_at,
-       moderated_at, rejection_reason, user_id`,
+       moderated_at, rejection_reason, user_id,
+       ai_moderation_verdict, ai_auto_rejected`,
     )
     .eq('show_id', showId)
     .order('submitted_at', { ascending: true })

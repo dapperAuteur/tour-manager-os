@@ -123,7 +123,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Email sending integration (Mailgun)
 - ✅ CSV subscriber import
 - ✅ Public event pages per show at `/shows/[id]` — fan-facing landing combining tour + venue header, doors/show/curfew times from the advance sheet, ticket-availability summary with a Buy Tickets CTA (deep-link to `/shows/[id]/tickets`), recent-fan-photo grid (deep-link to `/shows/[id]/photos`), setlist callout when one exists. Sharable URL. OG metadata for social posts. Auth show page exposes a &ldquo;Public event page&rdquo; deep link button
-- 📋 Pre/post-show exclusive content
+- ✅ Pre/post-show exclusive content — `show_exclusive_content` table holds per-show pieces with a `phase` (pre/post) and `unlock_offset_hours` relative to show-day midnight. Admin UI at `/tours/[id]/shows/[showId]/exclusive`; public event page renders a "Subscribers only" section where fans drop the email they signed up with and `/api/shows/[id]/exclusive` returns whatever pieces are inside their unlock window if the email is on any of the org&rsquo;s active subscriber lists
 
 ## Phase 10: Family Tour Hub ✅
 > Polls, practice scheduling, shared albums, group collaboration.
@@ -177,7 +177,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Quiz system with multiple choice, scoring, and explanations
 - ✅ Lesson navigation (prev/next within course)
 - ✅ 3 seeded courses (8 lessons, 2 quizzes)
-- 📋 Certificates of completion (PDF)
+- ✅ Certificates of completion (PDF) — `/api/academy/courses/[slug]/certificate` generates a one-page A4-landscape PDF via `pdf-lib` (display name + course title + completion date + verification ID), gated by the user&rsquo;s `user_course_progress` row being `completed`. Course page shows a green &ldquo;Course complete&rdquo; banner with a download button once unlocked
 - 📋 Admin course/lesson editor
 - 📋 Video lesson support
 - ✅ Admin education tool (5-lesson course: Stripe, email, Supabase, Vercel, codebase for presentations)
@@ -349,7 +349,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ `fan-photos` module registered in featurePages
 - ✅ Post-publish abuse reports UI at `/admin/photo-reports` — open-first queue, photo thumbnail + reason + reporter inline, &ldquo;N open reports&rdquo; warning chip clusters repeat offenders, two resolution paths: Dismiss (kept up) or Take down (flips photo status to `rejected` and auto-resolves any sibling reports on the same image). Resolution notes required for takedown. Filter toggle between open-only and all
 - ✅ Realtime moderation queue — `fan_photos` published to Supabase Realtime; the per-show moderation page subscribes to inserts/updates and silently refreshes the queue + counts within ~600 ms of a new submission. A pulsing &ldquo;connected&rdquo; badge plus a &ldquo;N new since you opened this&rdquo; chip make the live state obvious to moderators on duty
-- 📋 AI-moderation pre-filter (image safety scan before queue)
+- ✅ AI-moderation pre-filter — every fan-photo upload runs through `moderatePhoto()` against the configured vision model right after the Cloudinary write. High-confidence NSFW or violence verdicts flip the row to `rejected` automatically with `ai_auto_rejected=true`; everything else lands in the human queue with the verdict attached so moderators can see what the model flagged before they review. New columns `ai_moderation_verdict`, `ai_moderated_at`, `ai_auto_rejected` on `fan_photos`
 
 ## Roadmap Completions ✅
 > Quick wins and new features from user feedback.

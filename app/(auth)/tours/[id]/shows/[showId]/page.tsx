@@ -115,6 +115,12 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
             >
               Rider compliance
             </Link>
+            <Link
+              href={`/tours/${tourId}/shows/${showId}/exclusive`}
+              className="inline-flex items-center gap-1 rounded-lg border border-border-default px-3 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
+            >
+              Exclusive content
+            </Link>
             {advanceLink && (
               <Link
                 href={advanceLink}

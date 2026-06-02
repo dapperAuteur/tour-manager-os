@@ -7,6 +7,14 @@ import { createClient as createBrowserSupabase } from '@/lib/supabase/client'
 
 type ModStatus = 'pending' | 'approved' | 'rejected' | 'removed'
 
+interface AiVerdict {
+  nsfw_likely?: boolean
+  violence_likely?: boolean
+  off_topic_likely?: boolean
+  confidence?: 'low' | 'medium' | 'high'
+  reason?: string
+}
+
 interface Photo {
   id: string
   cloudinary_url: string
@@ -18,6 +26,8 @@ interface Photo {
   moderated_at: string | null
   rejection_reason: string | null
   user_id: string | null
+  ai_moderation_verdict?: AiVerdict | null
+  ai_auto_rejected?: boolean | null
 }
 
 interface ModerationQueueProps {
@@ -239,6 +249,28 @@ export function ModerationQueue({
                     <p className="mt-2 text-xs italic text-text-muted">
                       Reason: {p.rejection_reason}
                     </p>
+                  )}
+                  {p.ai_moderation_verdict && (
+                    <div className="mt-2 rounded border border-warning-500/30 bg-warning-500/5 p-2 text-[10px] text-text-secondary">
+                      <p className="font-semibold uppercase tracking-wide text-warning-700 dark:text-warning-300">
+                        AI verdict ({p.ai_moderation_verdict.confidence || 'unknown'})
+                        {p.ai_auto_rejected ? ' · auto-rejected' : ''}
+                      </p>
+                      <p className="mt-0.5 flex flex-wrap gap-1">
+                        {p.ai_moderation_verdict.nsfw_likely && (
+                          <span className="rounded-full bg-error-500/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase text-error-700 dark:text-error-300">NSFW</span>
+                        )}
+                        {p.ai_moderation_verdict.violence_likely && (
+                          <span className="rounded-full bg-error-500/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase text-error-700 dark:text-error-300">Violence</span>
+                        )}
+                        {p.ai_moderation_verdict.off_topic_likely && (
+                          <span className="rounded-full bg-warning-500/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase text-warning-700 dark:text-warning-300">Off-topic</span>
+                        )}
+                      </p>
+                      {p.ai_moderation_verdict.reason && (
+                        <p className="mt-1 italic">{p.ai_moderation_verdict.reason}</p>
+                      )}
+                    </div>
                   )}
                   <div className="mt-3 flex flex-wrap gap-2">
                     {p.status === 'pending' && (
