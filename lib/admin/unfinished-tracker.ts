@@ -39,13 +39,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 9,
-    title: 'Phase 9 — Fan Marketing & Community',
-    items: [
-      { key: 'p9-exclusive', label: 'Pre/post-show exclusive content' },
-    ],
-  },
-  {
     phase: 13,
     title: 'Phase 13 — Academy / LMS',
     items: [
@@ -126,6 +119,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 4 — Expense cost splitting + settle tracking', branch: 'feature/expense-splits' },
   { label: 'Phase 8 — Tour-exclusive merch drops', branch: 'feature/merch-drops' },
   { label: 'Phase 24.5 — Realtime moderation queue (Supabase Realtime)', branch: 'feature/realtime-moderation' },
+  { label: 'Phase 9 — Pre/post-show exclusive content for subscribers', branch: 'feature/exclusive-content' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'

@@ -126,6 +126,7 @@ const phases: Phase[] = [
       { label: 'Threaded replies', done: true },
       { label: 'Pin / lock post moderation', done: true },
       { label: 'Email sending (Mailgun)', done: true },
+      { label: 'Pre/post-show exclusive content for subscribers (email-gated unlock window)', done: true },
     ],
   },
   {

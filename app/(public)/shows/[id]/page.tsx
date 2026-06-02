@@ -17,6 +17,7 @@ import {
   getPublicShow,
   listRecentPublishedFanPhotos,
 } from '@/lib/shows/public'
+import { ExclusiveUnlock } from './exclusive-unlock'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -153,6 +154,19 @@ export default async function PublicShowPage({ params }: PageProps) {
             )}
           </div>
         </section>
+
+        {/* Exclusive content for subscribers */}
+        {show.has_exclusive_content && (
+          <section
+            aria-label="Exclusive content"
+            className="mb-8 rounded-xl border border-primary-500/30 bg-primary-500/5 p-5"
+          >
+            <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary-700 dark:text-primary-300">
+              Exclusive for subscribers
+            </h2>
+            <ExclusiveUnlock showId={id} />
+          </section>
+        )}
 
         {/* Fan photos */}
         {show.fan_photo_count > 0 && (
