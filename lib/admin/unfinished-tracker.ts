@@ -80,6 +80,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 4 — Receipt image viewing on expense detail (drift closeout)', branch: 'feature/receipt-image-viewer' },
   { label: 'Phase 24.1 — Stripe Connect Transfer execution at ticket sale (closes splits flow)', branch: 'feature/stripe-connect-execute' },
   { label: 'Phase 24 — Apple Wallet .pkpass ticket delivery', branch: 'feature/apple-wallet-pkpass' },
+  { label: 'Phase 4 — One-page tour settlement PDF report', branch: 'feature/tour-settlement-pdf' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

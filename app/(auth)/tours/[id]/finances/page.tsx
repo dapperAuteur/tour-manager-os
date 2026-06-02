@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { DollarSign, TrendingUp, TrendingDown, Plus, Receipt, Split } from 'lucide-react'
+import { DollarSign, TrendingUp, TrendingDown, Plus, Receipt, Split, FileText } from 'lucide-react'
 import { getTourFinances } from '@/lib/finances/queries'
 import { ExportCsvButton } from './export-csv-button'
 import { AccountingExportButton } from './accounting-export-button'
@@ -60,6 +60,13 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
           </Link>
           <ExportCsvButton expenses={data.expenses} />
           <AccountingExportButton tourId={tourId} />
+          <a
+            href={`/api/tours/${tourId}/settlement-pdf`}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border-default px-3 py-2 text-sm font-medium hover:bg-surface-alt"
+            aria-label="Download tour settlement PDF"
+          >
+            <FileText className="size-4" aria-hidden /> Settlement PDF
+          </a>
           <Link
             href={`/tours/${tourId}/finances/expenses/new`}
             className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-surface"
