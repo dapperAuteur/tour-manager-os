@@ -260,7 +260,9 @@ const phases: Phase[] = [
       { label: 'Auto-create from advance sheets', done: true },
       { label: 'Venue notes integration', done: true },
       { label: 'Multiple contacts per venue (booker, sound, hospitality, etc.)', done: true },
-      { label: 'Smart advance pre-fill', done: false },
+      { label: 'Smart advance pre-fill', done: true },
+      { label: 'Venue photos (Cloudinary upload + lightbox)', done: true },
+      { label: 'Map view with Leaflet', done: false },
     ],
   },
   {

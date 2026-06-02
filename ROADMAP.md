@@ -285,7 +285,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Auto-create venue profiles from advance sheet data — wired into `submitAdvanceSheet` (best-effort, admin-client)
 - ✅ Times-played counter and last-played date
 - ✅ Smart advance pre-fill from past venue data — `getSmartAdvanceDefaults()` looks up the most-recent SUBMITTED advance for shows whose `venue_name` matches (case-insensitive ILIKE) and copies forward stable fields (venue info, dressing rooms, security, hospitality, stage dimensions, PA, merch area) into any current-sheet blanks. Time-sensitive fields (load-in/soundcheck/doors/curfew/ticket price) are intentionally excluded. A green &ldquo;Pre-filled from {venue} on {date}&rdquo; banner tells the submitter what was carried over
-- 📋 Venue photos
+- ✅ Venue photos — Cloudinary-backed upload with lightbox viewer on `/venues/[id]`, up to 24 per venue (`app/api/venues/[id]/photos/route.ts`, `venue-photos.tsx`)
 - 📋 Map view with Leaflet
 
 ## Phase 21: Multi-Act Touring ✅
