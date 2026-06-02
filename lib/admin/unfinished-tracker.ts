@@ -42,7 +42,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 13,
     title: 'Phase 13 — Academy / LMS',
     items: [
-      { key: 'p13-editor', label: 'Admin course/lesson editor' },
       { key: 'p13-video', label: 'Video lesson support' },
     ],
   },
@@ -114,6 +113,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 9 — Pre/post-show exclusive content for subscribers', branch: 'feature/exclusive-content' },
   { label: 'Phase 13 — Academy completion certificates (PDF)', branch: 'feature/academy-certificates' },
   { label: 'Phase 24.5 — AI moderation pre-filter (vision-model NSFW/violence/off-topic)', branch: 'feature/ai-photo-moderation' },
+  { label: 'Phase 13 — Admin course/lesson editor', branch: 'feature/academy-editor' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
