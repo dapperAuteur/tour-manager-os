@@ -67,6 +67,7 @@ const phases: Phase[] = [
       { label: 'AI receipt scanning (vision-model expense pre-fill)', done: true },
       { label: 'Receipt image viewing on expense detail (lightbox + PDF fallback + table icon)', done: true },
       { label: 'Expense cost splitting between team members (even or custom shares, settle tracking)', done: true },
+      { label: 'One-page tour settlement PDF (revenue, expenses, net, splits, Stripe transfers)', done: true },
     ],
   },
   {
@@ -232,7 +233,7 @@ const phases: Phase[] = [
       { label: 'Click tracking', done: true },
       { label: 'Campaign analytics', done: true },
       { label: 'Webhook handler (bounces/complaints)', done: true },
-      { label: 'OAuth email (Gmail/Outlook)', done: false },
+      { label: 'OAuth-connected Gmail send-as (campaigns send from your address; Outlook follows)', done: true },
     ],
   },
   {
@@ -315,6 +316,7 @@ const phases: Phase[] = [
       { label: 'Refund handling via Stripe webhook', done: true },
       { label: 'Stripe Connect split payments (Express onboarding + per-tour basis-point splits + post-sale Transfer fan-out)', done: true },
       { label: 'Apple Wallet .pkpass ticket delivery (eventTicket pass + Add to Apple Wallet button)', done: true },
+      { label: 'Google Wallet ticket delivery (signed Save-to-Wallet JWT + Add to Google Wallet button)', done: true },
       { label: 'Offline scanner cache + reconciliation (IndexedDB manifest + queue, auto-sync on reconnect)', done: true },
     ],
   },

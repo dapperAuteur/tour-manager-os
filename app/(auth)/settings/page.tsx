@@ -6,16 +6,24 @@ import { getUserProfile } from '@/lib/settings/queries'
 import { ProfileForm } from './profile-form'
 import { PreferencesForm } from './preferences-form'
 import { PushNotifications } from './push-notifications'
+import { GmailConnection } from './gmail-connection'
+import { getGmailConnection, isGmailOauthConfigured } from '@/lib/email/gmail'
 
 export const metadata: Metadata = {
   title: 'Settings',
 }
 
-export default async function SettingsPage() {
+export default async function SettingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ gmail_oauth?: string }>
+}) {
   const data = await getUserProfile()
   if (!data) redirect('/login')
 
   const { user, profile } = data
+  const { gmail_oauth: gmailFlash } = await searchParams
+  const gmailConn = await getGmailConnection(user.id)
 
   return (
     <main id="main-content" className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
@@ -35,6 +43,19 @@ export default async function SettingsPage() {
             <h2 id="preferences-heading" className="mb-4 text-lg font-semibold">Preferences</h2>
             <div className="rounded-xl border border-border-default bg-surface-raised p-6">
               <PreferencesForm profile={profile} />
+            </div>
+          </section>
+
+          {/* Email sender — Gmail OAuth */}
+          <section aria-labelledby="gmail-heading">
+            <h2 id="gmail-heading" className="mb-4 text-lg font-semibold">Email sender (Gmail)</h2>
+            <div className="rounded-xl border border-border-default bg-surface-raised p-6">
+              <GmailConnection
+                connected={!!gmailConn}
+                emailAddress={gmailConn?.email_address ?? null}
+                configured={isGmailOauthConfigured()}
+                flash={gmailFlash ?? null}
+              />
             </div>
           </section>
 

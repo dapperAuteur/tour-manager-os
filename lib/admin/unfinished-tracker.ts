@@ -35,8 +35,7 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 17,
     title: 'Phase 17 — Email Integration',
     items: [
-      { key: 'p17-oauth', label: 'OAuth-connected email (Gmail/Outlook) for sending from user\'s own address' },
-      { key: 'p17-inbox', label: 'Emails appear in user\'s regular inbox' },
+      { key: 'p17-outlook', label: 'OAuth-connected Outlook (Gmail shipped — Outlook follows same pattern)' },
     ],
   },
   {
@@ -80,6 +79,9 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 4 — Receipt image viewing on expense detail (drift closeout)', branch: 'feature/receipt-image-viewer' },
   { label: 'Phase 24.1 — Stripe Connect Transfer execution at ticket sale (closes splits flow)', branch: 'feature/stripe-connect-execute' },
   { label: 'Phase 24 — Apple Wallet .pkpass ticket delivery', branch: 'feature/apple-wallet-pkpass' },
+  { label: 'Phase 17 — OAuth Gmail send-as for campaigns (Sent folder + inbox replies)', branch: 'feature/oauth-gmail-send' },
+  { label: 'Phase 24 — Google Wallet ticket delivery (signed JWT save link)', branch: 'feature/google-wallet-pass' },
+  { label: 'Phase 4 — One-page tour settlement PDF report', branch: 'feature/tour-settlement-pdf' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

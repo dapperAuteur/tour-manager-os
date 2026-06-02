@@ -8,12 +8,12 @@ Tour Manager OS digitizes the entire touring workflow:
 
 - **Digital Advance Sheets** — Smart web forms that venues fill out online. No more emailing Excel files and chasing responses. Data flows directly into auto-generated daily itineraries.
 - **Auto-Generated Itineraries** — Show day schedules, venue info, hotel details, transportation, and contacts — all assembled automatically from advance sheet data.
-- **Tour Finances** — Real-time P&L per show and per tour. Per-member financial views, expense tracking, and tax-friendly CSV exports.
+- **Tour Finances** — Real-time P&L per show and per tour. Per-member financial views, expense tracking, expense cost splitting with settle tracking, tax-friendly CSV exports, QuickBooks/Xero accounting export, and one-page settlement PDF (revenue, expenses, net, splits, Stripe transfers).
 - **Show Day Companion** — Mobile-first daily view for each member. Open your phone, see your whole day: soundcheck at 3, doors at 7, you're on at 9:15.
-- **Ticketing System** — Public buy page with Stripe Checkout, HMAC-signed QR codes (anti-counterfeit), web-based door scanner with atomic single-use enforcement, refund handling, and a manager dashboard for sales/admission stats.
+- **Ticketing System** — Public buy page with Stripe Checkout, HMAC-signed QR codes (anti-counterfeit), web-based door scanner with atomic single-use enforcement, offline scanner cache, refund handling, Apple Wallet and Google Wallet pass delivery, Stripe Connect transfer payouts, and a manager dashboard for sales/admission stats.
 - **Fan Photo Sharing** — Ticket-holders submit show photos to a pre-moderated public wall. Each approved photo gets its own sharable page with Open Graph + Twitter Card metadata.
 - **Merch Management** — Inventory tracking, per-show sales, and merch P&L. Online store with Stripe payments planned.
-- **Fan Engagement** — Marketing email campaigns via Mailgun (with open/click tracking, bounce/complaint webhooks), community forums with pin/lock moderation, and per-show event pages.
+- **Fan Engagement** — Marketing email campaigns via Mailgun, or via the band's own Gmail through OAuth send-as (campaigns land in the band's Sent folder, replies route to the band's inbox). Open/click tracking, bounce/complaint webhooks, community forums with pin/lock moderation, and per-show event pages.
 - **Family Collaboration** — Polls, practice scheduling, shared albums, setlist collaboration.
 - **Document Hub** — Contracts, riders, W-9s, venue maps — organized per tour and show.
 - **Venue Network** — Crowd-sourced public venue directory with ratings, fuzzy search, and auto-creation from submitted advance sheets.
@@ -45,7 +45,9 @@ Tour Manager OS digitizes the entire touring workflow:
 | Media | Cloudinary (server-signed uploads) |
 | Payments | Stripe (Checkout sessions + webhooks for tickets and subscriptions) |
 | QR Codes | qrcode.react (display) + @zxing/browser (scanner) |
-| Email | Mailgun (direct fetch, region-aware, HMAC webhook verification) |
+| Email | Mailgun (platform fallback) + Gmail API send-as (per-user OAuth) |
+| Wallet passes | Apple Wallet (passkit-generator + PKPASS_* certs) + Google Wallet (Save-to-Wallet JWT, RS256) |
+| PDF | pdf-lib (tour settlement report, completion certificates) |
 | AI | Vercel AI Gateway via AI SDK v6 (Mistral / Cerebras / Together / OpenRouter) |
 | Vector | pgvector on Supabase (HNSW cosine, 1024-dim Mistral embeddings) |
 | AI observability | LangSmith (traceable wrapper on embed / chat / vision calls) |
