@@ -32,13 +32,6 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 5,
-    title: 'Phase 5 — Show Day',
-    items: [
-      { key: 'p5-push', label: 'Push notifications for schedule changes' },
-    ],
-  },
-  {
     phase: 14,
     title: 'Phase 14 — Musician Tax',
     items: [
@@ -108,9 +101,10 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 13 — Admin course/lesson editor', branch: 'feature/academy-editor' },
   { label: 'Phase 13 — Video lesson support (YouTube/Vimeo/Loom/direct mp4 embed)', branch: 'feature/academy-video' },
   { label: 'Phase 19 — Runtime brand theme injection (org primary color → CSS custom properties)', branch: 'feature/white-label-theme' },
+  { label: 'Phase 5 — Web push notifications (VAPID + service worker + advance-submitted trigger)', branch: 'feature/push-notifications' },
 ]
 
-export const LAST_SYNCED_DATE = '2026-06-01'
+export const LAST_SYNCED_DATE = '2026-06-02'
 
 export const TOTAL_PLANNED = PLANNED_SECTIONS.reduce(
   (n, s) => n + s.items.length,

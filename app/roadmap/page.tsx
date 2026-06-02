@@ -78,7 +78,7 @@ const phases: Phase[] = [
       { label: 'Day navigation', done: true },
       { label: 'Timezone-aware times', done: true },
       { label: 'Weather forecast (Open-Meteo, cached)', done: true },
-      { label: 'Push notifications', done: false },
+      { label: 'Push notifications (web push via VAPID + service worker + advance-sheet trigger)', done: true },
     ],
   },
   {

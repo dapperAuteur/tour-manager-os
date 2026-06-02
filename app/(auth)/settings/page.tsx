@@ -5,6 +5,7 @@ import { ArrowRight, ClipboardCheck, Package, Users } from 'lucide-react'
 import { getUserProfile } from '@/lib/settings/queries'
 import { ProfileForm } from './profile-form'
 import { PreferencesForm } from './preferences-form'
+import { PushNotifications } from './push-notifications'
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -34,6 +35,16 @@ export default async function SettingsPage() {
             <h2 id="preferences-heading" className="mb-4 text-lg font-semibold">Preferences</h2>
             <div className="rounded-xl border border-border-default bg-surface-raised p-6">
               <PreferencesForm profile={profile} />
+            </div>
+          </section>
+
+          {/* Push notifications */}
+          <section aria-labelledby="push-heading">
+            <h2 id="push-heading" className="mb-4 text-lg font-semibold">Push notifications</h2>
+            <div className="rounded-xl border border-border-default bg-surface-raised p-6">
+              <PushNotifications
+                vapidPublicKey={process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || null}
+              />
             </div>
           </section>
 
