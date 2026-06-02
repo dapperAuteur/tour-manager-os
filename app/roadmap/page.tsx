@@ -204,7 +204,7 @@ const phases: Phase[] = [
       { label: 'Stage plots', done: true },
       { label: 'Input lists / patch sheets', done: true },
       { label: 'Searchable venue notes', done: true },
-      { label: 'Drag-and-drop stage plot editor', done: false },
+      { label: 'Drag-and-drop stage plot editor (9-piece palette + percent-of-stage coords)', done: true },
     ],
   },
   {

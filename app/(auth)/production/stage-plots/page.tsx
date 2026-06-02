@@ -35,8 +35,13 @@ export default async function StagePlotsPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           {plots.map((plot) => {
             const showInfo = plot.shows as { date: string; city: string; venue_name: string | null } | null
+            const pieceCount = Array.isArray(plot.elements) ? (plot.elements as unknown[]).length : 0
             return (
-              <div key={plot.id} className="rounded-xl border border-border-default bg-surface-raised p-5">
+              <Link
+                key={plot.id}
+                href={`/production/stage-plots/${plot.id}`}
+                className="rounded-xl border border-border-default bg-surface-raised p-5 transition hover:border-primary-500/40"
+              >
                 <div className="mb-2 flex items-start justify-between">
                   <h2 className="font-semibold">{plot.name}</h2>
                   {plot.is_default && <span className="rounded-full bg-primary-500/20 px-2 py-0.5 text-xs font-medium text-primary-600 dark:text-primary-400">Default</span>}
@@ -46,9 +51,10 @@ export default async function StagePlotsPage() {
                   {plot.stage_width && plot.stage_depth && (
                     <span>{plot.stage_width} x {plot.stage_depth} ft</span>
                   )}
+                  <span>{pieceCount} piece{pieceCount === 1 ? '' : 's'}</span>
                   {showInfo && <span>{showInfo.venue_name || showInfo.city}</span>}
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>

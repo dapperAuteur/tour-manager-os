@@ -32,13 +32,6 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 15,
-    title: 'Phase 15 — Production Bible',
-    items: [
-      { key: 'p15-stage-plot', label: 'Drag-and-drop stage plot builder' },
-    ],
-  },
-  {
     phase: 17,
     title: 'Phase 17 — Email Integration',
     items: [
@@ -96,6 +89,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 5 — Web push notifications (VAPID + service worker + advance-submitted trigger)', branch: 'feature/push-notifications' },
   { label: 'Phase 24 — Offline ticket scanner cache (manifest + IndexedDB queue + sync)', branch: 'feature/offline-scanner' },
   { label: 'Phase 14 — QuickBooks / Xero accounting CSV export', branch: 'feature/quickbooks-xero-export' },
+  { label: 'Phase 15 — Drag-and-drop stage plot builder', branch: 'feature/stage-plot-builder' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'
