@@ -145,6 +145,14 @@ export default async function TicketHolderPage({ params, searchParams }: PagePro
                 <p className="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
                   Scan this code at the door — works without a network.
                 </p>
+                {token && (
+                  <a
+                    href={`/api/tickets/${ticket.id}/pkpass?token=${encodeURIComponent(token)}`}
+                    className="mt-3 inline-flex items-center gap-1.5 rounded-md border border-gray-900 bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-gray-800 dark:border-gray-100 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
+                  >
+                    Add to Apple Wallet
+                  </a>
+                )}
               </div>
             )}
 

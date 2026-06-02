@@ -51,7 +51,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     title: 'Phase 24 — Ticketing',
     items: [
       { key: 'p24-connect-execute', label: 'Stripe Connect: wire Transfer execution at payout (config UI shipped)' },
-      { key: 'p24-wallet', label: 'Apple/Google Wallet .pkpass ticket delivery' },
     ],
   },
 ]
@@ -85,6 +84,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 15 — Drag-and-drop stage plot builder', branch: 'feature/stage-plot-builder' },
   { label: 'Phase 19 — Multi-tenant domain routing middleware', branch: 'feature/multi-tenant-routing' },
   { label: 'Phase 24 — Stripe Connect split payments scaffolding (account + tour revenue splits config)', branch: 'feature/stripe-connect-splits' },
+  { label: 'Phase 24 — Apple Wallet .pkpass ticket delivery', branch: 'feature/apple-wallet-pkpass' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'
