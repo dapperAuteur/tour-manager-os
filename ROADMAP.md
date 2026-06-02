@@ -61,7 +61,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ CSV export for expenses
 - ✅ Settlements and member payouts tables
 - ✅ Receipt capture with AI scanning — upload via `/api/expenses/extract-receipt`; Cloudinary stores the image; vision model (default `openrouter/anthropic/claude-3.5-sonnet`, swap via `vision_model` on `/admin/ai`) extracts amount/vendor/date/category/description/tax-deductible via Zod-validated `generateObject`; user reviews + edits before saving; `receipt_url` persists on the expense row
-- 📋 Receipt image viewing linked to transactions
+- ✅ Receipt image viewing linked to transactions — expense detail page renders the receipt image (or PDF link) attached to each `expenses.receipt_url`, with a click-to-open lightbox and Cloudinary thumbnail/full transforms. Tour finances list flags rows with a small Receipt icon so a glance at the table tells you which expenses are scanned + filed
 - ✅ Expense cost splitting between team members — `/tours/[id]/finances/expenses/[expenseId]` lets you split a paid expense into per-member shares (even-split or custom amounts) and `/me/finances` surfaces &ldquo;you owe&rdquo; / &ldquo;people owe you&rdquo; with a settle-via-Venmo/Zelle/etc. dropdown. New `expense_splits` table, RLS scoped to creator + share owner
 
 ## Phase 5: Show Day App ✅
