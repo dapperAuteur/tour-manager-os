@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { getLesson } from '@/lib/academy/queries'
 import { LessonContent } from './lesson-content'
+import { LessonVideo } from './lesson-video'
 import { QuizSection } from './quiz-section'
 
 export const metadata: Metadata = { title: 'Lesson', robots: { index: false } }
@@ -30,6 +31,7 @@ export default async function LessonPage({ params }: { params: Promise<{ courseS
           Lesson {currentIdx + 1} of {allLessons.length}
         </p>
         <h1 className="mb-6 text-2xl font-bold">{lesson.title}</h1>
+        {lesson.video_url && <LessonVideo url={lesson.video_url} />}
         <LessonContent content={lesson.content} />
       </article>
 

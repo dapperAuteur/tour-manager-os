@@ -179,6 +179,7 @@ const phases: Phase[] = [
       { label: 'Quiz system with scoring', done: true },
       { label: '4 courses seeded (13 lessons, including admin education for stakeholder presentations)', done: true },
       { label: 'Certificates of completion (PDF, pdf-lib, verification ID footer)', done: true },
+      { label: 'Video lesson support (YouTube / Vimeo / Loom / direct mp4 embed)', done: true },
     ],
   },
   {
