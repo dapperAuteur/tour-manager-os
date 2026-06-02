@@ -3,9 +3,18 @@
 import { useState } from 'react'
 import { createProduct } from '@/lib/merch/actions'
 
-export function AddProductForm({ orgId }: { orgId: string }) {
+interface TourOption { id: string; name: string }
+
+export function AddProductForm({
+  orgId,
+  tours = [],
+}: {
+  orgId: string
+  tours?: TourOption[]
+}) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isExclusive, setIsExclusive] = useState(false)
 
   async function handleSubmit(formData: FormData) {
     setError('')
@@ -92,6 +101,77 @@ export function AddProductForm({ orgId }: { orgId: string }) {
             <input id="height_in" name="height_in" type="number" step="0.1" min="0" className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm" placeholder="1" />
           </div>
         </div>
+      </fieldset>
+
+      <fieldset className="rounded-lg border border-border-default p-4">
+        <legend className="px-1 text-sm font-medium">Tour-exclusive drop</legend>
+        <label className="flex items-start gap-2 text-sm">
+          <input
+            type="checkbox"
+            name="is_exclusive"
+            checked={isExclusive}
+            onChange={(e) => setIsExclusive(e.target.checked)}
+            className="mt-0.5 rounded accent-primary-600"
+          />
+          <span>
+            Limit visibility to a specific tour or date window. Off = the
+            product is always available in your public store.
+          </span>
+        </label>
+        {isExclusive && (
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div className="sm:col-span-3">
+              <label htmlFor="drop_tour_id" className="mb-1 block text-xs font-medium">
+                Tied to tour
+              </label>
+              <select
+                id="drop_tour_id"
+                name="drop_tour_id"
+                className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm"
+                disabled={tours.length === 0}
+              >
+                <option value="">— Not tied to a tour —</option>
+                {tours.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+              {tours.length === 0 && (
+                <p className="mt-1 text-xs text-text-muted">
+                  No tours yet — drop will show whenever the window is active.
+                </p>
+              )}
+            </div>
+            <div>
+              <label htmlFor="drop_starts_at" className="mb-1 block text-xs font-medium">
+                Visible from
+              </label>
+              <input
+                id="drop_starts_at"
+                name="drop_starts_at"
+                type="datetime-local"
+                className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="drop_ends_at" className="mb-1 block text-xs font-medium">
+                Visible until
+              </label>
+              <input
+                id="drop_ends_at"
+                name="drop_ends_at"
+                type="datetime-local"
+                className="w-full rounded-lg border border-border-default bg-surface px-3 py-2 text-sm"
+              />
+            </div>
+            <p className="text-xs text-text-muted sm:col-span-3">
+              Leave both dates blank for an &ldquo;exclusive while the tour
+              runs&rdquo; product. The storefront badges drops as{' '}
+              <strong>Tour exclusive</strong>.
+            </p>
+          </div>
+        )}
       </fieldset>
 
       <button type="submit" disabled={loading} className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-surface">
