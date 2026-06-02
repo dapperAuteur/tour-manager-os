@@ -65,6 +65,7 @@ const phases: Phase[] = [
       { label: 'Per-member finance view', done: true },
       { label: 'CSV export', done: true },
       { label: 'AI receipt scanning (vision-model expense pre-fill)', done: true },
+      { label: 'Expense cost splitting between team members (even or custom shares, settle tracking)', done: true },
     ],
   },
   {
@@ -110,7 +111,8 @@ const phases: Phase[] = [
       { label: 'Inventory tracking per tour', done: true },
       { label: 'Per-show sales recording', done: true },
       { label: 'Merch P&L dashboard', done: true },
-      { label: 'Online store (Stripe)', done: false },
+      { label: 'Online store (Stripe Elements + Shippo)', done: true },
+      { label: 'Tour-exclusive merch drops (badge + auto-hide window)', done: true },
     ],
   },
   {
@@ -326,7 +328,7 @@ const phases: Phase[] = [
       { label: 'Fan dashboard with status badges + rejection reasons', done: true },
       { label: 'Per-photo share page with OG + Twitter Card metadata', done: true },
       { label: 'Cloudinary destroy on reject / remove (no hot-linking)', done: true },
-      { label: 'Realtime moderation queue (Supabase channel)', done: false },
+      { label: 'Realtime moderation queue (Supabase Realtime + live new-photo badge)', done: true },
       { label: 'Post-publish abuse reports UI', done: false },
       { label: 'AI-moderation pre-filter', done: false },
     ],

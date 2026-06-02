@@ -125,7 +125,21 @@ export default async function StorePage({ params }: PageProps) {
                           </div>
                         )}
                       </div>
-                      <p className="font-semibold">{p.name}</p>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <p className="font-semibold">{p.name}</p>
+                        {p.is_exclusive && (
+                          <span className="rounded-full bg-warning-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-warning-700 dark:text-warning-300">
+                            Tour exclusive
+                          </span>
+                        )}
+                      </div>
+                      {p.is_exclusive && p.drop_tour_name && (
+                        <p className="mt-1 text-xs text-warning-700 dark:text-warning-400">
+                          {p.drop_ends_at
+                            ? `Only until ${new Date(p.drop_ends_at).toLocaleDateString()}`
+                            : `Only during the ${p.drop_tour_name} run`}
+                        </p>
+                      )}
                       {p.description && (
                         <p className="mt-1 text-xs text-text-secondary">
                           {p.description}

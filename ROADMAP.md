@@ -62,7 +62,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Settlements and member payouts tables
 - ✅ Receipt capture with AI scanning — upload via `/api/expenses/extract-receipt`; Cloudinary stores the image; vision model (default `openrouter/anthropic/claude-3.5-sonnet`, swap via `vision_model` on `/admin/ai`) extracts amount/vendor/date/category/description/tax-deductible via Zod-validated `generateObject`; user reviews + edits before saving; `receipt_url` persists on the expense row
 - 📋 Receipt image viewing linked to transactions
-- 📋 Expense cost splitting between team members
+- ✅ Expense cost splitting between team members — `/tours/[id]/finances/expenses/[expenseId]` lets you split a paid expense into per-member shares (even-split or custom amounts) and `/me/finances` surfaces &ldquo;you owe&rdquo; / &ldquo;people owe you&rdquo; with a settle-via-Venmo/Zelle/etc. dropdown. New `expense_splits` table, RLS scoped to creator + share owner
 
 ## Phase 5: Show Day App ✅
 > Mobile-first daily companion for each band member.
@@ -108,7 +108,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Merch P&L dashboard (revenue, cost, profit, units sold, top sellers)
 - ✅ Demo data: 5 products, inventory, 11 sales across 3 shows
 - ✅ Online merch store (Stripe Elements + Shippo live rates) at `/store/[org-slug]` — fan-facing public catalog grouped by category with per-product Buy buttons. Embedded Stripe Elements checkout at `/store/[org-slug]/checkout/[product-id]` walks the fan through Address → live Shippo rate quotes → Payment Element. Real shipping rates pulled from USPS/UPS/etc. based on product dimensions + destination. Webhook on `payment_intent.succeeded` records the order AND buys the Shippo label (PDF + tracking URL stored on the order). Falls back to legacy three-tier flat-rate hosted Stripe Checkout if Shippo isn&apos;t configured or the org hasn&apos;t set a ship-from address. New `merch_orders` + `merch_order_items` tables with order number, shipping address, Shippo references. Admin order list at `/merch/orders` shows paid → fulfilled flow with tracking-number capture. Idempotent on the Stripe session/intent id so redelivered webhooks don&apos;t double-insert. Product dimensions (weight/length/width/height) + ship-from address are self-serve via the editor + `/settings/ship-from`
-- 📋 Tour-exclusive merch drops
+- ✅ Tour-exclusive merch drops — flag a product as `is_exclusive`, pick a tour, set a visibility window (or leave blank to auto-gate by the tour's run). Storefront badges drops as &ldquo;Tour exclusive&rdquo; with an end date, and quietly hides them once the window closes
 
 ## Phase 9: Fan Marketing & Community ✅
 > Email marketing and community discussion boards.
@@ -348,7 +348,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Staff moderation at `/tours/[id]/shows/[showId]/fan-photos` (tabs, counts, reject-with-reason flow)
 - ✅ `fan-photos` module registered in featurePages
 - ✅ Post-publish abuse reports UI at `/admin/photo-reports` — open-first queue, photo thumbnail + reason + reporter inline, &ldquo;N open reports&rdquo; warning chip clusters repeat offenders, two resolution paths: Dismiss (kept up) or Take down (flips photo status to `rejected` and auto-resolves any sibling reports on the same image). Resolution notes required for takedown. Filter toggle between open-only and all
-- 📋 Realtime moderation queue via Supabase Realtime
+- ✅ Realtime moderation queue — `fan_photos` published to Supabase Realtime; the per-show moderation page subscribes to inserts/updates and silently refreshes the queue + counts within ~600 ms of a new submission. A pulsing &ldquo;connected&rdquo; badge plus a &ldquo;N new since you opened this&rdquo; chip make the live state obvious to moderators on duty
 - 📋 AI-moderation pre-filter (image safety scan before queue)
 
 ## Roadmap Completions ✅

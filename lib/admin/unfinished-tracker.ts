@@ -32,24 +32,10 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 4,
-    title: 'Phase 4 — Tour Money Tracker',
-    items: [
-      { key: 'p4-expense-splitting', label: 'Expense cost splitting between team members' },
-    ],
-  },
-  {
     phase: 5,
     title: 'Phase 5 — Show Day',
     items: [
       { key: 'p5-push', label: 'Push notifications for schedule changes' },
-    ],
-  },
-  {
-    phase: 8,
-    title: 'Phase 8 — Merch',
-    items: [
-      { key: 'p8-drops', label: 'Tour-exclusive merch drops' },
     ],
   },
   {
@@ -118,7 +104,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 24.5 as unknown as number,
     title: 'Phase 24.5 — Fan Photo Sharing',
     items: [
-      { key: 'p245-realtime-mod', label: 'Realtime moderation queue via Supabase Realtime' },
       { key: 'p245-ai-mod', label: 'AI moderation pre-filter (image safety scan before queue)' },
     ],
   },
@@ -138,6 +123,9 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 21 — Cross-act messaging + festival lineup', branch: 'feature/cross-act-messaging + feature/festival-mode' },
   { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
   { label: 'Phase 22 — Burnout detection (/wellness/burnout)', branch: 'feature/burnout-detection' },
+  { label: 'Phase 4 — Expense cost splitting + settle tracking', branch: 'feature/expense-splits' },
+  { label: 'Phase 8 — Tour-exclusive merch drops', branch: 'feature/merch-drops' },
+  { label: 'Phase 24.5 — Realtime moderation queue (Supabase Realtime)', branch: 'feature/realtime-moderation' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'

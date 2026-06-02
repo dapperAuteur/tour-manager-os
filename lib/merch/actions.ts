@@ -22,6 +22,19 @@ export async function createProduct(orgId: string, formData: FormData) {
 
   if (!name || !price) return { error: 'Name and price are required' }
 
+  const isExclusive = formData.get('is_exclusive') === 'on'
+  const dropTourId = ((formData.get('drop_tour_id') as string | null) || '').trim() || null
+  const dropStartsAt = ((formData.get('drop_starts_at') as string | null) || '').trim() || null
+  const dropEndsAt = ((formData.get('drop_ends_at') as string | null) || '').trim() || null
+  if (
+    isExclusive &&
+    dropStartsAt &&
+    dropEndsAt &&
+    new Date(dropStartsAt).getTime() >= new Date(dropEndsAt).getTime()
+  ) {
+    return { error: 'Drop end must be after drop start' }
+  }
+
   const { error } = await supabase
     .from('merch_products')
     .insert({
@@ -36,6 +49,10 @@ export async function createProduct(orgId: string, formData: FormData) {
       length_in: optionalNum('length_in'),
       width_in: optionalNum('width_in'),
       height_in: optionalNum('height_in'),
+      is_exclusive: isExclusive,
+      drop_tour_id: isExclusive ? dropTourId : null,
+      drop_starts_at: isExclusive ? dropStartsAt : null,
+      drop_ends_at: isExclusive ? dropEndsAt : null,
     })
 
   if (error) return { error: error.message }
