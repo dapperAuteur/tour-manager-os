@@ -161,7 +161,9 @@ const phases: Phase[] = [
       { label: 'Activity logs', done: true },
       { label: 'Unfinished phase tracker (audit drift + planned items)', done: true },
       { label: 'Growth chart on admin dashboard (Recharts line)', done: true },
-      { label: 'Bar + pie chart variants for category breakdowns', done: false },
+      { label: 'Bar + pie chart variants for category breakdowns', done: true },
+      { label: 'User engagement metrics (DAU/WAU/MAU + stickiness + 30-day DAU trend)', done: true },
+      { label: 'Module adoption rates (per-module bar: org % + active members)', done: true },
     ],
   },
   {
@@ -260,7 +262,9 @@ const phases: Phase[] = [
       { label: 'Auto-create from advance sheets', done: true },
       { label: 'Venue notes integration', done: true },
       { label: 'Multiple contacts per venue (booker, sound, hospitality, etc.)', done: true },
-      { label: 'Smart advance pre-fill', done: false },
+      { label: 'Smart advance pre-fill', done: true },
+      { label: 'Venue photos (Cloudinary upload + lightbox)', done: true },
+      { label: 'Map view with Leaflet (OpenStreetMap tiles, click-to-open profile)', done: true },
     ],
   },
   {

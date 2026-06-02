@@ -164,9 +164,9 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Fuzzy search on help articles and feedback threads (pg_trgm)
 - ✅ Reusable search bar component
 - ✅ Unfinished phase tracker (/admin/unfinished) — single-page admin view of every 📋 item grouped by phase, audit-drift items at top (Recharts dashboard, smart advance pre-fill, multi-stage venues), and recently-shipped log; structured data in `lib/admin/unfinished-tracker.ts` mirrors `plans/02-unfinished-tracker.md`
-- 📋 User engagement metrics (DAU/WAU/MAU, session duration)
-- 📋 Module adoption rates
-- 🚧 Charts and graphs (Recharts) — `recharts` installed; 30-day daily-growth line chart (signups / new tours / new feedback) live on `/admin/dashboard`. Bar + pie variants for category breakdowns still TBD
+- ✅ User engagement metrics — DAU / WAU / MAU + stickiness (DAU÷MAU) computed from `activity_log` over 1/7/30-day windows, surfaced as stat cards plus a 30-day DAU bar trend on `/admin/dashboard`
+- ✅ Module adoption rates — per-module bar chart on `/admin/dashboard` (% of orgs with the module enabled and count of members actively opted in), sourced from `org_modules` + `member_module_access`
+- ✅ Charts and graphs (Recharts) — line for growth, bar for module adoption + DAU trend, pie for user-type breakdown, all live on `/admin/dashboard`
 
 ## Phase 13: Academy / LMS ✅
 > Courses teaching users how to use the platform.
@@ -285,8 +285,8 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Auto-create venue profiles from advance sheet data — wired into `submitAdvanceSheet` (best-effort, admin-client)
 - ✅ Times-played counter and last-played date
 - ✅ Smart advance pre-fill from past venue data — `getSmartAdvanceDefaults()` looks up the most-recent SUBMITTED advance for shows whose `venue_name` matches (case-insensitive ILIKE) and copies forward stable fields (venue info, dressing rooms, security, hospitality, stage dimensions, PA, merch area) into any current-sheet blanks. Time-sensitive fields (load-in/soundcheck/doors/curfew/ticket price) are intentionally excluded. A green &ldquo;Pre-filled from {venue} on {date}&rdquo; banner tells the submitter what was carried over
-- 📋 Venue photos
-- 📋 Map view with Leaflet
+- ✅ Venue photos — Cloudinary-backed upload with lightbox viewer on `/venues/[id]`, up to 24 per venue (`app/api/venues/[id]/photos/route.ts`, `venue-photos.tsx`)
+- ✅ Map view at `/venues/map` — Leaflet + OpenStreetMap tiles, every venue with lat/lng rendered as a marker, popup shows name/city/capacity/times-played + deep link to the venue profile, auto-fit bounds on load
 
 ## Phase 21: Multi-Act Touring ✅
 > Tour packages, festival mode, cross-act coordination.

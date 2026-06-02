@@ -16,9 +16,17 @@ export default async function VenuesPage({ searchParams }: { searchParams: Promi
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold">Venue Network</h1>
-        <p className="mt-1 text-sm text-text-secondary">Browse venues from advance sheets across the platform. Data grows as more shows are played.</p>
+      <div className="mb-8 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold">Venue Network</h1>
+          <p className="mt-1 text-sm text-text-secondary">Browse venues from advance sheets across the platform. Data grows as more shows are played.</p>
+        </div>
+        <Link
+          href="/venues/map"
+          className="inline-flex items-center gap-1.5 rounded-md border border-border-default bg-surface px-3 py-1.5 text-xs font-semibold hover:bg-surface-alt"
+        >
+          Map view
+        </Link>
       </div>
 
       <SearchBar basePath="/venues" placeholder="Search venues by name or city..." initialQuery={q} />
