@@ -132,6 +132,7 @@ export async function POST(request: Request) {
       purchaser_user_id: user?.id || '',
       purchaser_email: purchaserEmail,
       purchaser_name: purchaserName || '',
+      tour_id: show.tour_id || '',
     },
     payment_intent_data: {
       metadata: {
@@ -139,6 +140,7 @@ export async function POST(request: Request) {
         show_id,
         ticket_type_id,
         qty: String(qty),
+        tour_id: show.tour_id || '',
       },
     },
   })
