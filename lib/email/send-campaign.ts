@@ -2,6 +2,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendEmail, isMailgunConfigured } from './mailgun'
+import { getGmailConnection, sendViaGmail } from './gmail'
 
 export async function sendCampaign(campaignId: string) {
   const mailgunReady = isMailgunConfigured()
@@ -38,8 +39,15 @@ export async function sendCampaign(campaignId: string) {
     .update({ status: 'sending' })
     .eq('id', campaignId)
 
-  if (!mailgunReady) {
-    // Mailgun not configured — simulate send
+  // Prefer the campaign creator's connected Gmail when available so
+  // outbound shows in their Sent folder and replies route to their
+  // inbox. Falls back to Mailgun (or simulated send) otherwise.
+  const gmailConn = campaign.created_by
+    ? await getGmailConnection(campaign.created_by)
+    : null
+
+  if (!mailgunReady && !gmailConn) {
+    // Neither sender configured — simulate send
     await supabase
       .from('email_campaigns')
       .update({
@@ -49,7 +57,7 @@ export async function sendCampaign(campaignId: string) {
       })
       .eq('id', campaignId)
 
-    return { success: true, message: 'Campaign marked as sent (Mailgun not configured — emails not actually delivered)', count: subscribers.length }
+    return { success: true, message: 'Campaign marked as sent (no email sender configured — Mailgun unset and creator has no connected Gmail)', count: subscribers.length }
   }
 
   // Send via Mailgun
@@ -76,13 +84,19 @@ export async function sendCampaign(campaignId: string) {
 
     const results = await Promise.allSettled(
       batch.map((sub) =>
-        sendEmail({
-          to: sub.email,
-          subject: campaign.subject,
-          html: htmlContent,
-          tags: ['campaign', `campaign:${campaignId}`],
-        })
-      )
+        gmailConn
+          ? sendViaGmail(gmailConn.user_id, {
+              to: sub.email,
+              subject: campaign.subject,
+              html: htmlContent,
+            })
+          : sendEmail({
+              to: sub.email,
+              subject: campaign.subject,
+              html: htmlContent,
+              tags: ['campaign', `campaign:${campaignId}`],
+            }),
+      ),
     )
 
     for (const result of results) {
