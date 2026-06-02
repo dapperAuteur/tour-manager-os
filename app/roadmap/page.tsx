@@ -67,6 +67,7 @@ const phases: Phase[] = [
       { label: 'AI receipt scanning (vision-model expense pre-fill)', done: true },
       { label: 'Receipt image viewing on expense detail (lightbox + PDF fallback + table icon)', done: true },
       { label: 'Expense cost splitting between team members (even or custom shares, settle tracking)', done: true },
+      { label: 'One-page tour settlement PDF (revenue, expenses, net, splits, Stripe transfers)', done: true },
     ],
   },
   {
