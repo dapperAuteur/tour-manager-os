@@ -232,7 +232,7 @@ const phases: Phase[] = [
       { label: 'Click tracking', done: true },
       { label: 'Campaign analytics', done: true },
       { label: 'Webhook handler (bounces/complaints)', done: true },
-      { label: 'OAuth email (Gmail/Outlook)', done: false },
+      { label: 'OAuth-connected Gmail send-as (campaigns send from your address; Outlook follows)', done: true },
     ],
   },
   {

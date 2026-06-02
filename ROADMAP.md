@@ -237,8 +237,8 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Mailgun webhook handler with HMAC signature verification (permanent failures + complaints auto-unsubscribe)
 - ✅ HTML email template with tracking pixel and footer
 - ✅ Graceful fallback when Mailgun not configured
-- 📋 OAuth-connected email (Gmail/Outlook API) for sending from user's own address
-- 📋 Emails appear in user's regular inbox
+- ✅ OAuth-connected Gmail send-as — `oauth_email_connections` table holds per-user access + refresh tokens. `/api/oauth/gmail/init` builds the consent URL with the `gmail.send` scope + a CSRF state cookie; `/api/oauth/gmail/callback` exchanges code → tokens, captures the user&rsquo;s primary email, persists with RLS so only the owner can read. `lib/email/gmail.ts` `sendViaGmail()` refreshes the access token transparently and posts a MIME multipart message to the Gmail API. Campaign send-path prefers the campaign creator&rsquo;s connected Gmail when present; Mailgun stays as the platform fallback. Outlook OAuth scaffolding TBD (Microsoft Graph follows the same shape)
+- ✅ Emails appear in user&rsquo;s regular inbox — when Gmail is connected, outbound goes through the Gmail API so the message lands in their **Sent** folder automatically and replies route to their **inbox**. Operator setup: `plans/user-tasks/35-google-oauth-client.md` walks through the Google Cloud Console steps to provision the OAuth client
 
 ## Phase 18: Public API ✅
 > RESTful API for third-party integrations.
