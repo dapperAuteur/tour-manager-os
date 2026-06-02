@@ -313,7 +313,7 @@ const phases: Phase[] = [
       { label: 'Refund handling via Stripe webhook', done: true },
       { label: 'Stripe Connect split payments (artist/venue/crew)', done: false },
       { label: 'Apple/Google Wallet ticket delivery', done: false },
-      { label: 'Offline scanner cache + reconciliation', done: false },
+      { label: 'Offline scanner cache + reconciliation (IndexedDB manifest + queue, auto-sync on reconnect)', done: true },
     ],
   },
   {

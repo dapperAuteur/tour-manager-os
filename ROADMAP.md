@@ -329,7 +329,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ `ticketing` module in `featurePages` registry → landing page at `/features/ticketing`
 - 📋 Stripe Connect split payments to artist/venue/crew (Phase 24.1)
 - 📋 Apple/Google Wallet `.pkpass` ticket delivery
-- 📋 Offline scanner cache (IndexedDB + reconciliation)
+- ✅ Offline scanner cache — scanner pre-fetches a ticket manifest via `/api/tickets/manifest`, stores it in IndexedDB (`tmos.scanner` DB), and validates QRs offline when `navigator.onLine` flips false. Successful offline scans queue locally; the queue drains automatically when connectivity returns, replaying each scan with `offline_scanned_at` so the audit trail reflects door reality. `scan_logs` gains `offline_scanned_at` + `synced_from_offline` columns. A banner above the scanner shows online/offline state plus a "N queued" chip when scans are pending sync
 
 ## Phase 24.5: Fan Photo Sharing ✅
 > Ticket-holders share show photos to a pre-moderated public wall. Each photo gets its own sharable link.
