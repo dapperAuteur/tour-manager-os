@@ -49,7 +49,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 13,
     title: 'Phase 13 — Academy / LMS',
     items: [
-      { key: 'p13-cert', label: 'Certificates of completion (PDF)' },
       { key: 'p13-editor', label: 'Admin course/lesson editor' },
       { key: 'p13-video', label: 'Video lesson support' },
     ],
@@ -126,6 +125,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 4 — Expense cost splitting + settle tracking', branch: 'feature/expense-splits' },
   { label: 'Phase 8 — Tour-exclusive merch drops', branch: 'feature/merch-drops' },
   { label: 'Phase 24.5 — Realtime moderation queue (Supabase Realtime)', branch: 'feature/realtime-moderation' },
+  { label: 'Phase 13 — Academy completion certificates (PDF)', branch: 'feature/academy-certificates' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
