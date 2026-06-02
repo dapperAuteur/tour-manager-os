@@ -312,7 +312,7 @@ const phases: Phase[] = [
       { label: 'Atomic single-use enforcement + scan log', done: true },
       { label: 'Manager dashboard (sales, scans, revenue, refunds)', done: true },
       { label: 'Refund handling via Stripe webhook', done: true },
-      { label: 'Stripe Connect split payments (artist/venue/crew)', done: false },
+      { label: 'Stripe Connect split payments — config UI + Express onboarding shipped; Transfer execution at payout next', done: false },
       { label: 'Apple/Google Wallet ticket delivery', done: false },
       { label: 'Offline scanner cache + reconciliation (IndexedDB manifest + queue, auto-sync on reconnect)', done: true },
     ],

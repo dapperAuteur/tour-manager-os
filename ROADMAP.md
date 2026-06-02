@@ -327,7 +327,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Manager dashboard at `/tours/[id]/shows/[showId]/tickets` — sold/scanned/revenue/refunded, per-type breakdown, scan log
 - ✅ Mailgun email delivery of ticket links with `?token=<sig>`
 - ✅ `ticketing` module in `featurePages` registry → landing page at `/features/ticketing`
-- 📋 Stripe Connect split payments to artist/venue/crew (Phase 24.1)
+- 🚧 Stripe Connect split payments to artist/venue/crew (Phase 24.1) — schema + config UI shipped. New tables `stripe_connected_accounts` (per-org Express account) + `tour_revenue_splits` (per-tour basis-point allocations). `/admin/stripe-connect` runs the Express onboarding flow via Stripe `accountLinks`; `/tours/[id]/finances/splits` lets a manager configure who gets what cut and shows a "Total allocated: X%" gauge that goes green at 100%. **Transfer execution at payout still TBD** — current ticket + merch checkout still routes 100% to the platform account; the next pass wires Stripe Transfers against these rows once Connect is fully enabled on the platform Stripe account
 - 📋 Apple/Google Wallet `.pkpass` ticket delivery
 - ✅ Offline scanner cache — scanner pre-fetches a ticket manifest via `/api/tickets/manifest`, stores it in IndexedDB (`tmos.scanner` DB), and validates QRs offline when `navigator.onLine` flips false. Successful offline scans queue locally; the queue drains automatically when connectivity returns, replaying each scan with `offline_scanned_at` so the audit trail reflects door reality. `scan_logs` gains `offline_scanned_at` + `synced_from_offline` columns. A banner above the scanner shows online/offline state plus a "N queued" chip when scans are pending sync
 
