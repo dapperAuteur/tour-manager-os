@@ -46,13 +46,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
       { key: 'p22-wearable', label: 'Wearable integration via CentenarianOS' },
     ],
   },
-  {
-    phase: 24,
-    title: 'Phase 24 — Ticketing',
-    items: [
-      { key: 'p24-wallet', label: 'Apple/Google Wallet .pkpass ticket delivery' },
-    ],
-  },
 ]
 
 export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
@@ -86,6 +79,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 24 — Stripe Connect split payments scaffolding (account + tour revenue splits config)', branch: 'feature/stripe-connect-splits' },
   { label: 'Phase 4 — Receipt image viewing on expense detail (drift closeout)', branch: 'feature/receipt-image-viewer' },
   { label: 'Phase 24.1 — Stripe Connect Transfer execution at ticket sale (closes splits flow)', branch: 'feature/stripe-connect-execute' },
+  { label: 'Phase 24 — Apple Wallet .pkpass ticket delivery', branch: 'feature/apple-wallet-pkpass' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

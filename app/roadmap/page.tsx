@@ -314,7 +314,7 @@ const phases: Phase[] = [
       { label: 'Manager dashboard (sales, scans, revenue, refunds)', done: true },
       { label: 'Refund handling via Stripe webhook', done: true },
       { label: 'Stripe Connect split payments (Express onboarding + per-tour basis-point splits + post-sale Transfer fan-out)', done: true },
-      { label: 'Apple/Google Wallet ticket delivery', done: false },
+      { label: 'Apple Wallet .pkpass ticket delivery (eventTicket pass + Add to Apple Wallet button)', done: true },
       { label: 'Offline scanner cache + reconciliation (IndexedDB manifest + queue, auto-sync on reconnect)', done: true },
     ],
   },
