@@ -32,13 +32,6 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 14,
-    title: 'Phase 14 — Musician Tax',
-    items: [
-      { key: 'p14-qb-xero', label: 'QuickBooks / Xero integration' },
-    ],
-  },
-  {
     phase: 15,
     title: 'Phase 15 — Production Bible',
     items: [
@@ -102,6 +95,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 19 — Runtime brand theme injection (org primary color → CSS custom properties)', branch: 'feature/white-label-theme' },
   { label: 'Phase 5 — Web push notifications (VAPID + service worker + advance-submitted trigger)', branch: 'feature/push-notifications' },
   { label: 'Phase 24 — Offline ticket scanner cache (manifest + IndexedDB queue + sync)', branch: 'feature/offline-scanner' },
+  { label: 'Phase 14 — QuickBooks / Xero accounting CSV export', branch: 'feature/quickbooks-xero-export' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'
