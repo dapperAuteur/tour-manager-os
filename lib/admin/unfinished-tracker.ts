@@ -32,13 +32,6 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 4,
-    title: 'Phase 4 — Tour Money Tracker',
-    items: [
-      { key: 'p4-expense-splitting', label: 'Expense cost splitting between team members' },
-    ],
-  },
-  {
     phase: 5,
     title: 'Phase 5 — Show Day',
     items: [
@@ -138,6 +131,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 21 — Cross-act messaging + festival lineup', branch: 'feature/cross-act-messaging + feature/festival-mode' },
   { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
   { label: 'Phase 22 — Burnout detection (/wellness/burnout)', branch: 'feature/burnout-detection' },
+  { label: 'Phase 4 — Expense cost splitting + settle tracking', branch: 'feature/expense-splits' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'

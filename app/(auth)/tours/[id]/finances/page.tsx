@@ -109,7 +109,8 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
                   <th className="pb-2 pr-4" scope="col">Description</th>
                   <th className="pb-2 pr-4 text-right" scope="col">Amount</th>
                   <th className="pb-2 pr-4" scope="col">Status</th>
-                  <th className="pb-2" scope="col">Tax</th>
+                  <th className="pb-2 pr-4" scope="col">Tax</th>
+                  <th className="pb-2 text-right" scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -128,7 +129,15 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
                         {expense.status}
                       </span>
                     </td>
-                    <td className="py-3">{expense.is_tax_deductible ? '✓' : ''}</td>
+                    <td className="py-3 pr-4">{expense.is_tax_deductible ? '✓' : ''}</td>
+                    <td className="py-3 text-right">
+                      <Link
+                        href={`/tours/${tourId}/finances/expenses/${expense.id}`}
+                        className="text-xs text-primary-700 hover:underline dark:text-primary-400"
+                      >
+                        Split
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
