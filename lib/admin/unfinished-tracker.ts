@@ -40,13 +40,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 19,
-    title: 'Phase 19 — White Label',
-    items: [
-      { key: 'p19-routing', label: 'Multi-tenant domain routing middleware' },
-    ],
-  },
-  {
     phase: 22,
     title: 'Phase 22 — Wellness',
     items: [
@@ -90,6 +83,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 24 — Offline ticket scanner cache (manifest + IndexedDB queue + sync)', branch: 'feature/offline-scanner' },
   { label: 'Phase 14 — QuickBooks / Xero accounting CSV export', branch: 'feature/quickbooks-xero-export' },
   { label: 'Phase 15 — Drag-and-drop stage plot builder', branch: 'feature/stage-plot-builder' },
+  { label: 'Phase 19 — Multi-tenant domain routing middleware', branch: 'feature/multi-tenant-routing' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

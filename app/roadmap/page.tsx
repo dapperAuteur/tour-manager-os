@@ -255,6 +255,7 @@ const phases: Phase[] = [
       { label: 'Custom domain management', done: true },
       { label: 'DNS verification flow', done: true },
       { label: 'Dynamic theme injection at runtime (org color → derived 50–900 palette → CSS custom properties)', done: true },
+      { label: 'Multi-tenant domain routing middleware (custom domain → storefront rewrite + tenant headers)', done: true },
     ],
   },
   {

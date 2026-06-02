@@ -266,7 +266,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Color picker for primary brand color
 - ✅ Enterprise subscription required
 - ✅ Dynamic theme injection from org branding at runtime — `BrandTheme` server component on the authenticated layout reads the user&rsquo;s org `brand_primary_color` (when `white_label_enabled = true`), derives a 50/100/&hellip;/900 palette via HSL math (`shadesFromHex`), and emits an inline `<style>` setting the `--color-primary-*` CSS custom properties so every Tailwind primary class re-skins instantly. White-label admin form previews the derived shades next to the color picker
-- 📋 Multi-tenant domain routing middleware
+- ✅ Multi-tenant domain routing middleware — `middleware.ts` reads the request `host`, skips platform hosts (`tour.witus.online`, `*.vercel.app`, localhost), and looks the rest up against `custom_domains` (verified=true). A 60-second in-process cache keeps the hot path off the DB. Verified custom domains rewrite `/` to the org&rsquo;s storefront (`/store/<slug>`) and tag every request with `x-tmos-tenant-host` + `x-tmos-tenant-org` headers; `lib/multi-tenant/resolver.currentTenant()` is the server-side reader for downstream pages
 
 ## Phase 20: Venue Network ✅
 > Crowd-sourced venue database built from advance sheets.
