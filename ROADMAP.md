@@ -265,7 +265,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Font selection (Inter, Poppins, Roboto, Open Sans, Montserrat, Lato)
 - ✅ Color picker for primary brand color
 - ✅ Enterprise subscription required
-- 📋 Dynamic theme injection from org branding at runtime
+- ✅ Dynamic theme injection from org branding at runtime — `BrandTheme` server component on the authenticated layout reads the user&rsquo;s org `brand_primary_color` (when `white_label_enabled = true`), derives a 50/100/&hellip;/900 palette via HSL math (`shadesFromHex`), and emits an inline `<style>` setting the `--color-primary-*` CSS custom properties so every Tailwind primary class re-skins instantly. White-label admin form previews the derived shades next to the color picker
 - 📋 Multi-tenant domain routing middleware
 
 ## Phase 20: Venue Network ✅

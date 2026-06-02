@@ -39,7 +39,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-  {
     phase: 14,
     title: 'Phase 14 — Musician Tax',
     items: [
@@ -65,7 +64,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 19,
     title: 'Phase 19 — White Label',
     items: [
-      { key: 'p19-theme', label: 'Dynamic theme injection from org branding at runtime' },
       { key: 'p19-routing', label: 'Multi-tenant domain routing middleware' },
     ],
   },
@@ -109,6 +107,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 24.5 — AI moderation pre-filter (vision-model NSFW/violence/off-topic)', branch: 'feature/ai-photo-moderation' },
   { label: 'Phase 13 — Admin course/lesson editor', branch: 'feature/academy-editor' },
   { label: 'Phase 13 — Video lesson support (YouTube/Vimeo/Loom/direct mp4 embed)', branch: 'feature/academy-video' },
+  { label: 'Phase 19 — Runtime brand theme injection (org primary color → CSS custom properties)', branch: 'feature/white-label-theme' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
