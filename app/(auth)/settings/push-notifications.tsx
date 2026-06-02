@@ -75,18 +75,60 @@ export function PushNotifications({
     setBusy(true)
     try {
       const res = await fetch('/api/push/test', { method: 'POST' })
-      const json = await res.json()
+      const json = (await res.json()) as {
+        sent?: number
+        pruned?: number
+        failed?: number
+        error?: string
+      }
       if (!res.ok) {
         setError(json.error || 'Test push failed.')
         return
       }
-      setInfo(
-        json.sent > 0
-          ? `Test push sent to ${json.sent} device${json.sent === 1 ? '' : 's'}.`
-          : 'Test sent, but no devices accepted it.',
+      const sent = json.sent ?? 0
+      const pruned = json.pruned ?? 0
+      const failed = json.failed ?? 0
+      if (sent > 0) {
+        setInfo(`Test push sent to ${sent} device${sent === 1 ? '' : 's'}.`)
+        return
+      }
+      if (pruned > 0 || failed > 0) {
+        setError(
+          `Push rejected by ${pruned + failed} device${pruned + failed === 1 ? '' : 's'} (${pruned} expired, ${failed} failed). ` +
+            'Click **Turn off**, then **Turn on push** again — your browser subscription likely predates the current VAPID keys and needs to be re-issued.',
+        )
+        if (pruned > 0) {
+          // Server already deleted the row; reflect that here.
+          setSubscribed(false)
+        }
+        return
+      }
+      setError(
+        'No devices registered for your account on this server. Click Turn on push to subscribe this browser.',
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Test push failed.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function reSubscribe() {
+    setError(null)
+    setInfo(null)
+    setBusy(true)
+    try {
+      await unsubscribeFromPush()
+      setSubscribed(false)
+      if (!vapidPublicKey) {
+        setError('Push not configured — NEXT_PUBLIC_VAPID_PUBLIC_KEY is unset.')
+        return
+      }
+      await subscribeToPush(vapidPublicKey)
+      setSubscribed(true)
+      setInfo('Subscription re-issued with the current VAPID key.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Re-subscribe failed.')
     } finally {
       setBusy(false)
     }
@@ -134,6 +176,15 @@ export function PushNotifications({
                 className="inline-flex items-center gap-1 rounded-md border border-border-default px-3 py-1.5 text-xs hover:bg-surface-alt disabled:opacity-50"
               >
                 <Send className="size-3" aria-hidden /> Send test
+              </button>
+              <button
+                type="button"
+                onClick={reSubscribe}
+                disabled={busy}
+                title="Re-issue the subscription with the current VAPID key"
+                className="inline-flex items-center gap-1 rounded-md border border-border-default px-3 py-1.5 text-xs hover:bg-surface-alt disabled:opacity-50"
+              >
+                Re-subscribe
               </button>
               <button
                 type="button"

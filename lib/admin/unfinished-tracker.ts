@@ -32,25 +32,11 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 15,
-    title: 'Phase 15 — Production Bible',
-    items: [
-      { key: 'p15-stage-plot', label: 'Drag-and-drop stage plot builder' },
-    ],
-  },
-  {
     phase: 17,
     title: 'Phase 17 — Email Integration',
     items: [
       { key: 'p17-oauth', label: 'OAuth-connected email (Gmail/Outlook) for sending from user\'s own address' },
       { key: 'p17-inbox', label: 'Emails appear in user\'s regular inbox' },
-    ],
-  },
-  {
-    phase: 19,
-    title: 'Phase 19 — White Label',
-    items: [
-      { key: 'p19-routing', label: 'Multi-tenant domain routing middleware' },
     ],
   },
   {
@@ -64,7 +50,7 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 24,
     title: 'Phase 24 — Ticketing',
     items: [
-      { key: 'p24-connect', label: 'Stripe Connect split payments (Phase 24.1)' },
+      { key: 'p24-connect-execute', label: 'Stripe Connect: wire Transfer execution at payout (config UI shipped)' },
       { key: 'p24-wallet', label: 'Apple/Google Wallet .pkpass ticket delivery' },
     ],
   },
@@ -96,6 +82,9 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 5 — Web push notifications (VAPID + service worker + advance-submitted trigger)', branch: 'feature/push-notifications' },
   { label: 'Phase 24 — Offline ticket scanner cache (manifest + IndexedDB queue + sync)', branch: 'feature/offline-scanner' },
   { label: 'Phase 14 — QuickBooks / Xero accounting CSV export', branch: 'feature/quickbooks-xero-export' },
+  { label: 'Phase 15 — Drag-and-drop stage plot builder', branch: 'feature/stage-plot-builder' },
+  { label: 'Phase 19 — Multi-tenant domain routing middleware', branch: 'feature/multi-tenant-routing' },
+  { label: 'Phase 24 — Stripe Connect split payments scaffolding (account + tour revenue splits config)', branch: 'feature/stripe-connect-splits' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

@@ -204,7 +204,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Input lists / patch sheets (channel-by-channel with instrument, mic, DI, phantom power)
 - ✅ Venue notes (searchable by venue name, categorized: load-in, parking, stage, sound, etc.)
 - ✅ Production hub index with 4 section cards
-- 📋 Drag-and-drop stage plot builder (visual editor)
+- ✅ Drag-and-drop stage plot builder — `/production/stage-plots/[id]` opens a pointer-driven editor with a 9-piece palette (drum kit, guitar amp, bass amp, keys, monitor, mic stand, DI box, riser, other), percent-of-stage coordinates so the layout is resolution-independent, click-to-select inspector with rename / resize / delete, ⌘S to save, and a Delete-key shortcut. Saves serialise to the existing `stage_plots.elements` jsonb column. List page shows piece count and links straight into the editor
 - ✅ Auto-generated crew call sheets at `/tours/[id]/shows/[showId]/call-sheet` — assembles the day's brief from the advance sheet (times, venue, hospitality, dressing rooms, production notes), the tour&apos;s hotel booking for that show, and pinned + advance-sheet contacts. Print-friendly layout with `break-inside-avoid` per section; Print/PDF button on screen, hidden when printing. Deep-linked from the auth show page
 - ✅ Rider compliance checklists — `org_rider_items` template per band at `/settings/rider-template` (categories: technical / hospitality / dressing room / crew / transportation / security / other). Per-show checklist at `/tours/[id]/shows/[showId]/rider`: import the template in one click, then production crew flips each line item to delivered / partial / missing / N/A at load-in with actual qty + notes. Snapshots the description at import time so historical compliance stays correct after the template evolves
 
@@ -266,7 +266,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Color picker for primary brand color
 - ✅ Enterprise subscription required
 - ✅ Dynamic theme injection from org branding at runtime — `BrandTheme` server component on the authenticated layout reads the user&rsquo;s org `brand_primary_color` (when `white_label_enabled = true`), derives a 50/100/&hellip;/900 palette via HSL math (`shadesFromHex`), and emits an inline `<style>` setting the `--color-primary-*` CSS custom properties so every Tailwind primary class re-skins instantly. White-label admin form previews the derived shades next to the color picker
-- 📋 Multi-tenant domain routing middleware
+- ✅ Multi-tenant domain routing middleware — `middleware.ts` reads the request `host`, skips platform hosts (`tour.witus.online`, `*.vercel.app`, localhost), and looks the rest up against `custom_domains` (verified=true). A 60-second in-process cache keeps the hot path off the DB. Verified custom domains rewrite `/` to the org&rsquo;s storefront (`/store/<slug>`) and tag every request with `x-tmos-tenant-host` + `x-tmos-tenant-org` headers; `lib/multi-tenant/resolver.currentTenant()` is the server-side reader for downstream pages
 
 ## Phase 20: Venue Network ✅
 > Crowd-sourced venue database built from advance sheets.
@@ -327,7 +327,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Manager dashboard at `/tours/[id]/shows/[showId]/tickets` — sold/scanned/revenue/refunded, per-type breakdown, scan log
 - ✅ Mailgun email delivery of ticket links with `?token=<sig>`
 - ✅ `ticketing` module in `featurePages` registry → landing page at `/features/ticketing`
-- 📋 Stripe Connect split payments to artist/venue/crew (Phase 24.1)
+- 🚧 Stripe Connect split payments to artist/venue/crew (Phase 24.1) — schema + config UI shipped. New tables `stripe_connected_accounts` (per-org Express account) + `tour_revenue_splits` (per-tour basis-point allocations). `/admin/stripe-connect` runs the Express onboarding flow via Stripe `accountLinks`; `/tours/[id]/finances/splits` lets a manager configure who gets what cut and shows a "Total allocated: X%" gauge that goes green at 100%. **Transfer execution at payout still TBD** — current ticket + merch checkout still routes 100% to the platform account; the next pass wires Stripe Transfers against these rows once Connect is fully enabled on the platform Stripe account
 - 📋 Apple/Google Wallet `.pkpass` ticket delivery
 - ✅ Offline scanner cache — scanner pre-fetches a ticket manifest via `/api/tickets/manifest`, stores it in IndexedDB (`tmos.scanner` DB), and validates QRs offline when `navigator.onLine` flips false. Successful offline scans queue locally; the queue drains automatically when connectivity returns, replaying each scan with `offline_scanned_at` so the audit trail reflects door reality. `scan_logs` gains `offline_scanned_at` + `synced_from_offline` columns. A banner above the scanner shows online/offline state plus a "N queued" chip when scans are pending sync
 

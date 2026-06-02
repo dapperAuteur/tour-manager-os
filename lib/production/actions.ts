@@ -32,24 +32,87 @@ export async function deleteEquipment(equipmentId: string) {
   return { success: true }
 }
 
+export interface StagePlotElement {
+  id: string
+  type: string
+  label: string
+  /** 0-100 percent of stage width/depth — keeps the layout
+   *  resolution-independent across the editor + render targets. */
+  x: number
+  y: number
+  width: number
+  height: number
+  rotation: number
+}
+
+export async function updateStagePlotElements(
+  plotId: string,
+  elements: StagePlotElement[],
+  meta?: { name?: string; description?: string | null; stage_width?: number | null; stage_depth?: number | null },
+): Promise<{ ok: true } | { error: string }> {
+  if (!Array.isArray(elements)) return { error: 'elements must be an array.' }
+  // Basic validation so we don't persist nonsense.
+  for (const el of elements) {
+    if (
+      typeof el.id !== 'string' ||
+      typeof el.type !== 'string' ||
+      typeof el.label !== 'string' ||
+      typeof el.x !== 'number' ||
+      typeof el.y !== 'number' ||
+      typeof el.width !== 'number' ||
+      typeof el.height !== 'number'
+    ) {
+      return { error: 'Invalid element shape.' }
+    }
+  }
+  const supabase = await createClient()
+  const update: Record<string, unknown> = { elements }
+  if (meta?.name !== undefined) update.name = meta.name
+  if (meta?.description !== undefined) update.description = meta.description
+  if (meta?.stage_width !== undefined) update.stage_width = meta.stage_width
+  if (meta?.stage_depth !== undefined) update.stage_depth = meta.stage_depth
+  const { error } = await supabase
+    .from('stage_plots')
+    .update(update)
+    .eq('id', plotId)
+  if (error) return { error: error.message }
+  revalidatePath(`/production/stage-plots`)
+  revalidatePath(`/production/stage-plots/${plotId}`)
+  return { ok: true }
+}
+
+export async function deleteStagePlot(
+  plotId: string,
+): Promise<{ ok: true } | { error: string }> {
+  const supabase = await createClient()
+  const { error } = await supabase.from('stage_plots').delete().eq('id', plotId)
+  if (error) return { error: error.message }
+  revalidatePath('/production/stage-plots')
+  return { ok: true }
+}
+
 export async function createStagePlot(orgId: string, formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { error } = await supabase.from('stage_plots').insert({
-    org_id: orgId,
-    name: formData.get('name') as string,
-    description: (formData.get('description') as string) || null,
-    stage_width: Number(formData.get('stage_width')) || null,
-    stage_depth: Number(formData.get('stage_depth')) || null,
-    show_id: (formData.get('show_id') as string) || null,
-    is_default: formData.get('is_default') === 'on',
-    created_by: user?.id,
-  })
+  const { data: plot, error } = await supabase
+    .from('stage_plots')
+    .insert({
+      org_id: orgId,
+      name: formData.get('name') as string,
+      description: (formData.get('description') as string) || null,
+      stage_width: Number(formData.get('stage_width')) || null,
+      stage_depth: Number(formData.get('stage_depth')) || null,
+      show_id: (formData.get('show_id') as string) || null,
+      is_default: formData.get('is_default') === 'on',
+      created_by: user?.id,
+    })
+    .select('id')
+    .single()
 
   if (error) return { error: error.message }
   revalidatePath('/production/stage-plots')
-  redirect('/production/stage-plots')
+  redirect(`/production/stage-plots/${plot.id}`)
 }
 
 export async function createInputList(orgId: string, formData: FormData) {

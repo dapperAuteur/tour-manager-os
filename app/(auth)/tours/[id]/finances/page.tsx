@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { DollarSign, TrendingUp, TrendingDown, Plus } from 'lucide-react'
 import { getTourFinances } from '@/lib/finances/queries'
 import { ExportCsvButton } from './export-csv-button'
+import { Split } from 'lucide-react'
 import { AccountingExportButton } from './accounting-export-button'
 
 export const metadata: Metadata = {
@@ -52,6 +53,12 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Tour Finances</h1>
         <div className="flex gap-2">
+          <Link
+            href={`/tours/${tourId}/finances/splits`}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border-default px-3 py-2 text-sm font-medium hover:bg-surface-alt"
+          >
+            <Split className="size-4" aria-hidden /> Revenue splits
+          </Link>
           <ExportCsvButton expenses={data.expenses} />
           <AccountingExportButton tourId={tourId} />
           <Link
