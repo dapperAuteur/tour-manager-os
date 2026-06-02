@@ -349,7 +349,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ `fan-photos` module registered in featurePages
 - ✅ Post-publish abuse reports UI at `/admin/photo-reports` — open-first queue, photo thumbnail + reason + reporter inline, &ldquo;N open reports&rdquo; warning chip clusters repeat offenders, two resolution paths: Dismiss (kept up) or Take down (flips photo status to `rejected` and auto-resolves any sibling reports on the same image). Resolution notes required for takedown. Filter toggle between open-only and all
 - ✅ Realtime moderation queue — `fan_photos` published to Supabase Realtime; the per-show moderation page subscribes to inserts/updates and silently refreshes the queue + counts within ~600 ms of a new submission. A pulsing &ldquo;connected&rdquo; badge plus a &ldquo;N new since you opened this&rdquo; chip make the live state obvious to moderators on duty
-- 📋 AI-moderation pre-filter (image safety scan before queue)
+- ✅ AI-moderation pre-filter — every fan-photo upload runs through `moderatePhoto()` against the configured vision model right after the Cloudinary write. High-confidence NSFW or violence verdicts flip the row to `rejected` automatically with `ai_auto_rejected=true`; everything else lands in the human queue with the verdict attached so moderators can see what the model flagged before they review. New columns `ai_moderation_verdict`, `ai_moderated_at`, `ai_auto_rejected` on `fan_photos`
 
 ## Roadmap Completions ✅
 > Quick wins and new features from user feedback.

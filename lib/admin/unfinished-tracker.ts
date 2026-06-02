@@ -92,13 +92,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
       { key: 'p24-offline', label: 'Offline scanner cache (IndexedDB + reconciliation)' },
     ],
   },
-  {
-    phase: 24.5 as unknown as number,
-    title: 'Phase 24.5 — Fan Photo Sharing',
-    items: [
-      { key: 'p245-ai-mod', label: 'AI moderation pre-filter (image safety scan before queue)' },
-    ],
-  },
 ]
 
 export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
@@ -120,6 +113,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 24.5 — Realtime moderation queue (Supabase Realtime)', branch: 'feature/realtime-moderation' },
   { label: 'Phase 9 — Pre/post-show exclusive content for subscribers', branch: 'feature/exclusive-content' },
   { label: 'Phase 13 — Academy completion certificates (PDF)', branch: 'feature/academy-certificates' },
+  { label: 'Phase 24.5 — AI moderation pre-filter (vision-model NSFW/violence/off-topic)', branch: 'feature/ai-photo-moderation' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
