@@ -326,7 +326,7 @@ const phases: Phase[] = [
       { label: 'Fan dashboard with status badges + rejection reasons', done: true },
       { label: 'Per-photo share page with OG + Twitter Card metadata', done: true },
       { label: 'Cloudinary destroy on reject / remove (no hot-linking)', done: true },
-      { label: 'Realtime moderation queue (Supabase channel)', done: false },
+      { label: 'Realtime moderation queue (Supabase Realtime + live new-photo badge)', done: true },
       { label: 'Post-publish abuse reports UI', done: false },
       { label: 'AI-moderation pre-filter', done: false },
     ],

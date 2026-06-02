@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, Loader2, ShieldOff, Trash2, X } from 'lucide-react'
+import { Check, Loader2, Radio, ShieldOff, Trash2, X } from 'lucide-react'
+import { createClient as createBrowserSupabase } from '@/lib/supabase/client'
 
 type ModStatus = 'pending' | 'approved' | 'rejected' | 'removed'
 
@@ -22,6 +23,7 @@ interface Photo {
 interface ModerationQueueProps {
   photos: Photo[]
   counts: Record<ModStatus, number>
+  showId: string
 }
 
 function thumbUrl(url: string, width = 600): string {
@@ -38,12 +40,55 @@ const TAB_LABELS: Record<ModStatus, string> = {
   removed: 'Removed',
 }
 
-export function ModerationQueue({ photos, counts }: ModerationQueueProps) {
+export function ModerationQueue({
+  photos,
+  counts,
+  showId,
+}: ModerationQueueProps) {
   const router = useRouter()
   const [tab, setTab] = useState<ModStatus>('pending')
   const [pending, startTransition] = useTransition()
   const [actingOn, setActingOn] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [live, setLive] = useState(false)
+  const [newSinceMount, setNewSinceMount] = useState(0)
+  const refreshTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Subscribe to fan_photos for this show. New pending submissions, status
+  // flips from other moderators, and removals all trigger a debounced
+  // router.refresh() — the server component re-fetches counts + rows.
+  useEffect(() => {
+    const supabase = createBrowserSupabase()
+
+    const channel = supabase
+      .channel(`fan-photos-show-${showId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'fan_photos',
+          filter: `show_id=eq.${showId}`,
+        },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            setNewSinceMount((n) => n + 1)
+          }
+          if (refreshTimer.current) clearTimeout(refreshTimer.current)
+          refreshTimer.current = setTimeout(() => {
+            startTransition(() => router.refresh())
+          }, 600)
+        },
+      )
+      .subscribe((status) => {
+        setLive(status === 'SUBSCRIBED')
+      })
+
+    return () => {
+      if (refreshTimer.current) clearTimeout(refreshTimer.current)
+      void supabase.removeChannel(channel)
+    }
+  }, [router, showId])
 
   const visible = useMemo(
     () => photos.filter((p) => p.status === tab),
@@ -92,6 +137,23 @@ export function ModerationQueue({ photos, counts }: ModerationQueueProps) {
 
   return (
     <div>
+      <div className="mb-4 flex items-center justify-between gap-2 text-xs">
+        <div className="flex items-center gap-1.5">
+          <Radio
+            className={`size-3 ${live ? 'animate-pulse text-success-600 dark:text-success-400' : 'text-text-muted'}`}
+            aria-hidden
+          />
+          <span className="text-text-muted">
+            {live ? 'Realtime moderation queue connected' : 'Realtime offline — refresh to see new photos'}
+          </span>
+        </div>
+        {newSinceMount > 0 && (
+          <span className="rounded-full bg-warning-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-warning-700 dark:text-warning-300">
+            {newSinceMount} new since you opened this
+          </span>
+        )}
+      </div>
+
       <div
         role="tablist"
         className="mb-6 flex flex-wrap gap-1 border-b border-border-default"
