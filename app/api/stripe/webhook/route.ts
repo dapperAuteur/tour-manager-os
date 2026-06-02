@@ -5,6 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { signTicket } from '@/lib/tickets/sign'
 import { sendEmail, isMailgunConfigured } from '@/lib/email/mailgun'
 import { logError } from '@/lib/observability/logger'
+import { executeTourRevenueTransfers } from '@/lib/stripe-connect/transfers'
 
 async function issueTickets(
   supabase: ReturnType<typeof createAdminClient>,
@@ -142,6 +143,23 @@ export async function POST(request: Request) {
 
       if (session.metadata?.kind === 'ticket') {
         await issueTickets(supabase, session)
+        // Best-effort: route Stripe Connect Transfers to artist /
+        // venue / crew per the tour's revenue_splits. Skipped silently
+        // if Connect isn't configured for the org.
+        const tourId = session.metadata?.tour_id
+        if (tourId && session.payment_intent) {
+          await executeTourRevenueTransfers(supabase, stripe, {
+            tourId,
+            paymentIntentId: session.payment_intent as string,
+            amountCentsTotal: session.amount_total ?? 0,
+            currency: (session.currency ?? 'usd').toLowerCase(),
+          }).catch((err) => {
+            logError('stripe.webhook.transfer_fanout_failed', err, {
+              tour_id: tourId,
+              session_id: session.id,
+            })
+          })
+        }
         break
       }
 
