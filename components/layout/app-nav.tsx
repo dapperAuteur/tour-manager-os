@@ -52,6 +52,7 @@ const adminItems = [
   { href: '/admin/photo-reports', label: 'Photo Reports', icon: Flag },
   { href: '/admin/logs', label: 'Logs', icon: ScrollText },
   { href: '/admin/ai', label: 'AI', icon: Bot },
+  { href: '/admin/academy', label: 'Academy', icon: GraduationCap },
   { href: '/admin/unfinished', label: 'Unfinished', icon: ClipboardList },
 ]
 

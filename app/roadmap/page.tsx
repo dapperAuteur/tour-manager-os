@@ -179,6 +179,8 @@ const phases: Phase[] = [
       { label: 'Quiz system with scoring', done: true },
       { label: '4 courses seeded (13 lessons, including admin education for stakeholder presentations)', done: true },
       { label: 'Certificates of completion (PDF, pdf-lib, verification ID footer)', done: true },
+      { label: 'Admin course/lesson editor (CRUD + lesson body, video URL, draft toggle)', done: true },
+      { label: 'Video lesson support (YouTube / Vimeo / Loom / direct mp4 embed)', done: true },
     ],
   },
   {
@@ -252,7 +254,7 @@ const phases: Phase[] = [
       { label: 'Branding settings (logo, color, font, CSS)', done: true },
       { label: 'Custom domain management', done: true },
       { label: 'DNS verification flow', done: true },
-      { label: 'Dynamic theme injection', done: false },
+      { label: 'Dynamic theme injection at runtime (org color → derived 50–900 palette → CSS custom properties)', done: true },
     ],
   },
   {
