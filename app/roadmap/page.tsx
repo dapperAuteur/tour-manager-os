@@ -65,6 +65,7 @@ const phases: Phase[] = [
       { label: 'Per-member finance view', done: true },
       { label: 'CSV export', done: true },
       { label: 'AI receipt scanning (vision-model expense pre-fill)', done: true },
+      { label: 'Expense cost splitting between team members (even or custom shares, settle tracking)', done: true },
     ],
   },
   {

@@ -7,8 +7,10 @@ import {
   listTourCounterparties,
   listAccessibleTours,
 } from '@/lib/finances/loans'
+import { getUserSplitsSummary } from '@/lib/finances/split-queries'
 import { TutorialGate } from '@/components/tutorials/tutorial-gate'
 import { MemberLoans } from './member-loans'
+import { SplitsSummary } from './splits-summary'
 
 export const metadata: Metadata = {
   title: 'My Finances',
@@ -20,11 +22,12 @@ export default async function MyFinancesPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const [data, loans, counterparties, tours] = await Promise.all([
+  const [data, loans, counterparties, tours, splits] = await Promise.all([
     getMemberFinances(user.id),
     getMemberLoans(),
     listTourCounterparties(),
     listAccessibleTours(),
+    getUserSplitsSummary(user.id),
   ])
 
   const fmt = (n: number) => `$${Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
@@ -77,6 +80,17 @@ export default async function MyFinancesPage() {
             netOpen={loans.netOpen}
             counterparties={counterparties}
             tours={tours}
+          />
+        </div>
+      )}
+
+      {/* Expense splits */}
+      {(splits.owedToOthers.length > 0 || splits.owedByOthers.length > 0) && (
+        <div className="mb-8">
+          <SplitsSummary
+            owedToOthers={splits.owedToOthers}
+            owedByOthers={splits.owedByOthers}
+            netOwed={splits.netOwed}
           />
         </div>
       )}
