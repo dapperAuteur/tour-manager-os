@@ -192,7 +192,7 @@ const phases: Phase[] = [
       { label: 'State-by-state income with progress bars', done: true },
       { label: 'Deduction categories with IRS guidance', done: true },
       { label: 'CSV tax export', done: true },
-      { label: 'QuickBooks/Xero integration', done: false },
+      { label: 'QuickBooks / Xero export (bank-feed CSV, category + account-code mapping)', done: true },
     ],
   },
   {

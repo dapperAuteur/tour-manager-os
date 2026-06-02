@@ -39,13 +39,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 14,
-    title: 'Phase 14 — Musician Tax',
-    items: [
-      { key: 'p14-qb-xero', label: 'QuickBooks / Xero integration' },
-    ],
-  },
-  {
     phase: 15,
     title: 'Phase 15 — Production Bible',
     items: [
@@ -108,6 +101,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 13 — Admin course/lesson editor', branch: 'feature/academy-editor' },
   { label: 'Phase 13 — Video lesson support (YouTube/Vimeo/Loom/direct mp4 embed)', branch: 'feature/academy-video' },
   { label: 'Phase 19 — Runtime brand theme injection (org primary color → CSS custom properties)', branch: 'feature/white-label-theme' },
+  { label: 'Phase 14 — QuickBooks / Xero accounting CSV export', branch: 'feature/quickbooks-xero-export' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'

@@ -193,7 +193,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Year selector (5-year range)
 - ✅ Income detail table
 - ✅ CSV tax export (state + deduction summaries + detail records)
-- 📋 QuickBooks/Xero integration
+- ✅ QuickBooks / Xero export — `/api/finances/accounting-export?tour_id=…&format=quickbooks|xero` returns a bank-feed-shaped CSV ready for direct import. QuickBooks Online format: `Date, Description, Amount, Category` with expense amounts negative and our 10 expense categories mapped to QBO chart-of-account names. Xero format: `*Date, *Amount, Payee, Description, Reference, Account Code` with Xero account codes. Both reachable from the **Export for accounting** dropdown on `/tours/[id]/finances` next to the existing raw-CSV export
 - ✅ Auto-populate state income from show revenue (DB function)
 
 ## Phase 15: Production Bible ✅
