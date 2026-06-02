@@ -5,6 +5,7 @@ import { ArrowLeft, Split } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { listSplitsForExpense } from '@/lib/finances/split-queries'
 import { SplitEditor } from './split-editor'
+import { ReceiptViewer } from './receipt-viewer'
 
 export const metadata: Metadata = {
   title: 'Expense — Split',
@@ -24,6 +25,7 @@ export default async function ExpenseDetailPage({
       .from('expenses')
       .select(
         `id, tour_id, member_id, date, category, description, amount,
+         receipt_url, is_tax_deductible, status,
          tours:tour_id(org_id)`,
       )
       .eq('id', expenseId)
@@ -76,6 +78,21 @@ export default async function ExpenseDetailPage({
           })}
         </p>
       </header>
+
+      {expense.receipt_url && (
+        <section
+          aria-labelledby="receipt-heading"
+          className="mb-6 rounded-xl border border-border-default bg-surface-raised p-5"
+        >
+          <h2
+            id="receipt-heading"
+            className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted"
+          >
+            Receipt
+          </h2>
+          <ReceiptViewer url={expense.receipt_url as string} />
+        </section>
+      )}
 
       <SplitEditor
         expenseId={expenseId}
