@@ -74,7 +74,7 @@ export default async function FanPhotosModerationPage({ params }: PageProps) {
         </Link>
       </div>
 
-      <ModerationQueue photos={all} counts={counts} />
+      <ModerationQueue photos={all} counts={counts} showId={showId} />
     </main>
   )
 }

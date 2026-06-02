@@ -348,7 +348,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Staff moderation at `/tours/[id]/shows/[showId]/fan-photos` (tabs, counts, reject-with-reason flow)
 - ✅ `fan-photos` module registered in featurePages
 - ✅ Post-publish abuse reports UI at `/admin/photo-reports` — open-first queue, photo thumbnail + reason + reporter inline, &ldquo;N open reports&rdquo; warning chip clusters repeat offenders, two resolution paths: Dismiss (kept up) or Take down (flips photo status to `rejected` and auto-resolves any sibling reports on the same image). Resolution notes required for takedown. Filter toggle between open-only and all
-- 📋 Realtime moderation queue via Supabase Realtime
+- ✅ Realtime moderation queue — `fan_photos` published to Supabase Realtime; the per-show moderation page subscribes to inserts/updates and silently refreshes the queue + counts within ~600 ms of a new submission. A pulsing &ldquo;connected&rdquo; badge plus a &ldquo;N new since you opened this&rdquo; chip make the live state obvious to moderators on duty
 - 📋 AI-moderation pre-filter (image safety scan before queue)
 
 ## Roadmap Completions ✅

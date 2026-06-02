@@ -111,7 +111,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 24.5 as unknown as number,
     title: 'Phase 24.5 — Fan Photo Sharing',
     items: [
-      { key: 'p245-realtime-mod', label: 'Realtime moderation queue via Supabase Realtime' },
       { key: 'p245-ai-mod', label: 'AI moderation pre-filter (image safety scan before queue)' },
     ],
   },
@@ -132,6 +131,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
   { label: 'Phase 22 — Burnout detection (/wellness/burnout)', branch: 'feature/burnout-detection' },
   { label: 'Phase 8 — Tour-exclusive merch drops', branch: 'feature/merch-drops' },
+  { label: 'Phase 24.5 — Realtime moderation queue (Supabase Realtime)', branch: 'feature/realtime-moderation' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
