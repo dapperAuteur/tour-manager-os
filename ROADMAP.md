@@ -177,7 +177,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Quiz system with multiple choice, scoring, and explanations
 - ✅ Lesson navigation (prev/next within course)
 - ✅ 3 seeded courses (8 lessons, 2 quizzes)
-- 📋 Certificates of completion (PDF)
+- ✅ Certificates of completion (PDF) — `/api/academy/courses/[slug]/certificate` generates a one-page A4-landscape PDF via `pdf-lib` (display name + course title + completion date + verification ID), gated by the user&rsquo;s `user_course_progress` row being `completed`. Course page shows a green &ldquo;Course complete&rdquo; banner with a download button once unlocked
 - 📋 Admin course/lesson editor
 - 📋 Video lesson support
 - ✅ Admin education tool (5-lesson course: Stripe, email, Supabase, Vercel, codebase for presentations)
