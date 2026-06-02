@@ -1,5 +1,9 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import {
+  isPlatformHost,
+  resolveTenantFromHost,
+} from '@/lib/multi-tenant/resolver'
 
 export async function middleware(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -8,6 +12,29 @@ export async function middleware(request: NextRequest) {
   // Allow app to load without Supabase configured
   if (!supabaseUrl || !supabaseAnonKey) {
     return NextResponse.next()
+  }
+
+  // Multi-tenant routing: when a request arrives on a verified custom
+  // domain, rewrite the bare root to the org's storefront and tag the
+  // request so downstream server components can recover the tenant
+  // context via lib/multi-tenant/resolver currentTenant().
+  const requestHost = request.headers.get('host')
+  if (!isPlatformHost(requestHost)) {
+    const tenant = await resolveTenantFromHost(requestHost).catch(() => null)
+    if (tenant) {
+      if (request.nextUrl.pathname === '/') {
+        const url = request.nextUrl.clone()
+        url.pathname = tenant.landing_path
+        const rewritten = NextResponse.rewrite(url)
+        rewritten.headers.set('x-tmos-tenant-host', tenant.domain)
+        rewritten.headers.set('x-tmos-tenant-org', tenant.org_slug)
+        return rewritten
+      }
+      const passthrough = NextResponse.next({ request })
+      passthrough.headers.set('x-tmos-tenant-host', tenant.domain)
+      passthrough.headers.set('x-tmos-tenant-org', tenant.org_slug)
+      return passthrough
+    }
   }
 
   let supabaseResponse = NextResponse.next({ request })
