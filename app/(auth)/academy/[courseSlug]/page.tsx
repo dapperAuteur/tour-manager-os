@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Award, CheckCircle2, Circle } from 'lucide-react'
+import { Award, CheckCircle2, Circle, Play } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getCourseWithLessons, getUserCourseProgress } from '@/lib/academy/queries'
 
@@ -73,9 +73,14 @@ export default async function CoursePage({ params }: { params: Promise<{ courseS
                   <Circle className="h-5 w-5 text-border-default" aria-hidden="true" />
                 )}
               </div>
-              <div>
-                <p className="text-sm font-medium">
+              <div className="min-w-0 flex-1">
+                <p className="flex flex-wrap items-center gap-2 text-sm font-medium">
                   <span className="text-text-muted">Lesson {idx + 1}:</span> {lesson.title}
+                  {lesson.video_url && (
+                    <span className="inline-flex items-center gap-0.5 rounded-full bg-primary-500/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">
+                      <Play className="size-2.5" aria-hidden /> Video
+                    </span>
+                  )}
                 </p>
               </div>
             </Link>

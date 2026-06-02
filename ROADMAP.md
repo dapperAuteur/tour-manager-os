@@ -179,7 +179,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ 3 seeded courses (8 lessons, 2 quizzes)
 - ✅ Certificates of completion (PDF) — `/api/academy/courses/[slug]/certificate` generates a one-page A4-landscape PDF via `pdf-lib` (display name + course title + completion date + verification ID), gated by the user&rsquo;s `user_course_progress` row being `completed`. Course page shows a green &ldquo;Course complete&rdquo; banner with a download button once unlocked
 - ✅ Admin course/lesson editor — `/admin/academy` lists every course (published + draft); `/admin/academy/courses/new` + `/admin/academy/courses/[id]` provide CRUD for the course settings (title, slug, category, difficulty, estimated minutes, sort order, published) plus an embedded lesson editor (title, slug, markdown body, video URL, sort order, published) with inline add/edit/delete
-- 📋 Video lesson support
+- ✅ Video lesson support — `videoEmbedFor()` recognises YouTube (watch/shorts/youtu.be/embed), Vimeo, Loom, and direct mp4/webm/mov URLs and returns an embed shape. Lesson page renders a responsive 16:9 video container above the markdown body when `lessons.video_url` is set; unsupported URLs fall back to a &ldquo;Watch lesson video&rdquo; external link. Course outline rows show a small &ldquo;Video&rdquo; badge so learners know which lessons include one
 - ✅ Admin education tool (5-lesson course: Stripe, email, Supabase, Vercel, codebase for presentations)
 
 ## Phase 14: Musician Tax Platform ✅
