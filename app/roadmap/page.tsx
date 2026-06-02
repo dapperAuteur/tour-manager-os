@@ -252,7 +252,7 @@ const phases: Phase[] = [
       { label: 'Branding settings (logo, color, font, CSS)', done: true },
       { label: 'Custom domain management', done: true },
       { label: 'DNS verification flow', done: true },
-      { label: 'Dynamic theme injection', done: false },
+      { label: 'Dynamic theme injection at runtime (org color → derived 50–900 palette → CSS custom properties)', done: true },
     ],
   },
   {

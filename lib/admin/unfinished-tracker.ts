@@ -72,7 +72,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     phase: 19,
     title: 'Phase 19 — White Label',
     items: [
-      { key: 'p19-theme', label: 'Dynamic theme injection from org branding at runtime' },
       { key: 'p19-routing', label: 'Multi-tenant domain routing middleware' },
     ],
   },
@@ -114,6 +113,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 9 — Pre/post-show exclusive content for subscribers', branch: 'feature/exclusive-content' },
   { label: 'Phase 13 — Academy completion certificates (PDF)', branch: 'feature/academy-certificates' },
   { label: 'Phase 24.5 — AI moderation pre-filter (vision-model NSFW/violence/off-topic)', branch: 'feature/ai-photo-moderation' },
+  { label: 'Phase 19 — Runtime brand theme injection (org primary color → CSS custom properties)', branch: 'feature/white-label-theme' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'

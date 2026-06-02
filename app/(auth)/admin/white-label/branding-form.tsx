@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { updateBranding } from '@/lib/white-label/actions'
+import { shadesFromHex } from '@/lib/white-label/runtime-theme'
 
 interface Org {
   brand_name: string | null
@@ -18,6 +19,8 @@ export function BrandingForm({ orgId, org }: { orgId: string; org: Org }) {
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [color, setColor] = useState(org.brand_primary_color || '#4553ea')
+  const shades = useMemo(() => shadesFromHex(color), [color])
 
   async function handleSubmit(formData: FormData) {
     setError('')
@@ -65,9 +68,34 @@ export function BrandingForm({ orgId, org }: { orgId: string; org: Org }) {
         <div>
           <label htmlFor="brand_primary_color" className="mb-1 block text-sm font-medium">Primary Color</label>
           <div className="flex items-center gap-2">
-            <input id="brand_primary_color" name="brand_primary_color" type="color" defaultValue={org.brand_primary_color || '#4553ea'} className="h-10 w-14 cursor-pointer rounded border border-border-default" />
-            <span className="text-sm text-text-muted">{org.brand_primary_color || '#4553ea'}</span>
+            <input
+              id="brand_primary_color"
+              name="brand_primary_color"
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              className="h-10 w-14 cursor-pointer rounded border border-border-default"
+            />
+            <span className="text-sm font-mono text-text-muted">{color}</span>
           </div>
+          {Object.keys(shades).length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {Object.entries(shades).map(([shade, hex]) => (
+                <span
+                  key={shade}
+                  title={`${shade} · ${hex}`}
+                  style={{ backgroundColor: hex }}
+                  className="inline-flex h-6 w-8 items-end justify-center rounded text-[8px] font-semibold text-white/80 ring-1 ring-black/10"
+                >
+                  {shade}
+                </span>
+              ))}
+            </div>
+          )}
+          <p className="mt-1 text-[10px] text-text-muted">
+            Derived 50/100/&hellip;/900 shades are applied at runtime to every
+            authenticated page when white-label is enabled.
+          </p>
         </div>
         <div>
           <label htmlFor="brand_font" className="mb-1 block text-sm font-medium">Font Family</label>
