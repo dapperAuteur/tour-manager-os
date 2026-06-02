@@ -110,7 +110,8 @@ const phases: Phase[] = [
       { label: 'Inventory tracking per tour', done: true },
       { label: 'Per-show sales recording', done: true },
       { label: 'Merch P&L dashboard', done: true },
-      { label: 'Online store (Stripe)', done: false },
+      { label: 'Online store (Stripe Elements + Shippo)', done: true },
+      { label: 'Tour-exclusive merch drops (badge + auto-hide window)', done: true },
     ],
   },
   {

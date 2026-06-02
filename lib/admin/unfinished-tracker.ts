@@ -46,13 +46,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     ],
   },
   {
-    phase: 8,
-    title: 'Phase 8 — Merch',
-    items: [
-      { key: 'p8-drops', label: 'Tour-exclusive merch drops' },
-    ],
-  },
-  {
     phase: 9,
     title: 'Phase 9 — Fan Marketing & Community',
     items: [
@@ -138,6 +131,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 21 — Cross-act messaging + festival lineup', branch: 'feature/cross-act-messaging + feature/festival-mode' },
   { label: 'Phase 22 — Days-off wellness suggestions (folded into planner)', branch: 'feature/days-off-planner' },
   { label: 'Phase 22 — Burnout detection (/wellness/burnout)', branch: 'feature/burnout-detection' },
+  { label: 'Phase 8 — Tour-exclusive merch drops', branch: 'feature/merch-drops' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-01'
