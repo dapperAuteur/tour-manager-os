@@ -85,6 +85,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 15 — Drag-and-drop stage plot builder', branch: 'feature/stage-plot-builder' },
   { label: 'Phase 19 — Multi-tenant domain routing middleware', branch: 'feature/multi-tenant-routing' },
   { label: 'Phase 24 — Stripe Connect split payments scaffolding (account + tour revenue splits config)', branch: 'feature/stripe-connect-splits' },
+  { label: 'Phase 4 — Receipt image viewing on expense detail (drift closeout)', branch: 'feature/receipt-image-viewer' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

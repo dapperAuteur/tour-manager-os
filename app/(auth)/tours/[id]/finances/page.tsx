@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { DollarSign, TrendingUp, TrendingDown, Plus } from 'lucide-react'
+import { DollarSign, TrendingUp, TrendingDown, Plus, Receipt, Split } from 'lucide-react'
 import { getTourFinances } from '@/lib/finances/queries'
 import { ExportCsvButton } from './export-csv-button'
-import { Split } from 'lucide-react'
 import { AccountingExportButton } from './accounting-export-button'
 
 export const metadata: Metadata = {
@@ -127,7 +126,17 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
                   <tr key={expense.id} className="border-b border-border-default">
                     <td className="py-3 pr-4">{new Date(expense.date).toLocaleDateString()}</td>
                     <td className="py-3 pr-4">{categoryLabels[expense.category] || expense.category}</td>
-                    <td className="py-3 pr-4 text-text-secondary">{expense.description || '—'}</td>
+                    <td className="py-3 pr-4 text-text-secondary">
+                      <span className="inline-flex items-center gap-1">
+                        {expense.receipt_url && (
+                          <Receipt
+                            className="size-3 text-primary-600 dark:text-primary-400"
+                            aria-label="Receipt attached"
+                          />
+                        )}
+                        {expense.description || '—'}
+                      </span>
+                    </td>
                     <td className="py-3 pr-4 text-right font-medium">{fmt(Number(expense.amount))}</td>
                     <td className="py-3 pr-4">
                       <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
