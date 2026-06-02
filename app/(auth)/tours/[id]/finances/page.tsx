@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { DollarSign, TrendingUp, TrendingDown, Plus } from 'lucide-react'
 import { getTourFinances } from '@/lib/finances/queries'
 import { ExportCsvButton } from './export-csv-button'
+import { AccountingExportButton } from './accounting-export-button'
 
 export const metadata: Metadata = {
   title: 'Tour Finances',
@@ -52,6 +53,7 @@ export default async function TourFinancesPage({ params }: { params: Promise<{ i
         <h1 className="text-2xl font-bold">Tour Finances</h1>
         <div className="flex gap-2">
           <ExportCsvButton expenses={data.expenses} />
+          <AccountingExportButton tourId={tourId} />
           <Link
             href={`/tours/${tourId}/finances/expenses/new`}
             className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-surface"

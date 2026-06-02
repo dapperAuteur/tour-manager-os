@@ -32,20 +32,6 @@ export const DRIFT_ITEMS: TrackerItem[] = []
 
 export const PLANNED_SECTIONS: TrackerSection[] = [
   {
-    phase: 5,
-    title: 'Phase 5 — Show Day',
-    items: [
-      { key: 'p5-push', label: 'Push notifications for schedule changes' },
-    ],
-  },
-  {
-    phase: 14,
-    title: 'Phase 14 — Musician Tax',
-    items: [
-      { key: 'p14-qb-xero', label: 'QuickBooks / Xero integration' },
-    ],
-  },
-  {
     phase: 15,
     title: 'Phase 15 — Production Bible',
     items: [
@@ -80,7 +66,6 @@ export const PLANNED_SECTIONS: TrackerSection[] = [
     items: [
       { key: 'p24-connect', label: 'Stripe Connect split payments (Phase 24.1)' },
       { key: 'p24-wallet', label: 'Apple/Google Wallet .pkpass ticket delivery' },
-      { key: 'p24-offline', label: 'Offline scanner cache (IndexedDB + reconciliation)' },
     ],
   },
 ]
@@ -108,9 +93,12 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 13 — Admin course/lesson editor', branch: 'feature/academy-editor' },
   { label: 'Phase 13 — Video lesson support (YouTube/Vimeo/Loom/direct mp4 embed)', branch: 'feature/academy-video' },
   { label: 'Phase 19 — Runtime brand theme injection (org primary color → CSS custom properties)', branch: 'feature/white-label-theme' },
+  { label: 'Phase 5 — Web push notifications (VAPID + service worker + advance-submitted trigger)', branch: 'feature/push-notifications' },
+  { label: 'Phase 24 — Offline ticket scanner cache (manifest + IndexedDB queue + sync)', branch: 'feature/offline-scanner' },
+  { label: 'Phase 14 — QuickBooks / Xero accounting CSV export', branch: 'feature/quickbooks-xero-export' },
 ]
 
-export const LAST_SYNCED_DATE = '2026-06-01'
+export const LAST_SYNCED_DATE = '2026-06-02'
 
 export const TOTAL_PLANNED = PLANNED_SECTIONS.reduce(
   (n, s) => n + s.items.length,

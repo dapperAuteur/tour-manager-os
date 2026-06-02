@@ -6,10 +6,21 @@ import {
   Camera,
   CameraOff,
   CheckCircle2,
+  CloudOff,
+  Cloud,
   Keyboard,
   RefreshCw,
   XCircle,
 } from 'lucide-react'
+import {
+  enqueueScan,
+  listQueue,
+  manifestLookup,
+  markManifestUsedLocally,
+  queueSize,
+  removeFromQueue,
+  saveManifest,
+} from '@/lib/scanner/offline-cache'
 
 type ScanResult =
   | 'ok'
@@ -66,6 +77,9 @@ export function ScannerClient({ showId }: ScannerClientProps) {
   const [manualValue, setManualValue] = useState('')
   const [latest, setLatest] = useState<ScanRecord | null>(null)
   const [history, setHistory] = useState<ScanRecord[]>([])
+  const [online, setOnline] = useState(true)
+  const [queued, setQueued] = useState(0)
+  const [manifestReady, setManifestReady] = useState(false)
 
   const tally = useMemo(() => {
     let ok = 0
@@ -78,6 +92,62 @@ export function ScannerClient({ showId }: ScannerClientProps) {
     }
     return { ok, warn, bad }
   }, [history])
+
+  function extractTicketId(qrText: string): string | null {
+    // Plain UUID
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      qrText.trim(),
+    )) {
+      return qrText.trim().toLowerCase()
+    }
+    // JSON {v,id,sig}
+    try {
+      const j = JSON.parse(qrText)
+      if (
+        j &&
+        typeof j.id === 'string' &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(j.id)
+      ) {
+        return j.id.toLowerCase()
+      }
+    } catch {
+      /* not JSON */
+    }
+    return null
+  }
+
+  async function scanOffline(qrText: string, now: number): Promise<ScanRecord> {
+    const ticketId = extractTicketId(qrText)
+    if (!ticketId) {
+      return { result: 'not_found', ticket_id: null, at: now }
+    }
+    const entry = await manifestLookup(showId, ticketId)
+    if (!entry) {
+      return { result: 'not_found', ticket_id: ticketId, at: now }
+    }
+    if (entry.status === 'refunded') {
+      return { result: 'refunded', ticket_id: ticketId, at: now }
+    }
+    if (entry.status === 'void') {
+      return { result: 'void', ticket_id: ticketId, at: now }
+    }
+    if (entry.status === 'used') {
+      return { result: 'already_used', ticket_id: ticketId, at: now }
+    }
+    // Mark used locally so a re-scan in this offline session catches it,
+    // then queue the upstream POST for when we're back online.
+    await markManifestUsedLocally(showId, ticketId)
+    await enqueueScan({
+      key: `${showId}:${ticketId}:${now}`,
+      show_id: showId,
+      qr: qrText,
+      ticket_id: ticketId,
+      offline_scanned_at: new Date(now).toISOString(),
+      attempts: 0,
+    })
+    setQueued(await queueSize())
+    return { result: 'ok', ticket_id: ticketId, at: now }
+  }
 
   const submitScan = useCallback(
     async (qrText: string) => {
@@ -93,6 +163,26 @@ export function ScannerClient({ showId }: ScannerClientProps) {
       if (inflightRef.current.has(qrText)) return
       inflightRef.current.add(qrText)
       lastScanRef.current = { qr: qrText, at: now }
+
+      const isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true
+
+      // Offline path: only viable when the manifest has been
+      // pre-fetched on this device for this show.
+      if (!isOnline) {
+        try {
+          const record = await scanOffline(qrText, now)
+          setLatest(record)
+          setHistory((prev) => [record, ...prev].slice(0, 50))
+          if (navigator.vibrate) {
+            navigator.vibrate(record.result === 'ok' ? 80 : [80, 60, 80])
+          }
+        } catch (err) {
+          setError(err instanceof Error ? err.message : 'offline scan failed')
+        } finally {
+          inflightRef.current.delete(qrText)
+        }
+        return
+      }
 
       try {
         const res = await fetch('/api/tickets/scan', {
@@ -120,13 +210,89 @@ export function ScannerClient({ showId }: ScannerClientProps) {
           navigator.vibrate(json.result === 'ok' ? 80 : [80, 60, 80])
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'network error')
+        // Network failed mid-online — try the offline path as a
+        // fallback so the door keeps moving.
+        const record = await scanOffline(qrText, now).catch(() => null)
+        if (record) {
+          setLatest(record)
+          setHistory((prev) => [record, ...prev].slice(0, 50))
+          setOnline(false)
+        } else {
+          setError(err instanceof Error ? err.message : 'network error')
+        }
       } finally {
         inflightRef.current.delete(qrText)
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [showId, deviceId],
   )
+
+  // Pre-fetch the ticket manifest whenever we're online + on this page.
+  const refreshManifest = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/tickets/manifest?show_id=${showId}`)
+      if (!res.ok) return
+      const json = (await res.json()) as {
+        tickets: { id: string; status: 'issued' | 'used' | 'refunded' | 'void' }[]
+        generated_at: string
+      }
+      await saveManifest(showId, json.generated_at, json.tickets)
+      setManifestReady(true)
+    } catch {
+      /* offline; keep whatever manifest we already had */
+    }
+  }, [showId])
+
+  // Drain queued offline scans when connectivity returns.
+  const drainQueue = useCallback(async () => {
+    const items = await listQueue()
+    for (const item of items) {
+      try {
+        const res = await fetch('/api/tickets/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            qr: item.qr,
+            show_id: item.show_id,
+            device_id: deviceId,
+            offline_scanned_at: item.offline_scanned_at,
+          }),
+        })
+        if (res.ok) {
+          await removeFromQueue(item.key)
+        }
+      } catch {
+        /* still offline or server unreachable */
+        break
+      }
+    }
+    setQueued(await queueSize())
+  }, [deviceId])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    setOnline(navigator.onLine)
+    queueSize().then(setQueued).catch(() => undefined)
+    if (navigator.onLine) {
+      void refreshManifest()
+      void drainQueue()
+    }
+    function onOnline() {
+      setOnline(true)
+      void refreshManifest()
+      void drainQueue()
+    }
+    function onOffline() {
+      setOnline(false)
+    }
+    window.addEventListener('online', onOnline)
+    window.addEventListener('offline', onOffline)
+    return () => {
+      window.removeEventListener('online', onOnline)
+      window.removeEventListener('offline', onOffline)
+    }
+  }, [refreshManifest, drainQueue])
 
   const startCamera = useCallback(async () => {
     if (!videoRef.current || running) return
@@ -181,6 +347,34 @@ export function ScannerClient({ showId }: ScannerClientProps) {
 
   return (
     <div className="space-y-6">
+      <div
+        className={`flex flex-wrap items-center justify-between gap-2 rounded-xl border px-3 py-2 text-xs ${
+          online
+            ? 'border-success-500/30 bg-success-500/5 text-success-700 dark:text-success-300'
+            : 'border-warning-500/40 bg-warning-500/10 text-warning-700 dark:text-warning-300'
+        }`}
+      >
+        <div className="flex items-center gap-1.5">
+          {online ? (
+            <Cloud className="size-3.5" aria-hidden />
+          ) : (
+            <CloudOff className="size-3.5" aria-hidden />
+          )}
+          <span>
+            {online
+              ? manifestReady
+                ? 'Online — manifest cached, ready for offline fallback'
+                : 'Online — caching manifest…'
+              : 'Offline mode — scans queue locally and sync when network returns'}
+          </span>
+        </div>
+        {queued > 0 && (
+          <span className="rounded-full bg-warning-500/20 px-2 py-0.5 font-semibold uppercase tracking-wide">
+            {queued} queued
+          </span>
+        )}
+      </div>
+
       <div className="rounded-2xl border border-border-default bg-surface-raised p-4">
         <div className="relative aspect-square overflow-hidden rounded-lg bg-black">
           <video

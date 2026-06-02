@@ -9,6 +9,10 @@ interface ScanRequest {
   sig?: string
   show_id: string
   device_id?: string
+  /** ISO timestamp captured by the scanner when the QR was decoded
+   * offline. Used as `used_at` instead of now() so the audit trail
+   * reflects door reality, not network catch-up time. */
+  offline_scanned_at?: string
 }
 
 type ScanResult = 'ok' | 'already_used' | 'invalid_sig' | 'wrong_show' | 'refunded' | 'void' | 'not_found'
@@ -73,6 +77,14 @@ export async function POST(request: Request) {
   }
 
   const deviceId = body.device_id || null
+  const offlineScannedAt = (() => {
+    if (!body.offline_scanned_at) return null
+    const t = new Date(body.offline_scanned_at).getTime()
+    if (!Number.isFinite(t)) return null
+    // Clamp to "not in the future" so a misconfigured device clock
+    // can't shift the audit timeline forward.
+    return new Date(Math.min(t, Date.now())).toISOString()
+  })()
 
   async function logScan(
     ticketId: string | null,
@@ -86,6 +98,8 @@ export async function POST(request: Request) {
       device_id: deviceId,
       result,
       attempted_ticket_id: attemptedTicketId,
+      offline_scanned_at: offlineScannedAt,
+      synced_from_offline: !!offlineScannedAt,
     })
   }
 
@@ -137,7 +151,7 @@ export async function POST(request: Request) {
     .from('tickets')
     .update({
       status: 'used',
-      used_at: new Date().toISOString(),
+      used_at: offlineScannedAt || new Date().toISOString(),
       scanned_by_user_id: user.id,
       scanned_device_id: deviceId,
     })

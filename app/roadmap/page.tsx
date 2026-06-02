@@ -78,7 +78,7 @@ const phases: Phase[] = [
       { label: 'Day navigation', done: true },
       { label: 'Timezone-aware times', done: true },
       { label: 'Weather forecast (Open-Meteo, cached)', done: true },
-      { label: 'Push notifications', done: false },
+      { label: 'Push notifications (web push via VAPID + service worker + advance-sheet trigger)', done: true },
     ],
   },
   {
@@ -192,7 +192,7 @@ const phases: Phase[] = [
       { label: 'State-by-state income with progress bars', done: true },
       { label: 'Deduction categories with IRS guidance', done: true },
       { label: 'CSV tax export', done: true },
-      { label: 'QuickBooks/Xero integration', done: false },
+      { label: 'QuickBooks / Xero export (bank-feed CSV, category + account-code mapping)', done: true },
     ],
   },
   {
@@ -313,7 +313,7 @@ const phases: Phase[] = [
       { label: 'Refund handling via Stripe webhook', done: true },
       { label: 'Stripe Connect split payments (artist/venue/crew)', done: false },
       { label: 'Apple/Google Wallet ticket delivery', done: false },
-      { label: 'Offline scanner cache + reconciliation', done: false },
+      { label: 'Offline scanner cache + reconciliation (IndexedDB manifest + queue, auto-sync on reconnect)', done: true },
     ],
   },
   {

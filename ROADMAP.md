@@ -1,6 +1,6 @@
 # Tour Manager OS — Public Roadmap
 
-Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
+Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout detection + Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
 ## Legend
 - ✅ Complete
@@ -75,7 +75,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Travel info from previous show (distance, driver)
 - ✅ Next destination preview
 - ✅ Day off view when no show scheduled
-- 📋 Push notifications for schedule changes
+- ✅ Push notifications for schedule changes — VAPID-signed web push via `web-push`; per-device subscriptions in `push_subscriptions`; opt-in toggle + "Send test" on `/settings`; `public/sw.js` shows the notification and routes the click to the URL the server embedded. Advance-sheet submission now fans out a `advance_submitted` push to every org member who opted in
 - ✅ Weather integration (Open-Meteo, cached per show) — geocoding + 16-day forecast horizon, WMO-code-to-icon mapping, freshness rules (4h ≤ 14d out, 24h beyond), rendered as a `WeatherCard` near the show-day header
 
 ## Phase 6: Demo System ✅
@@ -193,7 +193,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Year selector (5-year range)
 - ✅ Income detail table
 - ✅ CSV tax export (state + deduction summaries + detail records)
-- 📋 QuickBooks/Xero integration
+- ✅ QuickBooks / Xero export — `/api/finances/accounting-export?tour_id=…&format=quickbooks|xero` returns a bank-feed-shaped CSV ready for direct import. QuickBooks Online format: `Date, Description, Amount, Category` with expense amounts negative and our 10 expense categories mapped to QBO chart-of-account names. Xero format: `*Date, *Amount, Payee, Description, Reference, Account Code` with Xero account codes. Both reachable from the **Export for accounting** dropdown on `/tours/[id]/finances` next to the existing raw-CSV export
 - ✅ Auto-populate state income from show revenue (DB function)
 
 ## Phase 15: Production Bible ✅
@@ -329,7 +329,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ `ticketing` module in `featurePages` registry → landing page at `/features/ticketing`
 - 📋 Stripe Connect split payments to artist/venue/crew (Phase 24.1)
 - 📋 Apple/Google Wallet `.pkpass` ticket delivery
-- 📋 Offline scanner cache (IndexedDB + reconciliation)
+- ✅ Offline scanner cache — scanner pre-fetches a ticket manifest via `/api/tickets/manifest`, stores it in IndexedDB (`tmos.scanner` DB), and validates QRs offline when `navigator.onLine` flips false. Successful offline scans queue locally; the queue drains automatically when connectivity returns, replaying each scan with `offline_scanned_at` so the audit trail reflects door reality. `scan_logs` gains `offline_scanned_at` + `synced_from_offline` columns. A banner above the scanner shows online/offline state plus a "N queued" chip when scans are pending sync
 
 ## Phase 24.5: Fan Photo Sharing ✅
 > Ticket-holders share show photos to a pre-moderated public wall. Each photo gets its own sharable link.
