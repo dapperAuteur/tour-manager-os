@@ -17,6 +17,7 @@ export interface PublicShowSummary {
   has_tickets_for_sale: boolean
   fan_photo_count: number
   has_setlist: boolean
+  has_exclusive_content: boolean
 }
 
 /**
@@ -52,7 +53,7 @@ export async function getPublicShow(
       ticket_price: number | null
     }> | null)?.[0] || null
 
-  const [ticketTypesRes, fanPhotosRes, setlistRes] = await Promise.all([
+  const [ticketTypesRes, fanPhotosRes, setlistRes, exclusiveRes] = await Promise.all([
     admin
       .from('ticket_types')
       .select('quantity_available, quantity_sold, active')
@@ -67,6 +68,11 @@ export async function getPublicShow(
       .select('id', { count: 'exact', head: true })
       .eq('show_id', showId)
       .limit(1),
+    admin
+      .from('show_exclusive_content')
+      .select('id', { count: 'exact', head: true })
+      .eq('show_id', showId)
+      .eq('active', true),
   ])
 
   const ticketTypes = ticketTypesRes.data || []
@@ -105,6 +111,7 @@ export async function getPublicShow(
     has_tickets_for_sale,
     fan_photo_count: fanPhotosRes.count ?? 0,
     has_setlist: (setlistRes.count ?? 0) > 0,
+    has_exclusive_content: (exclusiveRes.count ?? 0) > 0,
   }
 }
 

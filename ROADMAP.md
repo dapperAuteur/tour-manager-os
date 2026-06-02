@@ -123,7 +123,7 @@ Last updated: 2026-06-01 (Phase 22 burnout detection + Phase 18 public API endpo
 - ✅ Email sending integration (Mailgun)
 - ✅ CSV subscriber import
 - ✅ Public event pages per show at `/shows/[id]` — fan-facing landing combining tour + venue header, doors/show/curfew times from the advance sheet, ticket-availability summary with a Buy Tickets CTA (deep-link to `/shows/[id]/tickets`), recent-fan-photo grid (deep-link to `/shows/[id]/photos`), setlist callout when one exists. Sharable URL. OG metadata for social posts. Auth show page exposes a &ldquo;Public event page&rdquo; deep link button
-- 📋 Pre/post-show exclusive content
+- ✅ Pre/post-show exclusive content — `show_exclusive_content` table holds per-show pieces with a `phase` (pre/post) and `unlock_offset_hours` relative to show-day midnight. Admin UI at `/tours/[id]/shows/[showId]/exclusive`; public event page renders a "Subscribers only" section where fans drop the email they signed up with and `/api/shows/[id]/exclusive` returns whatever pieces are inside their unlock window if the email is on any of the org&rsquo;s active subscriber lists
 
 ## Phase 10: Family Tour Hub ✅
 > Polls, practice scheduling, shared albums, group collaboration.
