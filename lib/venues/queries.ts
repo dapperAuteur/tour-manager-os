@@ -94,6 +94,13 @@ export async function getVenueProfile(venueId: string) {
     .eq('venue_id', venueId)
     .order('name')
 
+  // Tech docs — sound / lights / video / stage plot files.
+  const { data: documents } = await supabase
+    .from('venue_documents')
+    .select('id, kind, title, file_url, public_id, content_type, bytes, created_at')
+    .eq('venue_id', venueId)
+    .order('created_at', { ascending: false })
+
   // Calculate averages
   const allRatings = ratings || []
   const avgOverall = allRatings.length > 0
@@ -107,6 +114,7 @@ export async function getVenueProfile(venueId: string) {
     contacts: contacts || [],
     contactHistory: history,
     stages: stages || [],
+    documents: documents || [],
     avgRating: Math.round(avgOverall * 10) / 10,
     ratingCount: allRatings.length,
   }
