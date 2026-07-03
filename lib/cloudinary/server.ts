@@ -89,6 +89,96 @@ export async function uploadImage(
   return (await res.json()) as UploadResult
 }
 
+export interface FileUploadResult {
+  public_id: string
+  secure_url: string
+  bytes: number
+  format: string
+  resource_type: string
+}
+
+/**
+ * Uploads any file (PDF, markdown, text, image) via Cloudinary's
+ * `auto` endpoint, which picks the right resource type. Use this for
+ * documents; use uploadImage when you specifically need image
+ * transforms.
+ */
+export async function uploadFile(
+  fileBuffer: Buffer,
+  opts: UploadOptions,
+): Promise<FileUploadResult> {
+  const { cloudName, apiKey, apiSecret } = getCloudinaryConfig()
+  const timestamp = Math.floor(Date.now() / 1000).toString()
+
+  const paramsToSign: Record<string, string> = {
+    folder: opts.folder,
+    timestamp,
+  }
+  if (opts.tags?.length) paramsToSign.tags = opts.tags.join(',')
+
+  const signature = signParams(paramsToSign, apiSecret)
+
+  const form = new FormData()
+  form.append('file', new Blob([fileBuffer as unknown as ArrayBuffer]))
+  form.append('api_key', apiKey)
+  form.append('timestamp', timestamp)
+  form.append('folder', opts.folder)
+  if (paramsToSign.tags) form.append('tags', paramsToSign.tags)
+  form.append('signature', signature)
+
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+    { method: 'POST', body: form },
+  )
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '')
+    throw new Error(`Cloudinary upload failed (${res.status}): ${text}`)
+  }
+
+  return (await res.json()) as FileUploadResult
+}
+
+/**
+ * Deletes a non-image (raw) asset. Cloudinary keys destroy by
+ * resource_type, so raw uploads need resource_type=raw. Best-effort.
+ */
+export async function destroyFile(
+  publicId: string,
+  resourceType = 'raw',
+): Promise<void> {
+  let cfg
+  try {
+    cfg = getCloudinaryConfig()
+  } catch {
+    return
+  }
+  const { cloudName, apiKey, apiSecret } = cfg
+  const timestamp = Math.floor(Date.now() / 1000).toString()
+  const paramsToSign: Record<string, string> = {
+    public_id: publicId,
+    timestamp,
+  }
+  const signature = signParams(paramsToSign, apiSecret)
+
+  const form = new URLSearchParams()
+  form.set('public_id', publicId)
+  form.set('api_key', apiKey)
+  form.set('timestamp', timestamp)
+  form.set('signature', signature)
+
+  await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/destroy`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: form.toString(),
+    },
+  ).catch(() => {
+    // best-effort cleanup; swallow errors
+  })
+}
+
 export async function destroyImage(publicId: string): Promise<void> {
   let cfg
   try {

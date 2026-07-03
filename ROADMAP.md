@@ -125,6 +125,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ CSV subscriber import
 - ✅ Public event pages per show at `/shows/[id]` — fan-facing landing combining tour + venue header, doors/show/curfew times from the advance sheet, ticket-availability summary with a Buy Tickets CTA (deep-link to `/shows/[id]/tickets`), recent-fan-photo grid (deep-link to `/shows/[id]/photos`), setlist callout when one exists. Sharable URL. OG metadata for social posts. Auth show page exposes a &ldquo;Public event page&rdquo; deep link button
 - ✅ Pre/post-show exclusive content — `show_exclusive_content` table holds per-show pieces with a `phase` (pre/post) and `unlock_offset_hours` relative to show-day midnight. Admin UI at `/tours/[id]/shows/[showId]/exclusive`; public event page renders a "Subscribers only" section where fans drop the email they signed up with and `/api/shows/[id]/exclusive` returns whatever pieces are inside their unlock window if the email is on any of the org&rsquo;s active subscriber lists
+- ✅ Live stream a show — tour team clicks **Go Live** on the show detail page; the public event page renders the platform Viloud embed with a &ldquo;Live now&rdquo; badge. Good for fans who can&rsquo;t attend and for behind-the-scenes pre-show. New `shows.stream_live` flag (migration 090), `POST /api/shows/[id]/stream` toggle behind tour-member auth, `lib/streaming/viloud.ts` reading `RTMP_STREAM_PLAYBACK_URL` + `STREAM_EMBED_CODE`. Hidden when off or unconfigured
 
 ## Phase 10: Family Tour Hub ✅
 > Polls, practice scheduling, shared albums, group collaboration.
@@ -288,6 +289,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Smart advance pre-fill from past venue data — `getSmartAdvanceDefaults()` looks up the most-recent SUBMITTED advance for shows whose `venue_name` matches (case-insensitive ILIKE) and copies forward stable fields (venue info, dressing rooms, security, hospitality, stage dimensions, PA, merch area) into any current-sheet blanks. Time-sensitive fields (load-in/soundcheck/doors/curfew/ticket price) are intentionally excluded. A green &ldquo;Pre-filled from {venue} on {date}&rdquo; banner tells the submitter what was carried over
 - ✅ Venue photos — Cloudinary-backed upload with lightbox viewer on `/venues/[id]`, up to 24 per venue (`app/api/venues/[id]/photos/route.ts`, `venue-photos.tsx`)
 - ✅ Map view at `/venues/map` — Leaflet + OpenStreetMap tiles, every venue with lat/lng rendered as a marker, popup shows name/city/capacity/times-played + deep link to the venue profile, auto-fit bounds on load
+- ✅ Venue tech docs — attach the venue&rsquo;s sound / lights / video / stage-plot files (PDF, txt, md, csv, image) to the venue profile so the whole team finds the tech pack before load-in. New `venue_documents` table, Cloudinary-backed upload via `app/api/venues/[id]/documents/route.ts`, self-serve upload + delete UI in `venue-documents.tsx`, up to 40 files per venue
 
 ## Phase 21: Multi-Act Touring ✅
 > Tour packages, festival mode, cross-act coordination.

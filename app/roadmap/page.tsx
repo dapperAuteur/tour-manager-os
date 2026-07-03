@@ -129,6 +129,7 @@ const phases: Phase[] = [
       { label: 'Pin / lock post moderation', done: true },
       { label: 'Email sending (Mailgun)', done: true },
       { label: 'Pre/post-show exclusive content for subscribers (email-gated unlock window)', done: true },
+      { label: 'Live stream a show to fans (Viloud embed + Go Live toggle)', done: true },
     ],
   },
   {
@@ -273,6 +274,7 @@ const phases: Phase[] = [
       { label: 'Smart advance pre-fill', done: true },
       { label: 'Venue photos (Cloudinary upload + lightbox)', done: true },
       { label: 'Map view with Leaflet (OpenStreetMap tiles, click-to-open profile)', done: true },
+      { label: 'Venue tech docs — sound / lights / video / stage-plot files attached to the venue', done: true },
     ],
   },
   {

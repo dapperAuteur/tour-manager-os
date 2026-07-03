@@ -5,6 +5,8 @@ import { getShow } from '@/lib/tours/queries'
 import { listShowContacts } from '@/lib/shows/contacts'
 import { ShowContacts } from './show-contacts'
 import { createClient } from '@/lib/supabase/server'
+import { isStreamingConfigured } from '@/lib/streaming/viloud'
+import { StreamToggle } from './stream-toggle'
 
 export const metadata: Metadata = {
   title: 'Show Details',
@@ -121,6 +123,11 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
             >
               Exclusive content
             </Link>
+            <StreamToggle
+              showId={showId}
+              initialLive={Boolean((show as unknown as { stream_live?: boolean }).stream_live)}
+              configured={isStreamingConfigured()}
+            />
             {advanceLink && (
               <Link
                 href={advanceLink}
