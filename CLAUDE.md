@@ -14,7 +14,13 @@ Required sections per task file: **Scope tag** · **What + why** (with explicit 
 
 ### Plans convention
 
-All implementation plans live in `./plans/` as markdown named `NN-description-of-plan.md` — two-digit numeric prefix, kebab-case slug, next available number, don't skip. Sub-queues: `./plans/user-tasks/NN-slug.md` (operator tasks), `./plans/bugs/`, `./plans/future/`.
+All implementation plans live in `./plans/` as markdown named `NN-description-of-plan.md` — two-digit numeric prefix, kebab-case slug, next available number, don't skip. Sub-queues:
+
+- `./plans/user-tasks/NN-slug.md` — operator tasks BAM performs outside the editor.
+- `./plans/app-improvements/` — open bug reports and improvement asks. **This used to be `./plans/bugs/`; the folder was renamed.** Never target the old name.
+- `./plans/completed/` — every file whose top line reads `DONE` (or that is otherwise finished) gets moved here so the open queue reflects only active work. Do this at the START of a work session (audit for stale DONE files) AND at the END (move newly closed work).
+- `./plans/future/` — ideas parked for later. Nothing in here ships until BAM explicitly greenlights it.
+- `./plans/reports/YYYY-MM-DD-slug.md` — every substantive audit, status report, SWOT analysis, or written recommendation goes here as a standalone markdown file. **Repo rule: reports must land on disk as `.md` files so BAM can review offline.** Do not answer report-shaped questions only in chat; write the file first, then summarize in chat with a link to the file.
 
 ### Citation rule
 
@@ -28,6 +34,7 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 - Go straight to the point. No filler.
 - Show ideas and options rather than asking permission for every small decision.
 - When presenting options, be opinionated — say which you recommend and why.
+- **Confirm the plan before running substantive work.** For anything larger than a one-file edit, one migration, or a trivial fix — state the plan in two or three lines and get a "go" from BAM before executing. Bias toward asking when scope, cost, or destination is ambiguous. Do NOT ask before trivial edits or read-only research.
 
 ### Planning & Process
 - Plans go in `./plans/` as markdown named `NN-description-of-plan.md` (see WitUS ecosystem rules → Plans convention).
@@ -65,6 +72,13 @@ This is a living document. We add to it as we go so I don't repeat instructions.
 **Half 2.** BAM merges committed-and-pushed branches via the GitHub UI before the next session starts, unless explicitly told otherwise. At session start the local checkout is typically fresh-from-main. **Mid-session, after a push, BAM may merge in a separate window and the local checkout silently fast-forwards to `main`.** Re-check `git branch --show-current` before EVERY commit, not just at branch creation, or you risk landing follow-up commits directly on `main` and bypassing the merge gate.
 
 **Half 3.** Keep branches small (one concern per branch). When a session produces multiple branches, Claude consolidates them into one `bundle/<slug>-YYYY-MM-DD` branch before handoff: merge the small branches in lowest-conflict-risk order using `git merge --no-ff` (preserves per-concern history — non-negotiable, no squash), resolve any 3-way conflicts during bundling, run a final `tsc + lint + build` against the bundle, push, and file ONE user-task at `./plans/user-tasks/NN-merge-bundle-<slug>.md` for BAM to merge bundle → main. The small branches stay on the remote for drill-down history; **BAM does one merge, not N.**
+
+**Half 4 — one clean bundle at handoff (added 2026-07-02).** The bundle Claude hands off MUST be conflict-free at push time. Do NOT hand off a bundle whose tip contains `<<<<<<<` markers, whose `npx tsc --noEmit` fails, or whose `npx next lint` shows NEW errors introduced by the bundle. Discipline that makes this work:
+
+- Every feature branch is cut from freshly-fetched `origin/main`, not a stale local `main`.
+- Additions to shared files (`ROADMAP.md`, `app/roadmap/page.tsx`, `README.md`, `lib/admin/unfinished-tracker.ts`, `plans/user-tasks/00-descriptions.md`) go at the END of their section — append, do not insert mid-list.
+- When a bundle merge hits a conflict on `RECENTLY_SHIPPED` or the roadmap phase-block, the correct resolution is the UNION of both changes (keep every branch's entry). Never delete either side.
+- Full workflow: `plans/reports/2026-07-02-single-bundle-no-conflicts-rule.md`.
 
 A checked-in `.githooks/pre-commit` guard refuses commits made directly on `main`/`master`. Activate it once per clone: `git config core.hooksPath .githooks`.
 
