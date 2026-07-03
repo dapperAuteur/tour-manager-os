@@ -288,6 +288,7 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ Smart advance pre-fill from past venue data — `getSmartAdvanceDefaults()` looks up the most-recent SUBMITTED advance for shows whose `venue_name` matches (case-insensitive ILIKE) and copies forward stable fields (venue info, dressing rooms, security, hospitality, stage dimensions, PA, merch area) into any current-sheet blanks. Time-sensitive fields (load-in/soundcheck/doors/curfew/ticket price) are intentionally excluded. A green &ldquo;Pre-filled from {venue} on {date}&rdquo; banner tells the submitter what was carried over
 - ✅ Venue photos — Cloudinary-backed upload with lightbox viewer on `/venues/[id]`, up to 24 per venue (`app/api/venues/[id]/photos/route.ts`, `venue-photos.tsx`)
 - ✅ Map view at `/venues/map` — Leaflet + OpenStreetMap tiles, every venue with lat/lng rendered as a marker, popup shows name/city/capacity/times-played + deep link to the venue profile, auto-fit bounds on load
+- ✅ Venue tech docs — attach the venue&rsquo;s sound / lights / video / stage-plot files (PDF, txt, md, csv, image) to the venue profile so the whole team finds the tech pack before load-in. New `venue_documents` table, Cloudinary-backed upload via `app/api/venues/[id]/documents/route.ts`, self-serve upload + delete UI in `venue-documents.tsx`, up to 40 files per venue
 
 ## Phase 21: Multi-Act Touring ✅
 > Tour packages, festival mode, cross-act coordination.

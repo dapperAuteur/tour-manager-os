@@ -16,7 +16,7 @@ Tour Manager OS digitizes the entire touring workflow:
 - **Fan Engagement** — Marketing email campaigns via Mailgun, or via the band's own Gmail through OAuth send-as (campaigns land in the band's Sent folder, replies route to the band's inbox). Open/click tracking, bounce/complaint webhooks, community forums with pin/lock moderation, and per-show event pages.
 - **Family Collaboration** — Polls, practice scheduling, shared albums, setlist collaboration.
 - **Document Hub** — Contracts, riders, W-9s, venue maps — organized per tour and show.
-- **Venue Network** — Crowd-sourced public venue directory with ratings, fuzzy search, and auto-creation from submitted advance sheets.
+- **Venue Network** — Crowd-sourced public venue directory with ratings, fuzzy search, auto-creation from submitted advance sheets, multiple contacts per venue, multi-stage/space support (indoor/outdoor/tent), photos, a Leaflet map view, and attachable tech-pack files (sound/lights/video/stage-plot PDFs and docs).
 - **Multi-Act Touring** — Tour packages with multiple acts, shared production timelines.
 - **Wellness Platform** — Daily wellness log, warmup routines, family check-ins, CentenarianOS integration.
 - **Academy/LMS** — Courses + lessons + quizzes teaching users how to use the platform.
