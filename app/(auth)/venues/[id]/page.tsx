@@ -7,6 +7,7 @@ import { RatingForm } from './rating-form'
 import { VenueContacts } from './venue-contacts'
 import { VenueStages } from './venue-stages'
 import { VenuePhotos, type VenuePhoto } from './venue-photos'
+import { VenueDocuments } from './venue-documents'
 
 function normalizePhotos(raw: unknown): VenuePhoto[] {
   if (!Array.isArray(raw)) return []
@@ -54,7 +55,7 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
   let data
   try { data = await getVenueProfile(id) } catch { notFound() }
 
-  const { venue, ratings, notes, contacts, contactHistory, stages, avgRating, ratingCount } = data
+  const { venue, ratings, notes, contacts, contactHistory, stages, documents, avgRating, ratingCount } = data
 
   return (
     <main id="main-content" className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -98,6 +99,9 @@ export default async function VenueProfilePage({ params }: { params: Promise<{ i
 
         {/* Multi-stage / spaces */}
         <VenueStages venueId={id} initial={stages} />
+
+        {/* Tech docs — sound / lights / video */}
+        <VenueDocuments venueId={id} initial={documents} />
 
         {/* Photos */}
         <VenuePhotos venueId={id} initial={normalizePhotos(venue.photo_urls)} />
