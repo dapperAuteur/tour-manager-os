@@ -83,6 +83,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 24 — Google Wallet ticket delivery (signed JWT save link)', branch: 'feature/google-wallet-pass' },
   { label: 'Phase 4 — One-page tour settlement PDF report', branch: 'feature/tour-settlement-pdf' },
   { label: 'Phase 20 — Venue tech docs (sound/lights/video/stage-plot file uploads)', branch: 'feature/venue-tech-documents' },
+  { label: 'Phase 9 — Live stream a show to fans (Viloud embed + Go Live toggle)', branch: 'feature/live-stream-viloud' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

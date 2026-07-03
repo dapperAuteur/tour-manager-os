@@ -18,6 +18,8 @@ import {
   listRecentPublishedFanPhotos,
 } from '@/lib/shows/public'
 import { ExclusiveUnlock } from './exclusive-unlock'
+import { LiveStreamEmbed } from './live-stream-embed'
+import { getStreamEmbedCode, getStreamPlaybackUrl } from '@/lib/streaming/viloud'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -91,6 +93,14 @@ export default async function PublicShowPage({ params }: PageProps) {
             )}
           </p>
         </header>
+
+        {/* Live stream — only when the tour team flipped this show live */}
+        {show.stream_live && (
+          <LiveStreamEmbed
+            embedHtml={getStreamEmbedCode()}
+            playbackUrl={getStreamPlaybackUrl()}
+          />
+        )}
 
         {/* Times */}
         {(show.doors_time || show.stage_time || show.curfew_time) && (

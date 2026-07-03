@@ -18,6 +18,7 @@ export interface PublicShowSummary {
   fan_photo_count: number
   has_setlist: boolean
   has_exclusive_content: boolean
+  stream_live: boolean
 }
 
 /**
@@ -36,7 +37,7 @@ export async function getPublicShow(
   const { data: show } = await admin
     .from('shows')
     .select(`
-      id, date, city, state, venue_name,
+      id, date, city, state, venue_name, stream_live,
       tours(name, artist_name),
       advance_sheets(doors_time, stage_time, curfew_time, ticket_price)
     `)
@@ -112,6 +113,7 @@ export async function getPublicShow(
     fan_photo_count: fanPhotosRes.count ?? 0,
     has_setlist: (setlistRes.count ?? 0) > 0,
     has_exclusive_content: (exclusiveRes.count ?? 0) > 0,
+    stream_live: Boolean(show.stream_live),
   }
 }
 
