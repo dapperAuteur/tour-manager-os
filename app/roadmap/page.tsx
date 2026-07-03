@@ -129,6 +129,7 @@ const phases: Phase[] = [
       { label: 'Pin / lock post moderation', done: true },
       { label: 'Email sending (Mailgun)', done: true },
       { label: 'Pre/post-show exclusive content for subscribers (email-gated unlock window)', done: true },
+      { label: 'Live stream a show to fans (Viloud embed + Go Live toggle)', done: true },
     ],
   },
   {
