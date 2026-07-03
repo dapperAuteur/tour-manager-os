@@ -17,6 +17,8 @@ export function Header() {
           </Link>
 
           <nav aria-label="Main navigation" className="hidden items-center gap-4 sm:flex">
+            <Link href="/features" className="text-sm text-text-secondary hover:text-text-primary">Modules</Link>
+            <Link href="/features/academy" className="text-sm text-text-secondary hover:text-text-primary">Academy</Link>
             <Link href="/roadmap" className="text-sm text-text-secondary hover:text-text-primary">Roadmap</Link>
             <Link href="/pricing" className="text-sm text-text-secondary hover:text-text-primary">Pricing</Link>
             <Link href="/login?demo=true" className="text-sm text-text-secondary hover:text-text-primary">Demo</Link>

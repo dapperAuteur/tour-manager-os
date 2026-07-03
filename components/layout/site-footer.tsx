@@ -63,6 +63,7 @@ export function SiteFooter() {
               <li><Link href="/" className={externalLinkClasses}>Home</Link></li>
               <li><Link href="/pricing" className={externalLinkClasses}>Pricing</Link></li>
               <li><Link href="/roadmap" className={externalLinkClasses}>Roadmap</Link></li>
+              <li><Link href="/features" className={externalLinkClasses}>Modules</Link></li>
               <li><Link href="/features/academy" className={externalLinkClasses}>Academy</Link></li>
               <li><Link href="/login?demo=true" className={externalLinkClasses}>Try Demo</Link></li>
               <li><Link href="/login" className={externalLinkClasses}>Sign in</Link></li>
