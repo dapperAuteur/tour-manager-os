@@ -19,6 +19,7 @@ export interface PublicShowSummary {
   has_setlist: boolean
   has_exclusive_content: boolean
   stream_live: boolean
+  wanderlearn_url: string | null
 }
 
 /**
@@ -37,7 +38,7 @@ export async function getPublicShow(
   const { data: show } = await admin
     .from('shows')
     .select(`
-      id, date, city, state, venue_name, stream_live,
+      id, date, city, state, venue_name, stream_live, wanderlearn_url,
       tours(name, artist_name),
       advance_sheets(doors_time, stage_time, curfew_time, ticket_price)
     `)
@@ -114,6 +115,7 @@ export async function getPublicShow(
     has_setlist: (setlistRes.count ?? 0) > 0,
     has_exclusive_content: (exclusiveRes.count ?? 0) > 0,
     stream_live: Boolean(show.stream_live),
+    wanderlearn_url: (show.wanderlearn_url as string | null) ?? null,
   }
 }
 

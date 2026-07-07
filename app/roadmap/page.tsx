@@ -130,6 +130,7 @@ const phases: Phase[] = [
       { label: 'Email sending (Mailgun)', done: true },
       { label: 'Pre/post-show exclusive content for subscribers (email-gated unlock window)', done: true },
       { label: 'Live stream a show to fans (Viloud embed + Go Live toggle)', done: true },
+      { label: 'WanderLearn 360 virtual tour embed per show (allowlisted host)', done: true },
     ],
   },
   {

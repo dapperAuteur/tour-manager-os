@@ -7,6 +7,7 @@ import { ShowContacts } from './show-contacts'
 import { createClient } from '@/lib/supabase/server'
 import { isStreamingConfigured } from '@/lib/streaming/viloud'
 import { StreamToggle } from './stream-toggle'
+import { WanderlearnForm } from './wanderlearn-form'
 
 export const metadata: Metadata = {
   title: 'Show Details',
@@ -139,6 +140,14 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
               </Link>
             )}
           </div>
+        </div>
+
+        {/* Virtual tour attach (WanderLearn) */}
+        <div className="mb-6">
+          <WanderlearnForm
+            showId={showId}
+            initialUrl={(show as unknown as { wanderlearn_url?: string | null }).wanderlearn_url ?? null}
+          />
         </div>
 
         {!advance || advance.status === 'pending' ? (

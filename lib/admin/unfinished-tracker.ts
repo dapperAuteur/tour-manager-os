@@ -84,6 +84,7 @@ export const RECENTLY_SHIPPED: { label: string; branch: string }[] = [
   { label: 'Phase 4 — One-page tour settlement PDF report', branch: 'feature/tour-settlement-pdf' },
   { label: 'Phase 20 — Venue tech docs (sound/lights/video/stage-plot file uploads)', branch: 'feature/venue-tech-documents' },
   { label: 'Phase 9 — Live stream a show to fans (Viloud embed + Go Live toggle)', branch: 'feature/live-stream-viloud' },
+  { label: 'Phase 9 — WanderLearn 360 virtual tour embed per show', branch: 'feature/wanderlearn-embed' },
 ]
 
 export const LAST_SYNCED_DATE = '2026-06-02'

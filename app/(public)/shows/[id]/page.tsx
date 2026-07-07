@@ -20,6 +20,7 @@ import {
 import { ExclusiveUnlock } from './exclusive-unlock'
 import { LiveStreamEmbed } from './live-stream-embed'
 import { getStreamEmbedCode, getStreamPlaybackUrl } from '@/lib/streaming/viloud'
+import { WanderlearnEmbed } from './wanderlearn-embed'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -101,6 +102,9 @@ export default async function PublicShowPage({ params }: PageProps) {
             playbackUrl={getStreamPlaybackUrl()}
           />
         )}
+
+        {/* Virtual tour (WanderLearn) */}
+        <WanderlearnEmbed url={show.wanderlearn_url} />
 
         {/* Times */}
         {(show.doors_time || show.stage_time || show.curfew_time) && (
