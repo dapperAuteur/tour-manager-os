@@ -11,6 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "db:types": "npx supabase gen types typescript --local > lib/supabase/database.types.ts",
     "db:push": "npx supabase db push",
     "db:seed": "npx supabase db seed",
@@ -21,6 +23,7 @@
     "@ai-sdk/openai": "^3.0.67",
     "@ai-sdk/openai-compatible": "^2.0.48",
     "@ai-sdk/react": "^3.0.195",
+    "@sentry/nextjs": "^10.69.0",
     "@stripe/react-stripe-js": "^6.5.0",
     "@stripe/stripe-js": "^9.7.0",
     "@supabase/ssr": "^0.6.1",
@@ -59,6 +62,7 @@
     "eslint": "^9.24.0",
     "eslint-config-next": "^15.3.1",
     "tailwindcss": "^4.1.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.10"
   }
 }

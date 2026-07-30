@@ -52,6 +52,8 @@ Tour Manager OS digitizes the entire touring workflow:
 | Vector | pgvector on Supabase (HNSW cosine, 1024-dim Mistral embeddings) |
 | AI observability | LangSmith (traceable wrapper on embed / chat / vision calls) |
 | Analytics | PostHog + Vercel Speed Insights + Vercel Analytics |
+| Error monitoring | Better Stack via the `@sentry/nextjs` SDK (server + edge + browser). Inert until `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` are set; a `beforeSend` scrubber strips advance tokens, auth codes, JWTs, API keys, and emails before anything leaves the process |
+| Tests | Vitest (`npm test`), node environment, unit tests for pure logic |
 | Deployment | Vercel |
 
 ## Getting Started
@@ -139,7 +141,12 @@ tour-manager-os/
 │   ├── tickets/            # HMAC signing helpers
 │   ├── cloudinary/         # Server-signed upload helper
 │   ├── email/              # Mailgun client + send-campaign action
+│   ├── observability/      # Structured logger + Sentry PII scrubber (+ its unit test)
 │   └── modules/            # Module registry + feature page data
+├── instrumentation.ts      # Runtime hook: loads error monitoring, tags the tenant host
+├── instrumentation-client.ts # Browser error monitoring init
+├── sentry.server.config.ts # Node runtime init (DSN-guarded)
+├── sentry.edge.config.ts   # Edge/middleware runtime init (DSN-guarded)
 ├── supabase/
 │   └── migrations/         # SQL migrations (run via psql against remote)
 ├── plans/                  # Internal product plans (gitignored)

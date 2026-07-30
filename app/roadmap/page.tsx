@@ -42,6 +42,13 @@ const phases: Phase[] = [
       { label: 'Light/dark mode', done: true },
       { label: 'SEO & social media optimization', done: true },
       { label: 'Vercel Analytics', done: true },
+      // Code is shipped and inert; this flips to done once the DSN env vars are set in Vercel
+      // (plans/user-tasks/44). Left false deliberately rather than claiming a feature that is
+      // not yet reporting.
+      {
+        label: 'Error monitoring (crash reports with personal data scrubbed out)',
+        done: false,
+      },
     ],
   },
   {
