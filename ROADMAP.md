@@ -2,6 +2,8 @@
 
 Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout detection + Phase 18 public API endpoints + OpenAPI spec + Phase 10 days-off planner + Phase 22 days-off wellness suggestions + Phase 7 ecosystem footer with Rise Wellness on all public pages + Phase 12 unfinished-tracker admin page + Phase 3 per-module tutorials + Phase 16 CSV import wizard + Phase 20 self-serve venue contacts UI + Phase 24.5 + audit quick-wins + weather + structured logging + admin-education course + AI help search + conversational agent + admin AI management + receipt OCR + WitUS Inbox feedback mirror)
 
+Also updated 2026-07-29: error monitoring wired (Better Stack via the Sentry SDK) with a PII scrubber, plus the repo's first unit test.
+
 ## Legend
 - ✅ Complete
 - 🚧 In Progress
@@ -394,6 +396,8 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 - ✅ `toggleLockPost()` server action for community moderation (mirrors `togglePinPost`)
 - ✅ Phase 24 Ticketing System (Stripe Checkout + HMAC QR + door scanner + manager dashboard)
 - ✅ Phase 24.5 Fan Photo Sharing (ticket-holder gate + Cloudinary uploads + pre-moderation + share pages)
+- ✅ Crash-grade error monitoring (`@sentry/nextjs` SDK reporting to Better Stack) across the Node, edge, and browser runtimes, with `onRequestError` tagging every crash with the tenant host, a `beforeSend` PII scrubber (`lib/observability/sentry-scrub.ts`) that strips advance tokens / auth codes / JWTs / API keys / emails, and a root `app/global-error.tsx` boundary. **Inert until `SENTRY_DSN` + `NEXT_PUBLIC_SENTRY_DSN` are set** (see `plans/user-tasks/44`), so it reports nothing yet.
+- ✅ First automated test in the repo: `vitest` + `lib/observability/sentry-scrub.test.ts` (26 cases). `npm run test` in the README is now real rather than aspirational.
 
 ---
 
