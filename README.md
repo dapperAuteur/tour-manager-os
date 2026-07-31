@@ -168,6 +168,38 @@ npm run db:reset     # Reset database and re-seed
 npm run db:types     # Generate TypeScript types from Supabase schema
 ```
 
+## Health Check
+
+`GET /api/health` is the endpoint uptime monitors should watch. **Point Better Stack at
+`https://tour.witus.online/api/health`, not at `/`.** The homepage can serve a cached 200 while
+Postgres is unreachable, so a green check on `/` proves only that the CDN is awake. This route runs
+a real database query on every request, is never cached (`force-dynamic` plus `Cache-Control:
+no-store`), and answers `HEAD` as well as `GET`.
+
+| State | Status | Body |
+| --- | --- | --- |
+| Database answered | `200` | `{"ok":true,"checks":{"database":"ok"}}` |
+| Database did not answer, errored, or timed out after 4s | `503` | `{"ok":false,"error":"database_unreachable"}` |
+
+The failure body is a fixed literal. Raw driver and PostgREST errors are never echoed, because a
+connection error can quote the connection string; at most an error code reaches the server log.
+
+What it checks, and deliberately does not:
+
+- Runs with the **anon key**, never the service role. A public unauthenticated endpoint never gets
+  an elevated client.
+- Queries `modules`, the tiny public-read feature registry, with `head: true` and no `count`, so
+  PostgREST returns an empty body. No tour, venue, show, ticket, settlement or advance-sheet row is
+  read, returned, or counted, and nothing in the response implies volume.
+- **Tenant-agnostic.** It reads no host header, no cookie and no tenant context, and `modules` is
+  global rather than org-scoped, so a request on an unrecognised white-label custom domain gets the
+  same answer as one on the platform host. `middleware.ts` excludes `/api/health` from its matcher
+  for the same reason: the custom-domain tenant lookup must not sit between a monitor and the
+  answer, or a healthy app can read as down.
+
+Implementation: `app/api/health/route.ts`. Tests: `app/api/health/route.test.ts` and
+`middleware.test.ts`.
+
 ## Documentation
 
 - [Roadmap](ROADMAP.md) — Phase-by-phase status of every feature with ✅ / 📋 / 🚧 / 💡 markers

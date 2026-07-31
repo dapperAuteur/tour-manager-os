@@ -77,8 +77,13 @@ export async function middleware(request: NextRequest) {
   return supabaseResponse
 }
 
+// `api/health` is excluded on purpose. The uptime probe must answer the same way on every
+// hostname, and everything above this line is host-dependent: custom-domain tenant resolution
+// runs a Supabase lookup and the auth gate reads cookies. Routing the monitor through either
+// would let an unrecognised white-label host, or a tenant-lookup hiccup, make a perfectly
+// healthy app read as down. The route is public and returns no data, so it needs no gate.
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/health$|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
