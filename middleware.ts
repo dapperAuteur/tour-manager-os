@@ -4,6 +4,7 @@ import {
   isPlatformHost,
   resolveTenantFromHost,
 } from '@/lib/multi-tenant/resolver'
+import { requiresAuth } from '@/lib/auth/public-paths'
 
 export async function middleware(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -60,14 +61,10 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Public routes that don't require authentication
-  const publicPaths = ['/', '/login', '/signup', '/auth/callback', '/advance', '/for/', '/features/']
-
-  const isPublicPath = publicPaths.some(
-    (path) => request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(path)
-  )
-
-  if (!user && !isPublicPath) {
+  // Which paths a signed-out visitor may reach lives in lib/auth/public-paths so it is unit
+  // testable. Until this branch the list here held '/' and was matched with startsWith, so every
+  // path counted as public and the redirect below was unreachable code.
+  if (!user && requiresAuth(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('redirect', request.nextUrl.pathname)
