@@ -32,8 +32,10 @@ export default withSentryConfig(nextConfig, {
   project: process.env.SENTRY_PROJECT,
   silent: !process.env.CI,
   widenClientFileUpload: true,
-  // Kept for parity with the rest of the WitUS apps, which share this config block. NOTE: SDK v10
-  // prints a deprecation warning for this and wants `webpack.treeshake.removeDebugLogging`
-  // instead. Change it ecosystem-wide in one pass rather than letting the repos drift.
-  disableLogger: true,
+  webpack: {
+    // Strips the SDK's own debug logging from the bundle. Replaces the deprecated top-level
+    // `disableLogger` option. Webpack-only, so it is a no-op under Turbopack (same as the old
+    // flag was), but it silences the v10 deprecation warning.
+    treeshake: { removeDebugLogging: true },
+  },
 })
