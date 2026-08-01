@@ -142,7 +142,9 @@ tour-manager-os/
 │   ├── cloudinary/         # Server-signed upload helper
 │   ├── email/              # Mailgun client + send-campaign action
 │   ├── observability/      # Structured logger + Sentry PII scrubber (+ its unit test)
+│   ├── auth/               # public-paths.ts: which paths a signed-out visitor may reach
 │   └── modules/            # Module registry + feature page data
+├── middleware.ts           # Tenant resolution + the signed-out login redirect
 ├── instrumentation.ts      # Runtime hook: loads error monitoring, tags the tenant host
 ├── instrumentation-client.ts # Browser error monitoring init
 ├── sentry.server.config.ts # Node runtime init (DSN-guarded)
@@ -152,6 +154,28 @@ tour-manager-os/
 ├── plans/                  # Internal product plans (gitignored)
 └── public/                 # Static assets
 ```
+
+## Authentication and route protection
+
+Three layers, in the order a request meets them:
+
+1. **`middleware.ts`** redirects a signed-out visitor to `/login?redirect=<path>`. What counts as
+   public is `lib/auth/public-paths.ts`: an exact list (`/`, `/login`, `/signup`, `/pricing`,
+   `/roadmap`, `/features`, `/wellness-resources`, plus `/robots.txt`, `/sitemap.xml`, `/sw.js`)
+   and a prefix list (`/auth/callback`, `/advance/`, `/for/`, `/features/`, `/shows/`, `/store/`,
+   `/photos/`, `/tickets/`). Exact and prefix are separate lists on purpose: a single list matched
+   with `startsWith` made `/` a prefix of every path, and this redirect never ran.
+2. **`app/(auth)/layout.tsx`** calls `supabase.auth.getUser()` and redirects to `/login` when there
+   is no session. Every page in that route group inherits it, so it is the real gate for the app,
+   and the middleware is defence in depth in front of it.
+3. **Route handlers gate themselves.** Middleware never redirects `/api/*`, because a 302 to an HTML form
+   is useless to a webhook or an API client. Each handler under `app/api` does its own check
+   (session + 401, `Authorization: Bearer tmos_...` API key, Stripe/Mailgun signature, or
+   `CRON_SECRET`) or is anonymous by design (public storefront checkout, ticket-token wallet
+   passes, `/api/health`).
+
+Row-level security in Postgres is the backstop under all three: an authenticated request that
+reaches data it does not own returns zero rows.
 
 ## Scripts
 
