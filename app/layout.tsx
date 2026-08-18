@@ -5,7 +5,7 @@ import { ThemeProvider } from '@/lib/theme/theme-provider'
 import { ThemeScript } from '@/lib/theme/theme-script'
 import { SkipToMain } from '@/components/ui/skip-to-main'
 import { HelpBubble } from '@/components/ui/help-bubble'
-import { PostHogProvider } from '@/components/analytics/posthog-provider'
+import { PostHogProvider } from '@/lib/analytics/posthog-provider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -57,13 +57,18 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-surface text-text-primary antialiased">
         <ThemeProvider>
-          <PostHogProvider>
-            <SkipToMain />
-            {children}
-            <HelpBubble />
-            <Analytics />
-            <SpeedInsights />
-          </PostHogProvider>
+          {/* Renders null; env is read here in the Server Component and passed down.
+              `?? null` is the supported keyless state — no key, no capture, page
+              renders normally. apiHost="/ingest" is proxied in next.config.mjs. */}
+          <PostHogProvider
+            apiKey={process.env.NEXT_PUBLIC_POSTHOG_KEY ?? null}
+            apiHost="/ingest"
+          />
+          <SkipToMain />
+          {children}
+          <HelpBubble />
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

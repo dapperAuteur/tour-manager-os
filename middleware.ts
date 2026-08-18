@@ -81,6 +81,6 @@ export async function middleware(request: NextRequest) {
 // healthy app read as down. The route is public and returns no data, so it needs no gate.
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|api/health$|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/health$|ingest|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
