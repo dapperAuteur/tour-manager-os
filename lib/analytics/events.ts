@@ -18,7 +18,7 @@
  */
 
 /** This app's slug. Every event carries it via register({ app }). */
-export const ANALYTICS_APP = 'tour-manager-os'
+export const ANALYTICS_APP = 'tour'
 
 /**
  * Events with identical names across every ecosystem app. Names are contractual.
