@@ -38,7 +38,7 @@ export function WanderlearnForm({ showId, initialUrl }: Props) {
     <div className="rounded-lg border border-border-default bg-surface-raised p-4">
       <div className="mb-2 flex items-center gap-2">
         <Globe className="size-4 text-primary-600 dark:text-primary-400" aria-hidden />
-        <h3 className="text-sm font-semibold">Virtual tour (WanderLearn)</h3>
+        <h3 className="text-sm font-semibold">Virtual tour (Wanderlust)</h3>
       </div>
 
       {savedUrl && !editing ? (
@@ -76,14 +76,14 @@ export function WanderlearnForm({ showId, initialUrl }: Props) {
       ) : (
         <div className="space-y-2">
           <p className="text-xs text-text-secondary">
-            Paste the WanderLearn embed code or tour link. Fans watch a 360
+            Paste the Wanderlust embed code or tour link. Fans watch a 360
             virtual tour on the show&apos;s public page.
           </p>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             rows={3}
-            placeholder='<iframe src="https://wanderlearn.witus.online/embed/tours/..."></iframe>'
+            placeholder='<iframe src="https://wanderlust.witus.online/embed/tours/..."></iframe>'
             className="w-full rounded-md border border-border-default bg-surface px-2 py-1.5 font-mono text-xs"
           />
           {error && (
