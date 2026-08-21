@@ -9,10 +9,10 @@ const SIBLING_PRODUCTS: { name: string; href: string }[] = [
   { name: 'WitUS Inbox', href: 'https://inbox.witus.online' },
   { name: 'CentenarianOS', href: 'https://centenarianos.com' },
   { name: 'Work.WitUS', href: 'https://work.witus.online' },
-  { name: 'Wanderlearn', href: 'https://wanderlearn.witus.online' },
+  { name: 'Wanderlust', href: 'https://wanderlust.witus.online' },
   { name: 'Fly.WitUS', href: 'https://fly.witus.online' },
   { name: 'FlashLearnAI', href: 'https://flashlearnai.witus.online' },
-  { name: 'Learn.WitUS', href: 'https://centenarianos.com/academy' },
+  { name: 'Learn.WitUS', href: 'https://learn.witus.online' },
   { name: 'AwesomeWebStore', href: 'https://awesomewebstore.com' },
 ]
 
