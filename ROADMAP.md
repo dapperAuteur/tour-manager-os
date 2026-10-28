@@ -304,7 +304,7 @@ Also updated 2026-07-29: error monitoring wired (Better Stack via the Sentry SDK
 - ✅ Act-specific blocks (assign to individual act or all)
 - ✅ Date selector for multi-day events
 - ✅ Cross-act messaging at `/packages/[id]/messages` — single channel per tour package where any act on the bill can post. Senders can pick which act they speak as (drawn from the package&apos;s `package_acts` they have org access to) or post under their plain name. Snapshots sender name + act label at send time so historical posts stay correct after renames. New `package_messages` table; broad-auth RLS (any signed-in user can read/post; only the author can edit or delete their own)
-- 📋 Festival mode (multiple stages)
+- ✅ Festival mode — `festival_slots` table assigns acts to stages with start times + set lengths per show. UI at `/tours/[id]/shows/[showId]/festival` lets you build the lineup grid (grouped by stage). Pulls available stages from the matched `venue_stages` and available acts from the tour&apos;s `package_acts`. Free-form act-name override for guest acts not in the lineup. Defaults to a single-stage view if no stages are mapped
 
 ## Phase 22: Wellness Platform ✅
 > Health and wellbeing tools for life on the road, powered by CentenarianOS and Rise Wellness.

@@ -129,6 +129,12 @@ export default async function ShowDetailPage({ params }: { params: Promise<{ id:
               initialLive={Boolean((show as unknown as { stream_live?: boolean }).stream_live)}
               configured={isStreamingConfigured()}
             />
+            <Link
+              href={`/tours/${tourId}/shows/${showId}/festival`}
+              className="inline-flex items-center gap-1 rounded-lg border border-border-default px-3 py-2 text-sm font-medium transition-colors hover:bg-surface-alt focus:outline-none focus:ring-2 focus:ring-primary-500"
+            >
+              Festival lineup
+            </Link>
             {advanceLink && (
               <Link
                 href={advanceLink}
