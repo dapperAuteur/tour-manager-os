@@ -14,7 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:types": "npx supabase gen types typescript --local > lib/supabase/database.types.ts",
-    "db:push": "npx supabase db push",
+    "db:push": "echo 'Refused: this project has no Supabase migration history, so supabase db push would replay every migration. Merge to main; the Migrate production database workflow applies new files (docs/01-operations.md).' >&2 && exit 1",
     "db:seed": "npx supabase db seed",
     "db:reset": "npx supabase db reset"
   },

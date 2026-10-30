@@ -3,7 +3,7 @@ app: tour
 name: Tour Manager OS
 stage: beta
 url: https://tour.witus.online
-updated: 2026-10-29
+updated: 2026-10-30
 ---
 
 ## Live now
@@ -23,10 +23,10 @@ updated: 2026-10-29
 
 ## In progress
 - Sign in with WitUS (branch feat/witus-sign-in)
+- Migrations applied by CI on merge, with a migration ledger and a fresh database password each run (branch feat/migrate-workflow)
 
 ## Next
 - Finish and turn on Sign in with WitUS
-- Automate migrations after deploy with a migration ledger (ecosystem post-deploy rule)
 
 ## Backlog
 - Outlook connected email (Gmail is done)
