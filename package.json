@@ -37,7 +37,7 @@
     "langsmith": "^0.7.3",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.477.0",
-    "next": "^15.3.1",
+    "next": "^15.5.28",
     "passkit-generator": "^3.5.7",
     "pdf-lib": "^1.17.1",
     "posthog-js": "^1.364.4",
@@ -60,7 +60,7 @@
     "@types/react-dom": "^19.1.0",
     "@types/web-push": "^3.6.4",
     "eslint": "^9.24.0",
-    "eslint-config-next": "^15.3.1",
+    "eslint-config-next": "^15.5.28",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
     "vitest": "^4.1.10"
