@@ -92,8 +92,8 @@ api_headers() {
 
 rotate_password() {
   NEW_PW="$(openssl rand -hex 32)"
-  # Mask before anything else can print it.
-  echo "::add-mask::$NEW_PW"
+  # Mask before anything else can print it. Only on GitHub: on a laptop this line would print it.
+  if [ "${GITHUB_ACTIONS:-}" = "true" ]; then echo "::add-mask::$NEW_PW"; fi
   local code
   # printf is a shell builtin, so the password is not in any process's arguments either.
   code="$(printf '{"password":"%s"}' "$NEW_PW" | curl -sS -o "$WORK/patch.json" -w '%{http_code}' -X PATCH \
