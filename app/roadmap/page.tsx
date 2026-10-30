@@ -49,6 +49,9 @@ const phases: Phase[] = [
         label: 'Error monitoring (crash reports with personal data scrubbed out)',
         done: false,
       },
+      // Code is on feat/witus-sign-in and inert until the WitUS client env vars are set and the
+      // IdP registers Tour's callback (plans/user-tasks/52). Flip to done once it signs people in.
+      { label: 'Sign in with WitUS (one account for every WitUS app)', done: false },
     ],
   },
   {

@@ -5,6 +5,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { LayoutDashboard, Music, Settings, LogOut, Menu, X, Blocks, Shield, DollarSign, CalendarDays, ShoppingBag, Mail, MessageCircle, Users, MessageSquare, HelpCircle, BarChart3, ScrollText, GraduationCap, FileText, Wrench, CreditCard, Database, Code2, Key, Palette, MapPin, Heart, PenSquare, Bot, ClipboardList, UserRound, Flag } from 'lucide-react'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { SignOutEverywhereButton } from '@/components/auth/sign-out-everywhere-button'
+import { SIGN_OUT_LABEL } from '@/lib/auth/witus-sso'
 
 // Feature modules — the core touring tools
 const navItems = [
@@ -61,13 +63,18 @@ interface AppNavProps {
   userName: string
   isAdmin?: boolean
   unreadFeedback?: number
+  /** Server-resolved IdP logout URL; null hides "Sign out of WitUS everywhere". */
+  signOutEverywhereUrl?: string | null
 }
 
-export function AppNav({ userName, isAdmin = false, unreadFeedback = 0 }: AppNavProps) {
+export function AppNav({ userName, isAdmin = false, unreadFeedback = 0, signOutEverywhereUrl = null }: AppNavProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
 
+  // "Sign out" ends ONLY Tour's Supabase session; it never visits the WitUS IdP, so other WitUS
+  // apps stay signed in. Ending WitUS too is the separate SignOutEverywhereButton below (BAM,
+  // 2026-10-29, witus task 128 option (b)).
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -236,8 +243,9 @@ export function AppNav({ userName, isAdmin = false, unreadFeedback = 0 }: AppNav
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-alt hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <LogOut className="h-4 w-4" aria-hidden="true" />
-            Log Out
+            {SIGN_OUT_LABEL}
           </button>
+          <SignOutEverywhereButton logoutUrl={signOutEverywhereUrl} />
         </div>
       </nav>
     </>

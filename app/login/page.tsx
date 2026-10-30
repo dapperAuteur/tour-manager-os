@@ -1,18 +1,28 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { LoginForm } from './login-form'
 import { DemoLogin } from './demo-login'
 import { Header } from '@/components/layout/header'
 import { SiteFooter } from '@/components/layout/site-footer'
+import { WitusSignIn } from '@/components/auth/witus-sign-in'
+import { resolveWitusSsoConfig } from '@/lib/auth/witus-sso-server'
 
 export const metadata: Metadata = {
   title: 'Log In',
   robots: { index: false, follow: false },
 }
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ demo?: string }> }) {
-  const { demo } = await searchParams
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ demo?: string; error?: string; redirect?: string }>
+}) {
+  const { demo, error, redirect } = await searchParams
   const isDemo = demo === 'true'
+  // Server-resolved: on only for a configured WitUS client on the registered host, so white-label
+  // custom domains and previews never show it (lib/auth/witus-sso.ts, witusSsoConfigFor).
+  const witus = resolveWitusSsoConfig((await headers()).get('host'))
 
   return (
     <>
@@ -31,6 +41,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <Suspense fallback={<div className="h-48" />}>
               <LoginForm />
             </Suspense>
+            <WitusSignIn enabled={witus.enabled} error={error} next={redirect} />
           </div>
         )}
       </main>

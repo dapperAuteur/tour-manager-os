@@ -142,7 +142,7 @@ tour-manager-os/
 │   ├── cloudinary/         # Server-signed upload helper
 │   ├── email/              # Mailgun client + send-campaign action
 │   ├── observability/      # Structured logger + Sentry PII scrubber (+ its unit test)
-│   ├── auth/               # public-paths.ts: which paths a signed-out visitor may reach
+│   ├── auth/               # public-paths.ts (signed-out access) + witus-sso*.ts, witus-callback.ts (Sign in with WitUS)
 │   └── modules/            # Module registry + feature page data
 ├── middleware.ts           # Tenant resolution + the signed-out login redirect
 ├── instrumentation.ts      # Runtime hook: loads error monitoring, tags the tenant host
@@ -176,6 +176,29 @@ Three layers, in the order a request meets them:
 
 Row-level security in Postgres is the backstop under all three: an authenticated request that
 reaches data it does not own returns zero rows.
+
+### Sign in with WitUS
+
+`/login` also offers **Sign in with WitUS**, the shared account for every WitUS app, served by the
+identity provider at `accounts.witus.online`. Tour runs its own OIDC authorization-code + PKCE flow
+(ported from CentenarianOS, the other Supabase app in the ecosystem):
+
+- `app/api/auth/witus/authorize` stores state + PKCE in 10-minute httpOnly cookies and redirects to
+  the IdP. `app/api/auth/witus/callback` exchanges the code, reads `userinfo`, signs in the Tour
+  user whose email matches the IdP-verified email (creating one if none exists), and records the
+  WitUS `sub` in `witus_identities` (migration `096`). Decisions live in `lib/auth/witus-sso.ts`
+  and `lib/auth/witus-callback.ts`, covered by the two `lib/auth/witus-*.test.ts` files.
+- Once per browser session, a signed-out visitor on `/login` is sent through the flow with
+  `prompt=none`: with a live WitUS session they come back signed in, without one they return to
+  `/login` with no message. `/login?no_sso=1` skips it.
+- **Sign out** in the sidebar ends only the Tour session. **Sign out of WitUS everywhere** ends the
+  Tour session, then the WitUS session at the IdP; other WitUS apps stay signed in until signed out
+  of individually.
+- All of it is off unless `WITUS_OIDC_CLIENT_ID` is set, and it only appears on the host of
+  `NEXT_PUBLIC_SITE_URL` (default `https://tour.witus.online`), never on a white-label custom
+  domain or a preview deployment. Env vars: `WITUS_OIDC_CLIENT_ID`, `WITUS_OIDC_CLIENT_SECRET`,
+  optional `WITUS_OIDC_AUTHORIZE_URL` / `WITUS_OIDC_TOKEN_URL` / `WITUS_OIDC_USERINFO_URL`, and
+  `NEXT_PUBLIC_SITE_URL` (see `.env.example`).
 
 ## Scripts
 
