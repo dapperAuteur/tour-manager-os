@@ -4,6 +4,8 @@ Last updated: 2026-06-02 (Phase 5 web push notifications + Phase 22 burnout dete
 
 Also updated 2026-07-29: error monitoring wired (Better Stack via the Sentry SDK) with a PII scrubber, plus the repo's first unit test.
 
+Also updated 2026-10-29: Sign in with WitUS added to Phase 2 as 🚧 (code on `feat/witus-sign-in`, inert until its env vars and the IdP registration land).
+
 ## Legend
 - ✅ Complete
 - 🚧 In Progress
@@ -34,7 +36,8 @@ Also updated 2026-07-29: error monitoring wired (Better Stack via the Sentry SDK
 - ✅ Global timezone picker — 80+ IANA zones grouped by region (US & Canada / Latin America / Europe & UK / Africa & Middle East / Asia / Australia, NZ & Pacific / UTC). Shared `<TimezoneSelect>` component wired into settings, the show-creation form, and any other timezone `<select>`. Replaces the old 8-option US-centric list so international tours don&apos;t have to settle for &ldquo;closest US zone&rdquo;.
 - ✅ Light/dark/system theme with flash prevention
 - ✅ Responsive nav sidebar with mobile drawer
-- ✅ Logout functionality
+- ✅ Logout functionality (the sidebar control now reads "Sign out")
+- 🚧 Sign in with WitUS (the shared WitUS account) on `/login`, with silent sign-in when another WitUS app is already signed in, and a secondary "Sign out of WitUS everywhere" in the sidebar. Code is on branch `feat/witus-sign-in` (`app/api/auth/witus/*`, `lib/auth/witus-sso.ts`, migration `096_witus_identities.sql`). Inert until `WITUS_OIDC_CLIENT_ID` / `WITUS_OIDC_CLIENT_SECRET` are set and the WitUS identity provider registers Tour's real callback path (`plans/user-tasks/52`); shown only on tour.witus.online, never on white-label domains
 - ✅ Branded Supabase email templates (confirmation, OTP, password reset)
 - ✅ SVG favicon (music note)
 - ✅ SEO (Open Graph, Twitter Cards, robots.txt, sitemap.xml)

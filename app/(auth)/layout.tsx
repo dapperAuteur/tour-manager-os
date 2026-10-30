@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { AppNav } from '@/components/layout/app-nav'
 import { BrandTheme } from '@/components/layout/brand-theme'
@@ -6,6 +7,7 @@ import { DemoBanner } from '@/components/layout/demo-banner'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { isDemoUser } from '@/lib/demo/config'
 import { isSuperAdmin } from '@/lib/auth/super-admin'
+import { resolveWitusSsoConfig } from '@/lib/auth/witus-sso-server'
 
 export default async function AuthLayout({
   children,
@@ -42,10 +44,19 @@ export default async function AuthLayout({
     .eq('recipient_id', user.id)
     .eq('read', false)
 
+  // Null unless this is a configured WitUS client on the registered host (never a white-label
+  // custom domain), in which case the sidebar shows only the local "Sign out".
+  const { signOutEverywhereUrl } = resolveWitusSsoConfig((await headers()).get('host'))
+
   return (
     <div className="flex min-h-screen">
       <BrandTheme userId={user.id} />
-      <AppNav userName={displayName} isAdmin={isAdmin} unreadFeedback={unreadFeedback || 0} />
+      <AppNav
+        userName={displayName}
+        isAdmin={isAdmin}
+        unreadFeedback={unreadFeedback || 0}
+        signOutEverywhereUrl={signOutEverywhereUrl}
+      />
       <div className="flex min-w-0 flex-1 flex-col">
         {isDemo && <DemoBanner />}
         <div className="flex-1">{children}</div>
