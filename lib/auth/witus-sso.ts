@@ -244,7 +244,6 @@ export function isQuietSilentSsoError(error: string | null | undefined): boolean
 export function safeNextPath(value: string | null | undefined): string | null {
   if (typeof value !== 'string' || value.length === 0 || value.length > 512) return null
   if (!value.startsWith('/') || value.startsWith('//')) return null
-  // eslint-disable-next-line no-control-regex
   if (value.includes('\\') || /[\u0000-\u001F\u007F]/.test(value)) return null
   return value
 }
