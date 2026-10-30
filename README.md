@@ -79,8 +79,8 @@ npm install
 cp .env.example .env.local
 # Edit .env.local with your Supabase and service credentials
 
-# Run Supabase migrations
-npx supabase db push
+# Migrations: never `supabase db push` (no migration history; it would replay every file).
+# Merging to main applies new supabase/migrations files: see docs/01-operations.md.
 
 # Seed demo data
 npx supabase db seed
@@ -209,7 +209,7 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run type-check   # Run TypeScript type checking
 npm run test         # Run tests
-npm run db:push      # Push Supabase migrations
+npm run db:push      # Refuses on purpose: production migrations run from CI (docs/01-operations.md)
 npm run db:seed      # Seed demo data
 npm run db:reset     # Reset database and re-seed
 npm run db:types     # Generate TypeScript types from Supabase schema
