@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { LOGIN_NEXT_PARAM, signedInDestination } from '@/lib/auth/witus-sso'
 
 type AuthMode = 'password' | 'otp-send' | 'otp-verify'
 
@@ -16,7 +17,8 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get('redirect') || '/dashboard'
+  // Same-origin paths only; anything else (another host, //host, /\host) lands on the dashboard.
+  const redirect = signedInDestination(searchParams.get(LOGIN_NEXT_PARAM))
 
   async function handlePasswordLogin(e: React.FormEvent) {
     e.preventDefault()

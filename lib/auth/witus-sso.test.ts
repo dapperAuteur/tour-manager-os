@@ -9,6 +9,7 @@ import {
   hasSilentSsoFlag,
   quietLoginPath,
   safeNextPath,
+  signedInDestination,
   signOutEverywhere,
   silentSsoDecision,
   silentSsoFlagCookie,
@@ -275,6 +276,34 @@ describe('safeNextPath', () => {
 
   it('keeps an ordinary in-app path', () => {
     expect(safeNextPath('/tours/1/shows/2?tab=advance')).toBe('/tours/1/shows/2?tab=advance')
+  })
+})
+
+describe('signedInDestination (login form and /auth/callback ?redirect=)', () => {
+  it.each([
+    'https://example.com',
+    'http://example.com/dashboard',
+    '//example.com',
+    '/\\example.com',
+    '/\texample.com',
+    '\t//example.com',
+    'javascript:alert(1)',
+    '@example.com',
+    '.example.com',
+    'dashboard',
+    '',
+  ])('sends %j to the dashboard', (raw) => {
+    expect(signedInDestination(raw)).toBe('/dashboard')
+  })
+
+  it('defaults to the dashboard with no param', () => {
+    expect(signedInDestination(null)).toBe('/dashboard')
+    expect(signedInDestination(undefined)).toBe('/dashboard')
+  })
+
+  it('keeps a same-origin path with its query', () => {
+    expect(signedInDestination('/tours/new')).toBe('/tours/new')
+    expect(signedInDestination('/tours/1/shows/2?tab=advance')).toBe('/tours/1/shows/2?tab=advance')
   })
 })
 

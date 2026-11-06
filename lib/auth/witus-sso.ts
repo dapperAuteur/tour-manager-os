@@ -248,6 +248,15 @@ export function safeNextPath(value: string | null | undefined): string | null {
   return value
 }
 
+/**
+ * Where a password, email-code, or email-link sign-in lands: the carried `?redirect=` when it is a
+ * same-origin path, else the dashboard. The login form and /auth/callback both read the param from
+ * the query string, so without this `/login?redirect=https://evil.example` was an open redirect.
+ */
+export function signedInDestination(value: string | null | undefined): string {
+  return safeNextPath(value) ?? DEFAULT_SIGNED_IN_PATH
+}
+
 /** Where the login page sends the browser: the same-origin authorize route, interactive or silent. */
 export function witusAuthorizePath(from: string | null | undefined, silent = false): string {
   const params = new URLSearchParams()
