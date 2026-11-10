@@ -1,7 +1,10 @@
+import { readdirSync } from 'node:fs'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
+  PROTECTED_PATHS,
   PUBLIC_PATH_PREFIXES,
   assertPrefixesAreSafe,
+  isProtectedPath,
   isPublicPath,
   requiresAuth,
 } from '@/lib/auth/public-paths'
@@ -133,13 +136,40 @@ describe('public path rules', () => {
     }
   })
 
-  it('does not let a prefix swallow an adjacent route', () => {
-    // '/advance/' with the trailing slash, so a hypothetical '/advanced-settings' stays gated.
-    expect(requiresAuth('/advanced-settings')).toBe(true)
-    expect(requiresAuth('/for-hire')).toBe(true)
-    expect(requiresAuth('/showsettings')).toBe(true)
-    expect(requiresAuth('/storefront-admin')).toBe(true)
-    expect(requiresAuth('/loginhistory')).toBe(true)
+  it('does not let a public prefix swallow an adjacent route', () => {
+    // '/advance/' with the trailing slash, so a hypothetical '/advanced-settings' is not public.
+    for (const path of ['/advanced-settings', '/for-hire', '/showsettings', '/storefront-admin', '/loginhistory']) {
+      expect(isPublicPath(path), `${path} should not be public`).toBe(false)
+    }
+  })
+
+  it('does not let a protected path swallow an adjacent route', () => {
+    expect(isProtectedPath('/tours')).toBe(true)
+    expect(isProtectedPath('/tours/abc-123')).toBe(true)
+    expect(isProtectedPath('/toursandmore')).toBe(false)
+    expect(isProtectedPath('/me')).toBe(true)
+    expect(isProtectedPath('/merch')).toBe(true)
+    expect(isProtectedPath('/men')).toBe(false)
+    expect(isProtectedPath('/settingsx')).toBe(false)
+  })
+
+  it('leaves an unknown path to the router, which answers with the public 404 page', () => {
+    // Neither public nor protected: the middleware must not bounce these to /login, or a typo in
+    // the URL shows a signed-out visitor the login form instead of "Page not found".
+    for (const path of ['/this-page-does-not-exist', '/advanced-settings', '/for-hire', '/toursandmore']) {
+      expect(requiresAuth(path), `${path} should fall through to the 404`).toBe(false)
+    }
+  })
+
+  it('protects exactly the route directories under app/(auth)', () => {
+    // Tripwire: a new private section added under app/(auth) without a PROTECTED_PATHS row would be
+    // gated only by the (auth) layout's redirect, and a stale row would gate a directory that no
+    // longer exists. The (auth) layout is the second line of defence, this list is the first.
+    const authDirs = readdirSync(new URL('./app/(auth)', import.meta.url), { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => `/${entry.name}`)
+      .sort()
+    expect([...PROTECTED_PATHS].sort()).toEqual(authDirs)
   })
 })
 
@@ -168,6 +198,12 @@ describe('middleware auth gate', () => {
     const location = new URL(response.headers.get('location') as string)
     expect(location.pathname).toBe('/login')
     expect(location.searchParams.get('redirect')).toBe('/tours/abc-123/finances')
+  })
+
+  it('lets a signed-out visitor reach an unknown path so the router can answer 404', async () => {
+    const response = await run('https://tour.witus.online/this-page-does-not-exist')
+    expect(response.status).toBe(200)
+    expect(response.headers.get('location')).toBeNull()
   })
 
   it('lets a signed-in user through the same page', async () => {

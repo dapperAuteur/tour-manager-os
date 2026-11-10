@@ -66,10 +66,57 @@ export function isPublicPath(pathname: string): boolean {
   )
 }
 
+/**
+ * Private sub-trees: one entry per route directory under `app/(auth)`, whose layout also redirects a
+ * signed-out visitor to /login server-side. Each entry matches the path itself and everything under
+ * it (`/tours`, `/tours/abc`), never a longer sibling (`/toursandmore`).
+ *
+ * The middleware gates only these. A path that is neither public nor protected is left for the router,
+ * which answers an unknown URL with the public 404 page (header, Sign in, footer). Until this list
+ * existed every unknown path was treated as private, so a signed-out visitor with a typo in the URL was
+ * bounced to the login form instead of seeing "Page not found" (BAM, 2026-11-09: "going to non-existing
+ * page shows login/sign up buttons"). `middleware.auth.test.ts` reads `app/(auth)` and fails when a
+ * directory is added there without a row here.
+ */
+export const PROTECTED_PATHS = [
+  '/academy',
+  '/admin',
+  '/blog',
+  '/community',
+  '/contacts',
+  '/dashboard',
+  '/data',
+  '/developers',
+  '/feedback',
+  '/help',
+  '/hub',
+  '/marketing',
+  '/me',
+  '/merch',
+  '/modules',
+  '/onboarding',
+  '/packages',
+  // The authed gallery is `/photos`; `/photos/<id>` is the public share page (PUBLIC_PATH_PREFIXES).
+  '/photos',
+  '/production',
+  '/settings',
+  '/today',
+  '/tours',
+  '/venues',
+  '/wellness',
+] as const
+
+export function isProtectedPath(pathname: string): boolean {
+  return (PROTECTED_PATHS as readonly string[]).some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
+  )
+}
+
 /** True when middleware should send a signed-out visitor to /login. */
 export function requiresAuth(pathname: string): boolean {
   if (isApiRoute(pathname)) return false
-  return !isPublicPath(pathname)
+  if (isPublicPath(pathname)) return false
+  return isProtectedPath(pathname)
 }
 
 /**
@@ -83,6 +130,12 @@ export function assertPrefixesAreSafe(): void {
       throw new Error(
         `Unsafe public prefix ${JSON.stringify(prefix)}: it would make every path public.`,
       )
+    }
+  }
+  for (const path of PROTECTED_PATHS) {
+    // A bare '/' would gate the marketing root; a trailing slash would miss the index page itself.
+    if (path.length < 2 || !path.startsWith('/') || path.endsWith('/')) {
+      throw new Error(`Unsafe protected path ${JSON.stringify(path)}: use the form "/segment".`)
     }
   }
 }
