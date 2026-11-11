@@ -48,6 +48,12 @@ export default function GlobalError({
             We could not load this page. The error has been logged. Please try again, and if it
             keeps happening use the feedback tool once you are back in.
           </p>
+          {/* The root layout and its header failed, so this minimal shell carries its own links. */}
+          <p style={{ margin: "12px 0", fontSize: 14 }}>
+            <a href="/login" style={{ color: "inherit" }}>
+              Sign in
+            </a>
+          </p>
           <div className="tmos-actions">
             <button type="button" onClick={reset} className="tmos-btn tmos-primary">
               Try again
